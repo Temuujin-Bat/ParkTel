@@ -128,7 +128,7 @@ export default function Navbar() {
       onClick={() => setOpen((prev) => !prev)}
     >
       <List>
-        {["How it works"].map((text) => (
+        {["The Drawer Is Under Development"].map((text) => (
           <Link key={text} underline="none" sx={{ display: "flex" }}>
             <Typography>{text}</Typography>
           </Link>
@@ -144,18 +144,21 @@ export default function Navbar() {
           justifyContent: "space-around",
           width: "100%",
           backgroundColor: "#FFF",
-          padding: "15px",
+          padding: "20px 15px 30px 15px",
         }}
       >
         <Link
           underline="none"
           href="#"
           sx={{
+            width: "50%",
             backgroundColor: "#2dc98a",
             color: "#FFF",
-            padding: "10px 50px",
             display: "flex",
             alignItems: "center",
+            padding: "10px",
+            justifyContent: "center",
+            mr: "25px",
             "&:hover": {
               backgroundColor: "#22a270",
             },
@@ -168,10 +171,12 @@ export default function Navbar() {
           underline="none"
           href="#"
           sx={{
+            width: "50%",
             border: "1px solid #2dc98a",
             display: "flex",
-            padding: "10px 30px", // to edit later
+            padding: "10px",
             alignItems: "center",
+            justifyContent: "center",
             "&:hover": {
               cursor: "pointer",
               backgroundColor: "#2dc98a",
