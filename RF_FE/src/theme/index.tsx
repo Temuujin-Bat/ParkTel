@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-// Third Party
+// MUI
 import {
   createTheme,
   CssBaseline,
@@ -12,6 +12,7 @@ import {
 // Components
 import { TThemeConfig } from "./type";
 import typography from "./typography";
+import ComponentsOverrides from "./overrides";
 
 const ThemeConfig: FC<TThemeConfig> = ({ children }) => {
   const themeOptions = {
@@ -20,6 +21,8 @@ const ThemeConfig: FC<TThemeConfig> = ({ children }) => {
   };
 
   const theme = createTheme(themeOptions);
+
+  theme.components = ComponentsOverrides();
 
   return (
     <StyledEngineProvider injectFirst>
