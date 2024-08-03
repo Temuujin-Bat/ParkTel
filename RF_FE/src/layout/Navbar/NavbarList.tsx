@@ -1,0 +1,94 @@
+// MUI
+import { LocalParking, AccountCircle } from "@mui/icons-material";
+import { Link, Typography, Box, Divider } from "@mui/material";
+
+export default function NavbarList() {
+  return (
+    <Box sx={{ display: "flex" }}>
+      <Link
+        underline="none"
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          padding: "3px 5px",
+          borderRadius: "2px",
+          mr: "10px",
+          "&:hover": {
+            cursor: "pointer",
+            "& .loginTypography": {
+              textDecoration: "underline",
+              color: "#2dc98a",
+            },
+          },
+        }}
+        href="/login"
+      >
+        <AccountCircle sx={{ color: "#2dc98a", mr: "5px" }} />
+        <Typography
+          className="loginTypography"
+          variant="subtitle2"
+          sx={{ color: "#FFF" }}
+        >
+          Log In
+        </Typography>
+      </Link>
+
+      <Link
+        underline="none"
+        sx={{
+          backgroundColor: "#2dc98a",
+          display: "flex",
+          alignItems: "center",
+          padding: "3px 5px",
+          borderRadius: "2px",
+          "&:hover": {
+            cursor: "pointer",
+            backgroundColor: "#22a270",
+          },
+        }}
+        href="/register"
+      >
+        <Typography variant="subtitle2" sx={{ color: "#101921" }}>
+          Sign Up
+        </Typography>
+      </Link>
+
+      <Divider
+        orientation="vertical"
+        sx={{
+          height: "auto",
+          mx: "15px",
+          borderColor: "#2dc98a",
+        }}
+      />
+
+      <Link
+        underline="none"
+        sx={{
+          backgroundColor: "#FFF",
+          display: "flex",
+          alignItems: "center",
+          padding: "3px 5px",
+          borderRadius: "2px",
+          "&:hover": {
+            cursor: "pointer",
+            backgroundColor: "#F2F2F2",
+          },
+        }}
+      >
+        <LocalParking
+          sx={{
+            backgroundColor: "#2dc98a",
+            color: "#FFF",
+            fontSize: "1em",
+            mr: "5px",
+          }}
+        />
+
+        <Typography variant="subtitle2" sx={{ color: "#000000" }}>
+          List Your Space
+        </Typography>
+      </Link>
+    </Box>
+  );
+}

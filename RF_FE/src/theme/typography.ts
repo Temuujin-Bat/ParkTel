@@ -26,14 +26,10 @@ function responsiveFontSizes({
   };
 }
 
-// const FONT_PRIMARY = "Nunito, sans-serif";
-const FONT_PRIMARY = "Arial";
+const FONT_PRIMARY = "Montserrat, sans-serif";
 
 const typography = {
   fontFamily: FONT_PRIMARY,
-  fontWeightRegular: 400,
-  fontWeightMedium: 600,
-  fontWeightBold: 700,
   h1: {
     fontWeight: 700,
     lineHeight: 80 / 64,
@@ -71,12 +67,12 @@ const typography = {
     ...responsiveFontSizes({ sm: 18, md: 18, lg: 18 }),
   },
   subtitle1: {
-    fontWeight: 600,
+    fontWeight: 700,
     lineHeight: 1.5,
     fontSize: pxToRem(16),
   },
   subtitle2: {
-    fontWeight: 600,
+    fontWeight: 700,
     lineHeight: 22 / 14,
     fontSize: pxToRem(14),
   },
