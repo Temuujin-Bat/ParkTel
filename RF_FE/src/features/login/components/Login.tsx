@@ -18,7 +18,7 @@ import LoginForm from "./LoginForm";
 export default function Login() {
   return (
     <>
-      <Container maxWidth={"xs"} sx={{ mt: "30px" }}>
+      <Container maxWidth={"sm"} sx={{ mt: "30px" }}>
         <Box
           sx={{
             width: "100%",
@@ -51,7 +51,7 @@ export default function Login() {
           <LoginForm />
         </Box>
       </Container>
-      <Container maxWidth={"xs"} sx={{ mt: "25px" }}>
+      <Container maxWidth={"sm"} sx={{ mt: "25px" }}>
         <Link
           sx={{
             color: "#2dc98a",

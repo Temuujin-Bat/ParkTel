@@ -9,6 +9,7 @@ import { MainLayout } from "../layout";
 // Components
 const LazyHome = lazy(() => import("../pages/HomePage"));
 const LazyLogin = lazy(() => import("../pages/welcome/LoginPage"));
+const LazyRegister = lazy(() => import("../pages/welcome/RegisterPage"));
 
 const InitRoutes = () =>
   useRoutes([
@@ -22,6 +23,10 @@ const InitRoutes = () =>
         {
           path: "/login",
           element: <LazyLogin />,
+        },
+        {
+          path: "/register",
+          element: <LazyRegister />,
         },
       ],
     },
