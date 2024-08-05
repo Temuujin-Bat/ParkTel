@@ -61,7 +61,7 @@ export default function Login() {
           <Typography variant="subtitle2">Forgotten your password?</Typography>
         </Link>
       </Container>
-      <Divider sx={{ my: "15px" }} />
+      <Divider sx={{ mt: "55px", mb: "20px" }} />
       <Container
         maxWidth={"xs"}
         sx={{
