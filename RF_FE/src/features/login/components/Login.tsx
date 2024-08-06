@@ -13,8 +13,6 @@ import {
 import ExternalLogin from "./ExternalLogin";
 import LoginForm from "./LoginForm";
 
-// Components
-
 export default function Login() {
   return (
     <>

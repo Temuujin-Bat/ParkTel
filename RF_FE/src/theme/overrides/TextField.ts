@@ -9,7 +9,7 @@ export default function Textfield() {
               borderRadius: "5px",
             },
             "&.Mui-focused fieldset": {
-              borderColor: "#78e2b8",
+              borderColor: "#22a270",
             },
             "& .MuiInputBase-input::placeholder": {
               fontSize: ".8em",

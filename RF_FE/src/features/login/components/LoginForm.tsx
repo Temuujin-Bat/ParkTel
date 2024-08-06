@@ -1,16 +1,56 @@
+import React, { useState } from "react";
+
 // MUI
 import { Mail } from "@mui/icons-material";
 import { Box, TextField, Typography } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 
+// Components
+import { useLoginAPI } from "../../../hooks/api/useLogin";
+
 export default function LoginForm() {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const { mutate: login } = useLoginAPI();
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    login({ email: formData.email, password: formData.password });
+  };
+
   return (
-    <Box component={"form"}>
+    <Box component={"form"} onSubmit={handleSubmit}>
       <TextField
+        name="email"
+        type="email"
+        required
         placeholder="Enter email address"
         sx={{ width: "100%", mb: "10px" }}
+        value={formData.email}
+        onChange={handleChange}
       />
-      <TextField placeholder="Enter password" sx={{ width: "100%" }} />
+      <TextField
+        name="password"
+        type="password"
+        required
+        placeholder="Enter password"
+        sx={{ width: "100%" }}
+        value={formData.password}
+        onChange={handleChange}
+      />
       <LoadingButton
         type="submit"
         fullWidth
