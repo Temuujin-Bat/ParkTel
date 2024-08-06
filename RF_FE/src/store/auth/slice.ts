@@ -2,12 +2,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
+
+// Components
 import { PERSIST_KEYS, STORE_SLICES } from "../../utils/enums";
 import { reducers } from "./reducers";
+import { IRootState } from "./types";
 
-const initialState = {
-  tokenDetails: {},
-  userFirstName: "",
+const initialState: IRootState = {
+  userDetails: {
+    firstName: "",
+    userID: "",
+  },
 };
 
 export const slice = createSlice({

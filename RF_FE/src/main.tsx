@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { Suspense } from "react";
 
 // Third Party
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -30,7 +31,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <PersistGate loading={<div>hello</div>} persistor={persistor}>
-            <App />
+            <Suspense fallback={<div>hello</div>}>
+              <App />
+            </Suspense>
           </PersistGate>
         </BrowserRouter>
       </QueryClientProvider>

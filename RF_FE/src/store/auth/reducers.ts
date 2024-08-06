@@ -1,13 +1,13 @@
-const reducers = {
-  setTokenDetails: (state, action) => ({
-    ...state,
-    tokenDetails: action.payload,
-  }),
+import { PayloadAction } from "@reduxjs/toolkit";
+import { IRootState } from "./types";
 
-  setUserDetails: (state, action) => ({
-    ...state,
-    userDetails: action.payload,
-  }),
+const reducers = {
+  setUserDetails: (
+    state: IRootState,
+    action: PayloadAction<IRootState["userDetails"]>
+  ) => {
+    state.userDetails = action.payload;
+  },
 };
 
 export { reducers };

@@ -62,7 +62,10 @@ const login = async (req, res) => {
       return res.status(401).json({ msg: "Email or password is incorrect!" });
     }
 
-    const token = createJWT({ userID: userData._id, name: userData.firstName });
+    const token = createJWT({
+      userID: userData._id,
+      firstName: userData.firstName,
+    });
 
     const oneDay = 1000 * 60 * 60 * 24;
 

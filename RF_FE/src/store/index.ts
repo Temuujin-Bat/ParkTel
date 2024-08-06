@@ -8,9 +8,12 @@ import {
   PAUSE,
   REHYDRATE,
 } from "redux-persist";
+import authReducer from "./auth/slice";
 
 const store = configureStore({
-  reducer: {},
+  reducer: {
+    authReducer,
+  },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
@@ -20,5 +23,8 @@ const store = configureStore({
 });
 
 const persistor = persistStore(store);
+
+export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;
 
 export { store, persistor };

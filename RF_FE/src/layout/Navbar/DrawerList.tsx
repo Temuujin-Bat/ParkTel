@@ -7,6 +7,8 @@ export default function DrawerList({
 }: {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  const isLoggedIn = true;
+
   return (
     <Box
       sx={(theme) => ({
@@ -62,40 +64,77 @@ export default function DrawerList({
           <Typography variant="subtitle2">List your Space</Typography>
         </Link>
 
-        <Link
-          underline="none"
-          href="#"
-          sx={{
-            width: "50%",
-            border: "1px solid #2dc98a",
-            display: "flex",
-            padding: "10px",
-            alignItems: "center",
-            justifyContent: "center",
-            "&:hover": {
-              cursor: "pointer",
-              backgroundColor: "#2dc98a",
-              "& .loginLogo": {
-                color: "#FFF",
+        {isLoggedIn ? (
+          <Link
+            underline="none"
+            href="#"
+            sx={{
+              width: "50%",
+              border: "1px solid #2dc98a",
+              display: "flex",
+              padding: "10px",
+              alignItems: "center",
+              justifyContent: "center",
+              "&:hover": {
+                cursor: "pointer",
+                backgroundColor: "#2dc98a",
+                "& .loginLogo": {
+                  color: "#FFF",
+                },
+                "& .loginTypo": {
+                  color: "#FFF",
+                },
               },
-              "& .loginTypo": {
-                color: "#FFF",
-              },
-            },
-          }}
-        >
-          <AccountCircle
-            className="loginLogo"
-            sx={{ color: "#2dc98a", mr: "5px" }}
-          />
-          <Typography
-            className="loginTypo"
-            variant="subtitle2"
-            sx={{ color: "#2dc98a" }}
+            }}
           >
-            Log in
-          </Typography>
-        </Link>
+            <AccountCircle
+              className="loginLogo"
+              sx={{ color: "#2dc98a", mr: "5px" }}
+            />
+            <Typography
+              className="loginTypo"
+              variant="subtitle2"
+              sx={{ color: "#2dc98a" }}
+            >
+              My Account
+            </Typography>
+          </Link>
+        ) : (
+          <Link
+            underline="none"
+            href="#"
+            sx={{
+              width: "50%",
+              border: "1px solid #2dc98a",
+              display: "flex",
+              padding: "10px",
+              alignItems: "center",
+              justifyContent: "center",
+              "&:hover": {
+                cursor: "pointer",
+                backgroundColor: "#2dc98a",
+                "& .loginLogo": {
+                  color: "#FFF",
+                },
+                "& .loginTypo": {
+                  color: "#FFF",
+                },
+              },
+            }}
+          >
+            <AccountCircle
+              className="loginLogo"
+              sx={{ color: "#2dc98a", mr: "5px" }}
+            />
+            <Typography
+              className="loginTypo"
+              variant="subtitle2"
+              sx={{ color: "#2dc98a" }}
+            >
+              Log in
+            </Typography>
+          </Link>
+        )}
       </Box>
     </Box>
   );
