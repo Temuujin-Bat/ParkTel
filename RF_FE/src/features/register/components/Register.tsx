@@ -13,8 +13,6 @@ import {
 import ExternalRegister from "./ExternalRegister";
 import RegisterForm from "./RegisterForm";
 
-// Components
-
 export default function Register() {
   return (
     <>
@@ -40,6 +38,7 @@ export default function Register() {
             </Typography>
           </Box>
 
+          {/* External Register */}
           <ExternalRegister />
 
           <Divider sx={{ my: "15px" }}>
@@ -48,10 +47,11 @@ export default function Register() {
             </Typography>
           </Divider>
 
+          {/* Register Form */}
           <RegisterForm />
         </Box>
       </Container>
-      <Divider sx={{ my: "15px" }} />
+      <Divider sx={{ mt: "55px", mb: "20px" }} />
       <Container
         maxWidth={"xs"}
         sx={{

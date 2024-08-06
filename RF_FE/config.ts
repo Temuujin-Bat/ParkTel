@@ -1,0 +1,3 @@
+const SECRET_KEY = "PARKTEL_SECURE_STORAGE";
+
+export { SECRET_KEY };

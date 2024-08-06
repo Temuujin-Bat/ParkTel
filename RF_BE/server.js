@@ -3,11 +3,33 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const morgan = require("morgan");
 const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
 
 dotenv.config();
 const app = express();
 
+const authRoutes = require("./routes/auth");
+
 app.use(express.json());
+
+const allowedOrigins = ["http://localhost:5173", "http://localhost"];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
+app.use(cookieParser());
+app.use(morgan("combined"));
+
+app.use("/api/v1/auth", authRoutes);
 
 const port = process.env.PORT || 1010;
 
