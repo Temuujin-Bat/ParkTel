@@ -13,7 +13,7 @@ export function useLoginAPI() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { mutate } = useMutation({
+  const { mutate, isPending, isError } = useMutation({
     mutationFn: LoginController,
     onSuccess: (response) => {
       if (response) {
@@ -37,5 +37,5 @@ export function useLoginAPI() {
     },
   });
 
-  return { mutate };
+  return { mutate, isPending, isError };
 }

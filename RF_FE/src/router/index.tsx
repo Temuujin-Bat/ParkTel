@@ -5,11 +5,15 @@ import { useRoutes } from "react-router-dom";
 
 // Components
 import { MainLayout } from "../layout";
+import { AuthRedirect } from "./AuthRedirect";
 
 // Components
 const LazyHome = lazy(() => import("../pages/HomePage"));
 const LazyLogin = lazy(() => import("../pages/welcome/LoginPage"));
 const LazyRegister = lazy(() => import("../pages/welcome/RegisterPage"));
+const LazyForgotPassword = lazy(
+  () => import("../pages/welcome/ForgotPasswordPage")
+);
 
 const InitRoutes = () =>
   useRoutes([
@@ -22,11 +26,27 @@ const InitRoutes = () =>
         },
         {
           path: "/login",
-          element: <LazyLogin />,
+          element: (
+            <AuthRedirect>
+              <LazyLogin />
+            </AuthRedirect>
+          ),
         },
         {
           path: "/register",
-          element: <LazyRegister />,
+          element: (
+            <AuthRedirect>
+              <LazyRegister />
+            </AuthRedirect>
+          ),
+        },
+        {
+          path: "/forgot-password",
+          element: (
+            <AuthRedirect>
+              <LazyForgotPassword />
+            </AuthRedirect>
+          ),
         },
       ],
     },

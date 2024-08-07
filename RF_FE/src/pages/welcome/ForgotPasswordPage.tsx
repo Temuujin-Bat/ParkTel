@@ -4,14 +4,14 @@ import Grid from "@mui/material/Unstable_Grid2/Grid2";
 
 // Components
 import img from "../../assets/welcome/loginPageMan.webp";
-import { Register } from "../../features/register";
+import { ForgotPassword } from "../../features/forgot-password";
 
-export default function RegisterPage() {
+export default function ForgotPasswordPage() {
   return (
     <Fade in={true} timeout={500}>
       <Grid container sx={{ position: "relative" }}>
         <Grid xs={12} sm={12} md={8} lg={8}>
-          <Register />
+          <ForgotPassword />
         </Grid>
 
         <Grid xs={0} sm={0} md={4} lg={4}>

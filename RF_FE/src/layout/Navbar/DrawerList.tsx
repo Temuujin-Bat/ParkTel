@@ -2,12 +2,15 @@
 import { AccountCircle } from "@mui/icons-material";
 import { Link, Typography, Box, List } from "@mui/material";
 
+// Components
+import { useAuth } from "../../hooks/useAuth";
+
 export default function DrawerList({
   setOpen,
 }: {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const isLoggedIn = true;
+  const { isLoggedIn } = useAuth();
 
   return (
     <Box
@@ -64,7 +67,7 @@ export default function DrawerList({
           <Typography variant="subtitle2">List your Space</Typography>
         </Link>
 
-        {isLoggedIn ? (
+        {isLoggedIn() ? (
           <Link
             underline="none"
             href="#"

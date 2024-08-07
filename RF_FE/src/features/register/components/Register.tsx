@@ -85,6 +85,7 @@ export default function Register() {
               },
             },
           }}
+          href="/login"
         >
           <AccountCircle
             className="accountLogo"

@@ -8,7 +8,7 @@ import { RegisterController } from "../../services/auth.api";
 export function useRegisterAPI() {
   const navigate = useNavigate();
 
-  const { mutate } = useMutation({
+  const { mutate, isPending, isError } = useMutation({
     mutationFn: RegisterController,
     onSuccess: (response) => {
       if (response) {
@@ -22,5 +22,5 @@ export function useRegisterAPI() {
     },
   });
 
-  return { mutate };
+  return { mutate, isPending, isError };
 }

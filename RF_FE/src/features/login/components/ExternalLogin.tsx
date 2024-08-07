@@ -33,7 +33,7 @@ export default function ExternalLogin() {
               mb: "10px",
               "&:hover": {
                 backgroundColor: "#F2F2F2",
-                cursor: "pointer",
+                cursor: "help",
               },
             }}
           >

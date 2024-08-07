@@ -55,6 +55,7 @@ export default function Login() {
             color: "#2dc98a",
             "&:hover": { color: "#22a270", cursor: "pointer" },
           }}
+          href="/forgot-password"
         >
           <Typography variant="subtitle2">Forgotten your password?</Typography>
         </Link>
@@ -93,6 +94,7 @@ export default function Login() {
               },
             },
           }}
+          href="/register"
         >
           <AccountCircle
             className="accountLogo"

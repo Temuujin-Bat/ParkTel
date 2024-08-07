@@ -10,6 +10,7 @@ import { PersistGate } from "redux-persist/integration/react";
 
 // Components
 import App from "./App.tsx";
+import LoadingMUI from "./components/LoadingMUI.tsx";
 
 // Redux-toolkit
 import { store, persistor } from "./store/index.ts";
@@ -30,8 +31,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
-          <PersistGate loading={<div>hello</div>} persistor={persistor}>
-            <Suspense fallback={<div>hello</div>}>
+          <PersistGate loading={<LoadingMUI />} persistor={persistor}>
+            <Suspense fallback={<LoadingMUI />}>
               <App />
             </Suspense>
           </PersistGate>

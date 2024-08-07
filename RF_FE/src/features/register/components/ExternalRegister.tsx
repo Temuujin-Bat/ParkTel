@@ -46,7 +46,7 @@ export default function ExternalRegister() {
                 borderRadius: "5px",
                 "&:hover": {
                   backgroundColor: "#F2F2F2",
-                  cursor: "pointer",
+                  cursor: "help",
                 },
               }}
             >
