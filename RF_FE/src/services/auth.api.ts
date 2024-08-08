@@ -74,9 +74,22 @@ const ResetPasswordController = async ({
   }
 };
 
+const ValidateResetToken = async (token: string) => {
+  try {
+    await axios.post(
+      `http://localhost:1010/api/v1/auth/reset-password/${token}`,
+      {},
+      { withCredentials: true }
+    );
+  } catch (error) {
+    throw error;
+  }
+};
+
 export {
   RegisterController,
   LoginController,
   ForgotPasswordController,
   ResetPasswordController,
+  ValidateResetToken,
 };

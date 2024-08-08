@@ -106,15 +106,11 @@ const forgotPassword = async (req, res) => {
       .createHash("sha256")
       .update(resetToken)
       .digest("hex");
-    const resetPasswordExpire = Date.now() + 10 * 60 * 1000; // 10 minutes
+    const resetPasswordExpire = Date.now() + 5 * 60 * 1000; // 5 minutes
 
-    await User.updateOne(
-      { email: email },
-      {
-        resetPasswordToken: resetPasswordToken,
-        resetPasswordExpire: resetPasswordExpire,
-      }
-    );
+    user.resetPasswordToken = resetPasswordToken;
+    user.resetPasswordExpire = resetPasswordExpire;
+    await user.save();
 
     const resetUrl = `http://localhost:5173/reset-password/${resetToken}`;
 
@@ -175,4 +171,37 @@ const resetPassword = async (req, res) => {
   }
 };
 
-module.exports = { register, login, forgotPassword, resetPassword };
+const validateResetToken = async (req, res) => {
+  try {
+    // Hash the provided token
+    const resetPasswordToken = crypto
+      .createHash("sha256")
+      .update(req.params.token)
+      .digest("hex");
+
+    // Find user by token and ensure the token has not expired
+    const user = await User.findOne({
+      resetPasswordToken,
+      resetPasswordExpire: { $gt: Date.now() },
+    });
+
+    // If no user is found, the token is invalid or expired
+    if (!user) {
+      return res.status(400).json({ msg: "Invalid or expired token." });
+    }
+
+    // If the token is valid, respond with a success message
+    res.status(200).json({ msg: "Valid token." });
+  } catch (error) {
+    // Handle any errors
+    return res.status(500).json({ error: "Error validating reset token" });
+  }
+};
+
+module.exports = {
+  register,
+  login,
+  forgotPassword,
+  resetPassword,
+  validateResetToken,
+};
