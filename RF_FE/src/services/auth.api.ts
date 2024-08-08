@@ -40,4 +40,43 @@ const LoginController = async (loginData: TLoginRequest) => {
   }
 };
 
-export { RegisterController, LoginController };
+const ForgotPasswordController = async (email: string) => {
+  try {
+    const response = await axios.post(
+      "http://localhost:1010/api/v1/auth/forgot-password",
+      { email },
+      { withCredentials: true }
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const ResetPasswordController = async ({
+  token,
+  password,
+}: {
+  token: string;
+  password: string;
+}) => {
+  try {
+    const response = await axios.post(
+      `http://localhost:1010/api/v1/auth/reset-password/${token}`,
+      { password },
+      { withCredentials: true }
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export {
+  RegisterController,
+  LoginController,
+  ForgotPasswordController,
+  ResetPasswordController,
+};

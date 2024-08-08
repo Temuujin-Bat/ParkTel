@@ -10,10 +10,10 @@ export type TMobileField = {
 };
 
 export type TErrorMessagesField = {
-  isError: boolean;
-  isMobileError: boolean;
-  isPasswordMatchError: boolean;
-  isPasswordError: boolean;
+  isError?: boolean;
+  isMobileError?: boolean;
+  isPasswordMatchError?: boolean;
+  isPasswordError?: boolean;
 };
 
 export type TPasswordField = {
@@ -24,4 +24,5 @@ export type TPasswordField = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onToggleShowPassword: () => void;
   error: boolean;
+  sx?: SxProps<Theme>;
 };

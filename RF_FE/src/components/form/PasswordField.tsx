@@ -13,6 +13,7 @@ export default function PasswordField({
   onChange,
   onToggleShowPassword,
   error,
+  sx,
 }: TPasswordField) {
   return (
     <TextField
@@ -23,7 +24,7 @@ export default function PasswordField({
       value={value}
       error={error}
       onChange={onChange}
-      sx={{ width: "50%" }}
+      sx={{ width: "50%", ...sx }}
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">

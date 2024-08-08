@@ -4,15 +4,18 @@ import { lazy } from "react";
 import { useRoutes } from "react-router-dom";
 
 // Components
-import { MainLayout } from "../layout";
+import { MainLayout } from "../layout/main";
 import { AuthRedirect } from "./AuthRedirect";
 
-// Components
+// Pages
 const LazyHome = lazy(() => import("../pages/HomePage"));
 const LazyLogin = lazy(() => import("../pages/welcome/LoginPage"));
 const LazyRegister = lazy(() => import("../pages/welcome/RegisterPage"));
 const LazyForgotPassword = lazy(
   () => import("../pages/welcome/ForgotPasswordPage")
+);
+const LazyResetPassword = lazy(
+  () => import("../pages/welcome/ResetPasswordPage")
 );
 
 const InitRoutes = () =>
@@ -47,6 +50,10 @@ const InitRoutes = () =>
               <LazyForgotPassword />
             </AuthRedirect>
           ),
+        },
+        {
+          path: "/reset-password/:token",
+          element: <LazyResetPassword />,
         },
       ],
     },

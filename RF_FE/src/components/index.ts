@@ -1,2 +1,2 @@
-export * from "./PagesTransition";
 export * from "./LoadingMUI";
+export * from "./PasswordCriteria";

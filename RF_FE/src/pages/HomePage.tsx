@@ -1,4 +1,4 @@
-import { Fade, Typography } from "@mui/material";
+import { Typography, Fade } from "@mui/material";
 
 export default function HomePage() {
   return (
