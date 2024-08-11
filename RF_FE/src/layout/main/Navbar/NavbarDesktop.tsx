@@ -48,6 +48,7 @@ export default function NavbarDesktop() {
         </Typography>
       </Link>
 
+      {/* Navbar List */}
       <NavbarList />
     </Box>
   );

@@ -11,6 +11,7 @@ import NotFoundPage from "../pages/NotFoundPage";
 
 // Pages
 const LazyHome = lazy(() => import("../pages/HomePage"));
+const LazyListYourSpace = lazy(() => import("../pages/ListYourSpace"));
 const LazyLogin = lazy(() => import("../pages/welcome/LoginPage"));
 const LazyRegister = lazy(() => import("../pages/welcome/RegisterPage"));
 const LazyForgotPassword = lazy(
@@ -28,6 +29,10 @@ const InitRoutes = () =>
         {
           path: "/",
           element: <LazyHome />,
+        },
+        {
+          path: "/list-your-space",
+          element: <LazyListYourSpace />,
         },
         {
           path: "/login",

@@ -107,6 +107,7 @@ export default function NavbarList() {
             backgroundColor: "#F2F2F2",
           },
         }}
+        href="/list-your-space"
       >
         <LocalParking
           sx={{
