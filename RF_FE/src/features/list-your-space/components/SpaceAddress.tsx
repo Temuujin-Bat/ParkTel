@@ -1,7 +1,13 @@
 // MUI
 import { Box, Typography, Tooltip, Stack, TextField } from "@mui/material";
 
-export default function Step1LocationAddress() {
+// Components
+import { TListYourSpace } from "../types";
+
+export default function SpaceAddress({
+  addressLine,
+  setAddressLine,
+}: TListYourSpace) {
   return (
     <Box>
       <Typography variant="h5" sx={{ mb: "20px" }}>
@@ -43,7 +49,14 @@ export default function Step1LocationAddress() {
         <Typography variant="body2" sx={{ mb: "5px" }}>
           Address Line*
         </Typography>
-        <TextField fullWidth name="addressLine" type="text" required />
+        <TextField
+          fullWidth
+          name="addressLine"
+          type="text"
+          required
+          value={addressLine || ""}
+          onChange={(e) => setAddressLine!(e.target.value)}
+        />
       </Stack>
     </Box>
   );

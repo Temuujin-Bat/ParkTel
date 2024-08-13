@@ -1,3 +1,4 @@
+// MUI
 import {
   Box,
   Typography,
@@ -5,9 +6,19 @@ import {
   FormControl,
   Select,
   MenuItem,
+  SelectChangeEvent,
 } from "@mui/material";
 
-export default function Step1LocationTypeSpace() {
+// Components
+import { TListYourSpace } from "../types";
+
+export default function SpaceType({ type, setType }: TListYourSpace) {
+  const handleSpaceTypeChange = (event: SelectChangeEvent<string>) => {
+    if (setType) {
+      setType(event.target.value);
+    }
+  };
+
   return (
     <Box>
       <Typography variant="h5" sx={{ mb: "20px" }}>
@@ -37,7 +48,11 @@ export default function Step1LocationTypeSpace() {
             },
           }}
         >
-          <Select defaultValue="street-parking">
+          <Select
+            defaultValue="street-parking"
+            value={type}
+            onChange={handleSpaceTypeChange}
+          >
             <MenuItem value="street-parking">
               <Typography variant="body2">Street Parking</Typography>
             </MenuItem>
@@ -56,8 +71,3 @@ export default function Step1LocationTypeSpace() {
     </Box>
   );
 }
-
-// Street Parking,
-// Gated Parking
-// Commercial Parking Lot,
-// Residental Parking lot

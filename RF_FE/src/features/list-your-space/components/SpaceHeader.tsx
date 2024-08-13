@@ -1,6 +1,6 @@
 import { Box, Typography, Divider } from "@mui/material";
 
-export default function Step1LocationHeader() {
+export default function SpaceHeader() {
   return (
     <Box>
       <Typography variant="h3" gutterBottom>
@@ -8,7 +8,7 @@ export default function Step1LocationHeader() {
       </Typography>
 
       <Typography sx={{ color: "#C0C0C0", fontWeight: "bold" }}>
-        STEP 1:
+        Only few steps
       </Typography>
 
       <Divider

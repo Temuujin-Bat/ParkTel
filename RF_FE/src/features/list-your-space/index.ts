@@ -1,12 +1,11 @@
 export { default as ListYourSpaceSteps } from "./components/ListYourSpaceSteps";
+export { default as SpaceButtons } from "./components/SpaceButtons";
 
-export { default as Step1Location } from "./components/Step1Location";
-export { default as Step1LocationHeader } from "./components/Step1LocationHeader";
-export { default as Step1LocationAddress } from "./components/Step1LocationAddress";
-export { default as Step1LocationPinMap } from "./components/Step1LocationPinMap";
-export { default as Step1LocationFeatures } from "./components/Step1LocationFeatures";
-export { default as Step1LocationTypeSpace } from "./components/Step1LocationTypeSpace";
-
-export { default as Step2Booking } from "./components/Step2Booking";
-
-export { default as Step3Pictures } from "./components/Step3Pictures";
+export { default as SpaceHeader } from "./components/SpaceHeader";
+export { default as SpaceAddress } from "./components/SpaceAddress";
+export { default as SpaceMap } from "./components/SpaceMap";
+export { default as SpaceFeatures } from "./components/SpaceFeatures";
+export { default as SpaceType } from "./components/SpaceType";
+export { default as SpaceDayPicker } from "./components/SpaceDayPicker";
+export { default as SpacePrice } from "./components/SpacePrice";
+export { default as SpacePhotos } from "./components/SpacePhotos";
