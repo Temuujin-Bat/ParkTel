@@ -15,6 +15,10 @@ import {
   SpacePhotos,
   SpaceButtons,
 } from "../index";
+import { useAddSpaceList } from "../../../hooks/api/useAddSpaceList";
+
+// Third party
+import { useSnackbar } from "notistack";
 
 export default function ListYourSpaceSteps() {
   const [activeStep, setActiveStep] = useState(0);
@@ -77,10 +81,33 @@ export default function ListYourSpaceSteps() {
     }
   };
 
+  const { mutate: addSpaceList, isPending } = useAddSpaceList(setActiveStep);
+  const { enqueueSnackbar } = useSnackbar();
+
   const submitHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    console.log("Saving...");
+    if (photos.length === 0) {
+      enqueueSnackbar("Please add at least one photo.", {
+        variant: "error",
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "right",
+        },
+        autoHideDuration: 3000,
+      });
+      return;
+    }
+
+    addSpaceList({
+      addressLine,
+      coordinates,
+      features,
+      type,
+      selectedDays,
+      price,
+      photos,
+    });
   };
 
   return (
@@ -93,6 +120,7 @@ export default function ListYourSpaceSteps() {
         activeStep={activeStep}
         setActiveStep={setActiveStep}
         onSubmit={submitHandler}
+        isPending={isPending}
       />
     </Box>
   );

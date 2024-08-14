@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
+import { SnackbarProvider } from "notistack";
 
 // Components
 import App from "./App.tsx";
@@ -33,7 +34,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <BrowserRouter>
           <PersistGate loading={<LoadingMUI />} persistor={persistor}>
             <Suspense fallback={<LoadingMUI />}>
-              <App />
+              <SnackbarProvider>
+                <App />
+              </SnackbarProvider>
             </Suspense>
           </PersistGate>
         </BrowserRouter>

@@ -1,6 +1,7 @@
 // MUI
 import { Box, Typography, Link } from "@mui/material";
 import { LocalParking, KeyboardBackspace } from "@mui/icons-material";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 // Components
 import { TButtons } from "../types";
@@ -9,6 +10,7 @@ export default function SpaceButtons({
   activeStep,
   setActiveStep,
   onSubmit,
+  isPending,
 }: TButtons) {
   return (
     <Box
@@ -39,19 +41,22 @@ export default function SpaceButtons({
       )}
 
       {activeStep === steps.length - 1 ? (
-        <Link component={"button"} underline="none" onClick={onSubmit}>
-          <Typography
-            variant="subtitle2"
-            sx={{
-              color: "#FFF",
-              backgroundColor: "#2dc98a",
-              borderRadius: "3px",
-              padding: "10px 50px",
-            }}
-          >
-            Save
-          </Typography>
-        </Link>
+        <LoadingButton
+          variant="contained"
+          loading={isPending}
+          onClick={onSubmit}
+          sx={{
+            color: "#FFF",
+            backgroundColor: "#2dc98a",
+            borderRadius: "3px",
+            padding: "10px 50px",
+            "&:hover": {
+              backgroundColor: "#22a270",
+            },
+          }}
+        >
+          <Typography variant="subtitle2">Save</Typography>
+        </LoadingButton>
       ) : (
         <Link
           component={"button"}

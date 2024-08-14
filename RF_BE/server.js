@@ -9,8 +9,10 @@ dotenv.config();
 const app = express();
 
 const authRoutes = require("./routes/auth");
+const spaceListRoutes = require("./routes/spaceList");
 
-app.use(express.json());
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ limit: "10mb", extended: true }));
 
 const allowedOrigins = ["http://localhost:5173", "http://localhost"];
 
@@ -30,6 +32,7 @@ app.use(cookieParser());
 app.use(morgan("combined"));
 
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/spaceList", spaceListRoutes);
 
 const port = process.env.PORT || 1010;
 
