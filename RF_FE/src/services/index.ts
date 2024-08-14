@@ -1,2 +1,2 @@
 export * from "./auth.api";
-export * from "./map.api";
+export * from "./spaceList.api";

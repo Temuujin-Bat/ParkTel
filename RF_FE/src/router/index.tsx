@@ -8,6 +8,7 @@ import { MainLayout } from "../layout/main";
 import { AuthRedirect } from "./AuthRedirect";
 import { TokenValidationWrapper } from "../layout/wrappers/TokenValidateWrapper";
 import NotFoundPage from "../pages/NotFoundPage";
+import { ProtectedRoute } from "./ProtectedRoute";
 
 // Pages
 const LazyHome = lazy(() => import("../pages/HomePage"));
@@ -32,7 +33,11 @@ const InitRoutes = () =>
         },
         {
           path: "/list-your-space",
-          element: <LazyListYourSpace />,
+          element: (
+            <ProtectedRoute>
+              <LazyListYourSpace />
+            </ProtectedRoute>
+          ),
         },
         {
           path: "/login",

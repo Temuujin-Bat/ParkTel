@@ -2,6 +2,7 @@ export type TButtons = {
   activeStep: number;
   setActiveStep: React.Dispatch<React.SetStateAction<number>>;
   onSubmit: React.MouseEventHandler<HTMLButtonElement>;
+  isPending?: boolean;
 };
 
 export type TCoordinates = {
