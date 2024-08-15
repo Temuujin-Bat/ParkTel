@@ -91,8 +91,12 @@ const SpaceList = new mongoose.Schema({
   },
 });
 
-SpaceList.path("selectedDays").validate(function (value) {
-  return Object.values(value).includes(true);
-}, "At least one day must be selected");
+SpaceList.pre("save", function (next) {
+  const selectedDays = this.selectedDays;
+  if (!Object.values(selectedDays).includes(true)) {
+    return next(new Error("At least one day must be selected"));
+  }
+  next();
+});
 
 module.exports = mongoose.model("SpaceList", SpaceList);
