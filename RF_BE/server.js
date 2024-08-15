@@ -10,6 +10,7 @@ const app = express();
 
 const authRoutes = require("./routes/auth");
 const spaceListRoutes = require("./routes/spaceList");
+const userRoutes = require("./routes");
 
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ limit: "10mb", extended: true }));
@@ -33,6 +34,7 @@ app.use(morgan("combined"));
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/spaceList", spaceListRoutes);
+app.use("/api/v1/user", userRoutes);
 
 const port = process.env.PORT || 1010;
 
