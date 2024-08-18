@@ -1,8 +1,8 @@
-// Components
-import NavbarList from "./NavbarList";
-
 // MUI
 import { Link, Typography, Box } from "@mui/material";
+
+// Components
+import NavbarList from "./NavbarList";
 
 export default function NavbarDesktop() {
   return (
@@ -10,7 +10,7 @@ export default function NavbarDesktop() {
       sx={{
         display: {
           xs: "none",
-          sm: "flex",
+          sm: "none",
           md: "flex",
           lg: "flex",
         },

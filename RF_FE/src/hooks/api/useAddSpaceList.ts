@@ -6,7 +6,7 @@ import { useSnackbar } from "notistack";
 // Components
 import { SpaceListController } from "../../services";
 
-export function useAddSpaceList(
+export function useAddSpaceListAPI(
   setActiveStep: React.Dispatch<React.SetStateAction<number>>
 ) {
   const navigate = useNavigate();

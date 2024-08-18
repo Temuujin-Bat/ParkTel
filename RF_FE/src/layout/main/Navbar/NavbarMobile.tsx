@@ -14,7 +14,7 @@ export default function NavbarMobile({
       sx={{
         display: {
           xs: "flex",
-          sm: "none",
+          sm: "flex",
           md: "none",
           lg: "none",
         },

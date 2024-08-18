@@ -25,4 +25,25 @@ const createSpaceList = async (req, res) => {
   }
 };
 
-module.exports = { createSpaceList };
+const getUserSpaceList = async (req, res) => {
+  try {
+    const user = req.user.userID;
+
+    const spaces = await SpaceList.find({ user });
+
+    if (spaces.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No spaces found for this user." });
+    }
+
+    return res.status(201).json(spaces);
+  } catch (error) {
+    console.error("Error during creating a list:", error);
+    return res
+      .status(500)
+      .json({ error: "Error inside spaceListController.js/createList" });
+  }
+};
+
+module.exports = { createSpaceList, getUserSpaceList };

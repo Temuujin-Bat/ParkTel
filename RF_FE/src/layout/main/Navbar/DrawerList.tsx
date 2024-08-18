@@ -21,8 +21,14 @@ export default function DrawerList({
         width: "80vw",
         backgroundColor: "#F2F2F2",
         mt: "50px",
-        [theme.breakpoints.down(400)]: {
+        [theme.breakpoints.down("xs")]: {
           width: "100vw",
+        },
+        [theme.breakpoints.between("xs", "sm")]: {
+          width: "100vw",
+        },
+        [theme.breakpoints.between("sm", "md")]: {
+          width: "70vw",
         },
       })}
       onClick={() => setOpen((prev) => !prev)}

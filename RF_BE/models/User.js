@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true, minLength: 8 },
   mobile: { type: String, required: true, trim: true },
   createdAt: { type: Date, default: Date.now },
-  role: { type: String, default: "user" },
+  role: { type: String, default: "owner" },
   isActive: { type: Boolean, default: true },
   resetPasswordToken: { type: String },
   resetPasswordExpire: { type: Date },

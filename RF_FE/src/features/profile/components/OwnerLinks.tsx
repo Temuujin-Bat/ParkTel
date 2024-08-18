@@ -1,0 +1,46 @@
+// MUI
+import { Box, Link, Typography } from "@mui/material";
+
+// Third party
+import { useLocation } from "react-router-dom";
+
+const links = [
+  { name: "Your Listing", url: "/space-owner" },
+  { name: "Your Reservations", url: "/space-owner/your-reservations" },
+  { name: "Profile Settings", url: "/space-owner/profile-settings" },
+  { name: "Change Password", url: "/space-owner/change-password" },
+  { name: "Log Out", url: "log-out" },
+];
+
+export default function OwnerLinks() {
+  const location = useLocation();
+
+  return (
+    <Box
+      sx={{
+        display: { xs: "none", sm: "none", md: "flex", lg: "flex" },
+        flexDirection: "column",
+        width: "30%",
+        mt: "30px",
+      }}
+    >
+      {links.map((link) => (
+        <Link underline="none" href={link?.url}>
+          <Typography
+            variant="subtitle2"
+            sx={{
+              color: location.pathname === link.url ? "#36383e" : "#a4a5a8",
+              lineHeight: "2.5em",
+              "&:hover": { color: "#36383e" },
+            }}
+          >
+            {link?.name}
+          </Typography>
+        </Link>
+      ))}
+    </Box>
+  );
+}
+
+// #a4a5a8
+// #36383e

@@ -11,7 +11,7 @@ import NavbarDesktop from "./NavbarDesktop";
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const theme = useTheme();
-  const isSmUp = useMediaQuery(theme.breakpoints.up("sm"));
+  const isSmUp = useMediaQuery(theme.breakpoints.up("md"));
 
   return (
     <>

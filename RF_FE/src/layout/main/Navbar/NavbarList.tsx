@@ -26,7 +26,7 @@ export default function NavbarList() {
               },
             },
           }}
-          href="/register"
+          href="/space-owner"
         >
           <AccountCircle sx={{ color: "#2dc98a", mr: "5px" }} />
           <Typography variant="subtitle2" sx={{ color: "#FFFFFF" }}>

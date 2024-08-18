@@ -6,6 +6,7 @@ import {
   Stack,
   TextField,
   Fade,
+  InputAdornment,
 } from "@mui/material";
 
 // Components
@@ -69,6 +70,15 @@ export default function SpaceAddress({
             required
             value={addressLine || ""}
             onChange={(e) => setAddressLine!(e.target.value)}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <Tooltip title="Only available in Tel Aviv, Israel">
+                    <Typography>Tel Aviv</Typography>
+                  </Tooltip>
+                </InputAdornment>
+              ),
+            }}
           />
         </Stack>
       </Box>

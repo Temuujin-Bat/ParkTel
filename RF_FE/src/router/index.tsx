@@ -12,6 +12,20 @@ import { ProtectedRoute } from "./ProtectedRoute";
 
 // Pages
 const LazyHome = lazy(() => import("../pages/HomePage"));
+const LazyOwner = lazy(() => import("../pages/OwnerPage"));
+const LazyOwnerReservations = lazy(
+  () => import("../features/profile/components/OwnerReservations")
+);
+const LazyDriver = lazy(() => import("../pages/DriverPage"));
+const LazyDriverPastBookin = lazy(
+  () => import("../features/profile/components/DriverPastBooking")
+);
+const LazyProfileSettings = lazy(
+  () => import("../features/profile/components/ProfileSettings")
+);
+const LazyChangePassword = lazy(
+  () => import("../features/profile/components/ProfileChangePassword")
+);
 const LazyListYourSpace = lazy(() => import("../pages/ListYourSpace"));
 const LazyLogin = lazy(() => import("../pages/welcome/LoginPage"));
 const LazyRegister = lazy(() => import("../pages/welcome/RegisterPage"));
@@ -30,6 +44,50 @@ const InitRoutes = () =>
         {
           path: "/",
           element: <LazyHome />,
+        },
+        {
+          path: "/space-owner",
+          element: (
+            <ProtectedRoute>
+              <LazyOwner />
+            </ProtectedRoute>
+          ),
+          children: [
+            {
+              path: "your-reservations",
+              element: (
+                <ProtectedRoute>
+                  <LazyOwnerReservations />
+                </ProtectedRoute>
+              ),
+            },
+            {
+              path: "profile-settings",
+              element: (
+                <ProtectedRoute>
+                  <LazyProfileSettings />
+                </ProtectedRoute>
+              ),
+            },
+            {
+              path: "change-password",
+              element: (
+                <ProtectedRoute>
+                  <LazyChangePassword />
+                </ProtectedRoute>
+              ),
+            },
+          ],
+        },
+        {
+          path: "/driver",
+          element: <LazyDriver />,
+          children: [
+            {
+              path: "past-bookings",
+              element: <LazyDriverPastBookin />,
+            },
+          ],
         },
         {
           path: "/list-your-space",

@@ -15,7 +15,7 @@ import {
   SpacePhotos,
   SpaceButtons,
 } from "../index";
-import { useAddSpaceList } from "../../../hooks/api/useAddSpaceList";
+import { useAddSpaceListAPI } from "../../../hooks/api/useAddSpaceList";
 
 // Third party
 import { useSnackbar } from "notistack";
@@ -81,7 +81,7 @@ export default function ListYourSpaceSteps() {
     }
   };
 
-  const { mutate: addSpaceList, isPending } = useAddSpaceList(setActiveStep);
+  const { mutate: addSpaceList, isPending } = useAddSpaceListAPI(setActiveStep);
   const { enqueueSnackbar } = useSnackbar();
 
   const submitHandler = (e: React.MouseEvent<HTMLButtonElement>) => {

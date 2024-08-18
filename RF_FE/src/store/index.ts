@@ -1,3 +1,4 @@
+// Third party
 import { configureStore } from "@reduxjs/toolkit";
 import {
   persistStore,
@@ -8,11 +9,15 @@ import {
   PAUSE,
   REHYDRATE,
 } from "redux-persist";
+
+// Components
 import authReducer from "./auth/slice";
+import userSpaceListReducer from "./spaceList/slice";
 
 const store = configureStore({
   reducer: {
     authReducer,
+    userSpaceListReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
