@@ -2,14 +2,14 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 
 // Components
-import { IRootState } from "./types";
+import { IRootState } from "./type";
 
 const reducers = {
-  setUserDetails: (
+  setUserSpaceList: (
     state: IRootState,
-    action: PayloadAction<IRootState["userDetails"]>
+    action: PayloadAction<IRootState["userSpaceList"]>
   ) => {
-    state.userDetails = action.payload;
+    state.userSpaceList = action.payload;
   },
 };
 

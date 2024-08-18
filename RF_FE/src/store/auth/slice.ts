@@ -12,6 +12,7 @@ const initialState: IRootState = {
   userDetails: {
     firstName: "",
     userID: "",
+    role: "",
   },
 };
 

@@ -25,6 +25,7 @@ export function useLoginAPI() {
             authActions.setUserDetails({
               firstName: decodedToken.firstName,
               userID: decodedToken.userID,
+              role: decodedToken.role,
             })
           );
         }

@@ -1,8 +1,8 @@
 // Third party
 import axios from "axios";
-import { TListYourSpace } from "../types/requests";
 
 // Components
+import { TListYourSpace } from "../types/requests";
 
 const SpaceListController = async (listSpaceData: TListYourSpace) => {
   try {
@@ -16,4 +16,20 @@ const SpaceListController = async (listSpaceData: TListYourSpace) => {
   }
 };
 
-export { SpaceListController };
+const UserSpaceListController = async () => {
+  try {
+    const response = await axios.post(
+      "http://localhost:1010/api/v1/spaceList/space-owner",
+      {},
+      {
+        withCredentials: true,
+      }
+    );
+
+    return response?.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export { SpaceListController, UserSpaceListController };

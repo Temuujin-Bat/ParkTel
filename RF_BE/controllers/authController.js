@@ -67,6 +67,7 @@ const login = async (req, res) => {
     const token = createJWT({
       userID: userData._id,
       firstName: userData.firstName,
+      role: userData.role,
     });
 
     const oneDay = 1000 * 60 * 60 * 24;

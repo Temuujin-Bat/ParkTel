@@ -1,4 +1,5 @@
-import { RootState } from "../index";
+// Components
+import { RootState } from "..";
 
 const getUserDetails = (state: RootState) => state.authReducer.userDetails;
 
