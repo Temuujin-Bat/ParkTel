@@ -30,6 +30,7 @@ export type TListYourSpace = {
   selectedDays?: TSelectedDays;
   price?: string;
   photos?: string[];
+  _id?: string;
 };
 
 export type TOwnerListingGridProps = {

@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 
 // Components
-import { UserSpaceListController } from "../../services";
+import { GetUserSpaceListController } from "../../services";
 import { QUERY_KEYS } from "../../utils/enums";
 import { spaceList } from "../../store/spaceList/slice";
 
@@ -13,7 +13,7 @@ export function useGetUserSpaceListAPI() {
 
   const { isSuccess, data, isPending } = useQuery({
     queryKey: [QUERY_KEYS.SPACELIST],
-    queryFn: () => UserSpaceListController(),
+    queryFn: GetUserSpaceListController,
     refetchOnWindowFocus: false,
   });
 

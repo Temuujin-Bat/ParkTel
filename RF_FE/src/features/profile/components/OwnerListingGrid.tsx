@@ -1,23 +1,30 @@
 // MUI
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
-import { Box, Link, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 
 // Components
 import { TOwnerListingGridProps } from "../../../types/spaceListing.type";
+import { LoadingButton } from "@mui/lab";
+import { useDeleteUserSpaceListAPI } from "../../../hooks/api/useDeleteUserSpaceList";
 
 export default function OwnerListingGrid({
   myListings,
 }: TOwnerListingGridProps) {
+  const { mutate: deleteSpaceList, isPending } = useDeleteUserSpaceListAPI();
+
+  const deleteHandler = (id: string) => {
+    deleteSpaceList(id);
+  };
+
   return (
     <Grid container spacing={1}>
       {myListings.map((listing, index) => (
-        <>
+        <Grid key={index} container spacing={1} xs={12} sm={12} md={12} lg={12}>
           <Grid
             xs={12}
             sm={4}
             md={5}
             lg={5}
-            key={index}
             sx={{ mb: { xs: "0px", sm: "0px", md: "20px", lg: "20px" } }}
           >
             <Box
@@ -103,13 +110,13 @@ export default function OwnerListingGrid({
                   gap: "10px",
                 }}
               >
-                <Link
-                  underline="none"
+                <LoadingButton
                   sx={{
                     backgroundColor: "#2dc98a ",
                     borderRadius: "3px",
                     flex: 1,
                     textAlign: "center",
+                    height: "35px",
                     "&:hover": {
                       cursor: "pointer",
                       backgroundColor: "#22a270",
@@ -122,14 +129,14 @@ export default function OwnerListingGrid({
                   >
                     Edit
                   </Typography>
-                </Link>
-                <Link
-                  underline="none"
+                </LoadingButton>
+                <LoadingButton
                   sx={{
                     border: "1px solid #4a555e",
                     borderRadius: "3px",
                     flex: 1,
                     textAlign: "center",
+                    height: "35px",
                     "&:hover": {
                       cursor: "pointer",
                       backgroundColor: "#f2f2f2",
@@ -145,18 +152,24 @@ export default function OwnerListingGrid({
                   >
                     Preview
                   </Typography>
-                </Link>
-                <Link
-                  underline="none"
+                </LoadingButton>
+                <LoadingButton
                   sx={{
                     border: "1px solid #b14646",
                     borderRadius: "3px",
                     flex: 1,
                     textAlign: "center",
+                    height: "35px",
                     "&:hover": {
                       cursor: "pointer",
                       backgroundColor: "#f2f2f2",
                     },
+                  }}
+                  loading={isPending}
+                  onClick={() => {
+                    if (listing?._id) {
+                      deleteHandler(listing._id);
+                    }
                   }}
                 >
                   <Typography
@@ -165,11 +178,11 @@ export default function OwnerListingGrid({
                   >
                     Delete
                   </Typography>
-                </Link>
+                </LoadingButton>
               </Stack>
             </Box>
           </Grid>
-        </>
+        </Grid>
       ))}
     </Grid>
   );

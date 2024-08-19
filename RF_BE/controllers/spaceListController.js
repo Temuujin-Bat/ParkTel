@@ -31,19 +31,47 @@ const getUserSpaceList = async (req, res) => {
 
     const spaces = await SpaceList.find({ user });
 
-    if (spaces.length === 0) {
-      return res
-        .status(404)
-        .json({ message: "No spaces found for this user." });
-    }
-
     return res.status(201).json(spaces);
   } catch (error) {
-    console.error("Error during creating a list:", error);
+    console.error("Error during getting a list:", error);
     return res
       .status(500)
-      .json({ error: "Error inside spaceListController.js/createList" });
+      .json({ error: "Error inside spaceListController.js/getList" });
   }
 };
 
-module.exports = { createSpaceList, getUserSpaceList };
+const deleteUserSpaceList = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const spaceList = await SpaceList.findById(id);
+
+    if (!spaceList) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ msg: `No space list with id: ${id}` });
+    }
+
+    await SpaceList.findByIdAndDelete(id);
+
+    const updatedSpaceList = await SpaceList.find({ user: req.user.userID });
+
+    return res
+      .status(200)
+      .json({ msg: "Space list deleted successfully!", updatedSpaceList });
+  } catch (error) {
+    console.error("Error during deleting a list:", error);
+    return res
+      .status(500)
+      .json({ error: "Error inside spaceListController.js/deleteList" });
+  }
+};
+
+const editUserSpaceList = async (req, res) => {};
+
+module.exports = {
+  createSpaceList,
+  getUserSpaceList,
+  deleteUserSpaceList,
+  editUserSpaceList,
+};
