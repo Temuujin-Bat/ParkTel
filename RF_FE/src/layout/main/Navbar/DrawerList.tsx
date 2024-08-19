@@ -4,6 +4,16 @@ import { Link, Typography, Box, List } from "@mui/material";
 
 // Components
 import { useAuth } from "../../../hooks/useAuth";
+import { useAppSelector } from "../../../hooks/useAppStore";
+import { getUserDetails } from "../../../store/auth/selectors";
+
+const links = [
+  { name: "Your Listing", url: "/space-owner" },
+  { name: "Your Reservations", url: "/space-owner/your-reservations" },
+  { name: "Profile Settings", url: "/space-owner/profile-settings" },
+  { name: "Change Password", url: "/space-owner/change-password" },
+  { name: "Log Out", url: "log-out" },
+];
 
 export default function DrawerList({
   setOpen,
@@ -11,6 +21,11 @@ export default function DrawerList({
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const { isLoggedIn } = useAuth();
+  const userDetails = useAppSelector(getUserDetails);
+
+  if (!userDetails) {
+    return <p>Loading...</p>; // Or some loading indicator
+  }
 
   return (
     <Box
@@ -28,18 +43,35 @@ export default function DrawerList({
           width: "100vw",
         },
         [theme.breakpoints.between("sm", "md")]: {
-          width: "70vw",
+          width: "60vw",
         },
       })}
       onClick={() => setOpen((prev) => !prev)}
     >
-      <List>
-        {["The Drawer Is Under Development"].map((text) => (
-          <Link key={text} underline="none" sx={{ display: "flex" }}>
-            <Typography>{text}</Typography>
-          </Link>
-        ))}
-      </List>
+      {userDetails && userDetails.role === "owner" && (
+        <List
+          sx={{
+            display: { xs: "flex", sm: "flex", md: "none", lg: "none" },
+            flexDirection: "column",
+            mt: "30px",
+          }}
+        >
+          {links.map((link) => (
+            <Link underline="none" href={link?.url}>
+              <Typography
+                variant="subtitle1"
+                sx={{
+                  color: location.pathname === link.url ? "#36383e" : "#a4a5a8",
+                  lineHeight: "2.5em",
+                  "&:hover": { color: "#36383e" },
+                }}
+              >
+                {link?.name}
+              </Typography>
+            </Link>
+          ))}
+        </List>
+      )}
 
       <Box
         sx={{
@@ -64,6 +96,7 @@ export default function DrawerList({
             alignItems: "center",
             padding: "10px",
             justifyContent: "center",
+            flex: "1",
             mr: "25px",
             "&:hover": {
               backgroundColor: "#22a270",
@@ -84,6 +117,7 @@ export default function DrawerList({
               padding: "10px",
               alignItems: "center",
               justifyContent: "center",
+              flex: "1",
               "&:hover": {
                 cursor: "pointer",
                 backgroundColor: "#2dc98a",
@@ -119,6 +153,7 @@ export default function DrawerList({
               padding: "10px",
               alignItems: "center",
               justifyContent: "center",
+              flex: "1",
               "&:hover": {
                 cursor: "pointer",
                 backgroundColor: "#2dc98a",

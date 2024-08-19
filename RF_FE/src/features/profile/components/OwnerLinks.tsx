@@ -24,10 +24,10 @@ export default function OwnerLinks() {
         mt: "30px",
       }}
     >
-      {links.map((link) => (
-        <Link underline="none" href={link?.url}>
+      {links.map((link, index) => (
+        <Link key={index} underline="none" href={link?.url}>
           <Typography
-            variant="subtitle2"
+            variant="subtitle1"
             sx={{
               color: location.pathname === link.url ? "#36383e" : "#a4a5a8",
               lineHeight: "2.5em",
