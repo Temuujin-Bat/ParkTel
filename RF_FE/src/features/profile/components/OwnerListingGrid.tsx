@@ -1,6 +1,8 @@
 // MUI
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import { Box, Link, Stack, Typography } from "@mui/material";
+
+// Components
 import { TOwnerListingGridProps } from "../../../types/spaceListing.type";
 
 export default function OwnerListingGrid({
@@ -118,7 +120,7 @@ export default function OwnerListingGrid({
                     variant="subtitle2"
                     sx={{ color: "#FFF", padding: "5px 12px" }}
                   >
-                    Edit Listing
+                    Edit
                   </Typography>
                 </Link>
                 <Link
@@ -161,7 +163,7 @@ export default function OwnerListingGrid({
                     variant="subtitle2"
                     sx={{ color: "#b14646", padding: "5px 12px" }}
                   >
-                    Delete Listing
+                    Delete
                   </Typography>
                 </Link>
               </Stack>
