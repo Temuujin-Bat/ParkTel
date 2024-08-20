@@ -12,21 +12,34 @@ import { ProtectedRoute } from "./ProtectedRoute";
 
 // Pages
 const LazyHome = lazy(() => import("../pages/HomePage"));
+// Pages Owner
 const LazyOwner = lazy(() => import("../pages/OwnerPage"));
+const LazyEditListing = lazy(
+  () => import("../features/profile/components/OwnerEditListing")
+);
 const LazyOwnerReservations = lazy(
   () => import("../features/profile/components/OwnerReservations")
 );
+const LazyOwnerReservationsCompleted = lazy(
+  () => import("../features/profile/components/OwnerReservationsCompleted")
+);
+const LazyOwnerReservationsCancelled = lazy(
+  () => import("../features/profile/components/OwnerReservationsCancelled")
+);
+const LazyListYourSpace = lazy(() => import("../pages/ListYourSpace"));
+// Pages Driver
 const LazyDriver = lazy(() => import("../pages/DriverPage"));
 const LazyDriverPastBookin = lazy(
   () => import("../features/profile/components/DriverPastBooking")
 );
+// Pages Profile
 const LazyProfileSettings = lazy(
   () => import("../features/profile/components/ProfileSettings")
 );
 const LazyChangePassword = lazy(
   () => import("../features/profile/components/ProfileChangePassword")
 );
-const LazyListYourSpace = lazy(() => import("../pages/ListYourSpace"));
+// Pages Welcome
 const LazyLogin = lazy(() => import("../pages/welcome/LoginPage"));
 const LazyRegister = lazy(() => import("../pages/welcome/RegisterPage"));
 const LazyForgotPassword = lazy(
@@ -54,12 +67,30 @@ const InitRoutes = () =>
           ),
           children: [
             {
+              path: "edit/:id",
+              element: (
+                <ProtectedRoute>
+                  <LazyEditListing />
+                </ProtectedRoute>
+              ),
+            },
+            {
               path: "your-reservations",
               element: (
                 <ProtectedRoute>
                   <LazyOwnerReservations />
                 </ProtectedRoute>
               ),
+              children: [
+                {
+                  path: "completed",
+                  element: <LazyOwnerReservationsCompleted />,
+                },
+                {
+                  path: "cancelled",
+                  element: <LazyOwnerReservationsCancelled />,
+                },
+              ],
             },
             {
               path: "profile-settings",

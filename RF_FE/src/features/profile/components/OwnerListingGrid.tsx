@@ -1,3 +1,7 @@
+// Third party
+import { format } from "date-fns";
+import { useNavigate } from "react-router-dom";
+
 // MUI
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import { Box, Stack, Typography } from "@mui/material";
@@ -10,6 +14,8 @@ import { useDeleteUserSpaceListAPI } from "../../../hooks/api/useDeleteUserSpace
 export default function OwnerListingGrid({
   myListings,
 }: TOwnerListingGridProps) {
+  const navigate = useNavigate();
+
   const { mutate: deleteSpaceList, isPending } = useDeleteUserSpaceListAPI();
 
   const deleteHandler = (id: string) => {
@@ -74,7 +80,7 @@ export default function OwnerListingGrid({
             >
               <Stack sx={{ display: "flex", flexDirection: "row" }}>
                 <Typography variant="h4">
-                  Parking on {listing.addressLine}
+                  Parking on {listing.addressLine}, Tel Aviv
                 </Typography>
               </Stack>
 
@@ -97,7 +103,11 @@ export default function OwnerListingGrid({
 
                 <Stack>
                   <Typography variant="body2" sx={{ color: "#b7b7b9" }}>
-                    Last updated on 17th August 2024
+                    Last updated on{" "}
+                    {format(
+                      new Date(listing.updatedAt ?? new Date()),
+                      "do MMMM yyyy"
+                    )}
                   </Typography>
                 </Stack>
               </Box>
@@ -122,6 +132,7 @@ export default function OwnerListingGrid({
                       backgroundColor: "#22a270",
                     },
                   }}
+                  onClick={() => navigate(`/space-owner/edit/${listing?._id}`)}
                 >
                   <Typography
                     variant="subtitle2"

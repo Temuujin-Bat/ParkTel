@@ -67,7 +67,32 @@ const deleteUserSpaceList = async (req, res) => {
   }
 };
 
-const editUserSpaceList = async (req, res) => {};
+const editUserSpaceList = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const spaceList = await SpaceList.findById(id);
+
+    if (!spaceList) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ msg: `No space list with id: ${id}` });
+    }
+
+    await SpaceList.findByIdAndUpdate(id);
+
+    const updatedSpaceList = await SpaceList.find({ user: req.user.userID });
+
+    return res
+      .status(200)
+      .json({ msg: "Space list edited successfully!", updatedSpaceList });
+  } catch (error) {
+    console.error("Error during editing a list:", error);
+    return res
+      .status(500)
+      .json({ error: "Error inside spaceListController.js/editList" });
+  }
+};
 
 module.exports = {
   createSpaceList,

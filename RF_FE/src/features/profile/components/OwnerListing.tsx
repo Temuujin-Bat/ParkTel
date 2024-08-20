@@ -12,7 +12,7 @@ export default function OwnerListing() {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Typography variant="h3" gutterBottom>
+      <Typography variant="h4" sx={{ mb: "30px" }}>
         Your Listings
       </Typography>
 

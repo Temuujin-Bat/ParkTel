@@ -6,14 +6,10 @@ import { Link, Typography, Box, List } from "@mui/material";
 import { useAuth } from "../../../hooks/useAuth";
 import { useAppSelector } from "../../../hooks/useAppStore";
 import { getUserDetails } from "../../../store/auth/selectors";
+import { persistor } from "../../../store";
 
-const links = [
-  { name: "Your Listing", url: "/space-owner" },
-  { name: "Your Reservations", url: "/space-owner/your-reservations" },
-  { name: "Profile Settings", url: "/space-owner/profile-settings" },
-  { name: "Change Password", url: "/space-owner/change-password" },
-  { name: "Log Out", url: "log-out" },
-];
+// Third party
+import { useNavigate } from "react-router-dom";
 
 export default function DrawerList({
   setOpen,
@@ -22,10 +18,23 @@ export default function DrawerList({
 }) {
   const { isLoggedIn } = useAuth();
   const userDetails = useAppSelector(getUserDetails);
+  const navigate = useNavigate();
 
-  if (!userDetails) {
-    return <p>Loading...</p>; // Or some loading indicator
-  }
+  const logoutHandler = async () => {
+    await persistor.purge();
+    sessionStorage.clear();
+    localStorage.clear();
+
+    navigate("/");
+  };
+
+  const links = [
+    { name: "Your Listing", url: "/space-owner" },
+    { name: "Your Reservations", url: "/space-owner/your-reservations" },
+    { name: "Profile Settings", url: "/space-owner/profile-settings" },
+    { name: "Change Password", url: "/space-owner/change-password" },
+    { name: "Log Out", action: logoutHandler },
+  ];
 
   return (
     <Box
@@ -56,20 +65,37 @@ export default function DrawerList({
             mt: "30px",
           }}
         >
-          {links.map((link) => (
-            <Link underline="none" href={link?.url}>
+          {links.map((link, index) =>
+            link.action ? (
               <Typography
+                key={index}
                 variant="subtitle1"
                 sx={{
-                  color: location.pathname === link.url ? "#36383e" : "#a4a5a8",
+                  color: "#a4a5a8",
                   lineHeight: "2.5em",
+                  cursor: "pointer",
                   "&:hover": { color: "#36383e" },
                 }}
+                onClick={link.action}
               >
-                {link?.name}
+                {link.name}
               </Typography>
-            </Link>
-          ))}
+            ) : (
+              <Link key={index} underline="none" href={link.url}>
+                <Typography
+                  variant="subtitle1"
+                  sx={{
+                    color:
+                      location.pathname === link.url ? "#36383e" : "#a4a5a8",
+                    lineHeight: "2.5em",
+                    "&:hover": { color: "#36383e" },
+                  }}
+                >
+                  {link.name}
+                </Typography>
+              </Link>
+            )
+          )}
         </List>
       )}
 
@@ -87,7 +113,7 @@ export default function DrawerList({
       >
         <Link
           underline="none"
-          href="#"
+          href="/list-your-space"
           sx={{
             width: "50%",
             backgroundColor: "#2dc98a",
@@ -109,7 +135,7 @@ export default function DrawerList({
         {isLoggedIn() ? (
           <Link
             underline="none"
-            href="#"
+            href="/space-owner"
             sx={{
               width: "50%",
               border: "1px solid #2dc98a",
@@ -145,7 +171,7 @@ export default function DrawerList({
         ) : (
           <Link
             underline="none"
-            href="#"
+            href="/login"
             sx={{
               width: "50%",
               border: "1px solid #2dc98a",

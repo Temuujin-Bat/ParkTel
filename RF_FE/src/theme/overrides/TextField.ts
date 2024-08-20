@@ -5,8 +5,8 @@ export default function Textfield() {
         root: {
           "& .MuiOutlinedInput-root": {
             "& fieldset": {
-              borderColor: "#2dc98a ",
-              borderRadius: "5px",
+              borderColor: "#8aa4b3 ",
+              borderRadius: "4px",
             },
             "&.Mui-focused fieldset": {
               borderColor: "#22a270",
