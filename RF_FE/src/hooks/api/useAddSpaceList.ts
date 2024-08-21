@@ -23,7 +23,7 @@ export function useAddSpaceListAPI(
         },
         autoHideDuration: 3000,
       });
-      navigate("/");
+      navigate("/space-owner");
     },
     onError: (err) => {
       console.error(
