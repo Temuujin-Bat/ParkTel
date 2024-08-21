@@ -112,7 +112,6 @@ export default function ProfileChangePassword() {
 
         <Stack
           sx={{
-            mb: "20px",
             display: "flex",
             flexDirection: {
               xs: "column",
