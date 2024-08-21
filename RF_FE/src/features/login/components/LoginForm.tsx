@@ -20,6 +20,7 @@ export default function LoginForm() {
     email: "",
     password: "",
   });
+
   const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

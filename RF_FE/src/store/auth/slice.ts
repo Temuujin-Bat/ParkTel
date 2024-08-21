@@ -10,8 +10,11 @@ import { IRootState } from "./types";
 
 const initialState: IRootState = {
   userDetails: {
-    firstName: "",
     userID: "",
+    email: "",
+    firstName: "",
+    lastName: "",
+    mobile: "",
     role: "",
   },
 };

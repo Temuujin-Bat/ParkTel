@@ -23,7 +23,6 @@ export function useLoginAPI() {
         if (decodedToken) {
           dispatch(
             authActions.setUserDetails({
-              firstName: decodedToken.firstName,
               userID: decodedToken.userID,
               role: decodedToken.role,
             })
