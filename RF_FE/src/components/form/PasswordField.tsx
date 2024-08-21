@@ -14,9 +14,11 @@ export default function PasswordField({
   onToggleShowPassword,
   error,
   sx,
+  size,
 }: TPasswordField) {
   return (
     <TextField
+      size={size === "large" ? "medium" : size}
       name={name}
       type={showPassword ? "text" : "password"}
       placeholder={placeholder}

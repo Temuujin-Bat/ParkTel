@@ -6,7 +6,7 @@ export default function ErrorMessagesField({
   isError,
   isMobileError,
   isPasswordMatchError,
-  isPasswordError,
+  isPasswordLengthError,
 }: TErrorMessagesField) {
   return (
     <>
@@ -15,7 +15,7 @@ export default function ErrorMessagesField({
         <ErrorField text="The mobile number is invalid, it should be 05*-*******" />
       )}
       {isPasswordMatchError && <ErrorField text="Passwords do not match" />}
-      {isPasswordError && (
+      {isPasswordLengthError && (
         <ErrorField text="Password length should be at least 8 characters" />
       )}
     </>

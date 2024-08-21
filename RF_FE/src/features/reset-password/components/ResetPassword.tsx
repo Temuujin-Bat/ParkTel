@@ -72,7 +72,7 @@ export default function ResetPassword() {
     >
       <ErrorMessagesField
         isPasswordMatchError={isPasswordMatchError}
-        isPasswordError={isPasswordError}
+        isPasswordLengthError={isPasswordError}
       />
 
       <Box

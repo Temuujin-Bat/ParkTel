@@ -2,7 +2,11 @@
 import axios from "axios";
 
 // Components
-import { TLoginRequest, TRegisterRequest } from "../types/requests";
+import {
+  TChangePassword,
+  TLoginRequest,
+  TRegisterRequest,
+} from "../types/requests";
 import { encryptData } from "../utils/crypto_util";
 
 const RegisterController = async (registerData: TRegisterRequest) => {
@@ -74,11 +78,26 @@ const ResetPasswordController = async ({
   }
 };
 
-const ValidateResetToken = async (token: string) => {
+const ValidateResetTokenController = async (token: string) => {
   try {
     await axios.post(
       `http://localhost:1010/api/v1/auth/reset-password/${token}`,
       {},
+      { withCredentials: true }
+    );
+  } catch (error) {
+    throw error;
+  }
+};
+
+const ChangePasswordController = async (changeData: TChangePassword) => {
+  try {
+    await axios.post(
+      "http://localhost:1010/api/v1/auth/change-password",
+      {
+        oldPassword: changeData.oldPassword,
+        newPassword: changeData.newPassword,
+      },
       { withCredentials: true }
     );
   } catch (error) {
@@ -91,5 +110,6 @@ export {
   LoginController,
   ForgotPasswordController,
   ResetPasswordController,
-  ValidateResetToken,
+  ValidateResetTokenController,
+  ChangePasswordController,
 };

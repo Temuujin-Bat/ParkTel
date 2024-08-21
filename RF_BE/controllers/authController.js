@@ -199,10 +199,51 @@ const validateResetToken = async (req, res) => {
   }
 };
 
+const changePassword = async (req, res) => {
+  try {
+    const { oldPassword, newPassword } = req.body;
+
+    const userID = req.user.userID;
+
+    const user = await User.findById({ _id: userID });
+
+    if (!user) {
+      return res.status(404).json({ success: false, msg: "User not found" });
+    }
+
+    const isMatch = await comparePasswords(oldPassword, user.password);
+
+    if (!isMatch) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Old password is incorrect" });
+    }
+
+    const hashedPassword = await hashPassword(newPassword);
+    user.password = hashedPassword;
+
+    await User.updateOne(
+      { _id: user._id },
+      {
+        password: hashedPassword,
+      }
+    );
+
+    res
+      .status(200)
+      .json({ success: true, message: "Password updated successfully" });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ error: "Error inside authController.js/changePassword" });
+  }
+};
+
 module.exports = {
   register,
   login,
   forgotPassword,
   resetPassword,
   validateResetToken,
+  changePassword,
 };

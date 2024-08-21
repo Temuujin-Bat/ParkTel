@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 
 // MUI
-import { Box, List, ListItem, TextField, Typography } from "@mui/material";
+import { Box, TextField, Typography } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { Circle } from "@mui/icons-material";
 
 // Components
 import { useRegisterAPI } from "../../../hooks/api/useRegister";
@@ -12,6 +11,7 @@ import {
   PasswordField,
   ErrorMessagesField,
 } from "../../../components/form";
+import PasswordCriteria from "../../../components/PasswordCriteria";
 
 export default function RegisterForm() {
   const [formData, setFormData] = useState({
@@ -26,7 +26,7 @@ export default function RegisterForm() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isMobileError, setIsMobileError] = useState(false);
   const [isPasswordMatchError, setIsPasswordMatchError] = useState(false);
-  const [isPasswordError, setIsPasswordError] = useState(false);
+  const [isPasswordLengthError, setIsPasswordLengthError] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -51,7 +51,7 @@ export default function RegisterForm() {
     }
 
     if (name === "password") {
-      setIsPasswordError(false);
+      setIsPasswordLengthError(false);
     }
 
     setFormData((prevState) => ({
@@ -77,7 +77,7 @@ export default function RegisterForm() {
     }
 
     if (formData.password.length < 8 && formData.confirmPassword.length < 8) {
-      setIsPasswordError(true);
+      setIsPasswordLengthError(true);
       return;
     }
 
@@ -96,7 +96,7 @@ export default function RegisterForm() {
         isError={isError}
         isMobileError={isMobileError}
         isPasswordMatchError={isPasswordMatchError}
-        isPasswordError={isPasswordError}
+        isPasswordLengthError={isPasswordLengthError}
       />
 
       <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
@@ -149,7 +149,7 @@ export default function RegisterForm() {
           showPassword={showPassword}
           onChange={handleChange}
           onToggleShowPassword={() => setShowPassword((prev) => !prev)}
-          error={isPasswordMatchError || isPasswordError}
+          error={isPasswordMatchError || isPasswordLengthError}
         />
         <PasswordField
           name="confirmPassword"
@@ -158,31 +158,11 @@ export default function RegisterForm() {
           showPassword={showConfirmPassword}
           onChange={handleChange}
           onToggleShowPassword={() => setShowConfirmPassword((prev) => !prev)}
-          error={isPasswordMatchError || isPasswordError}
+          error={isPasswordMatchError || isPasswordLengthError}
         />
       </Box>
 
-      <Box>
-        <Typography
-          variant="body2"
-          sx={{ lineHeight: ".1em", fontSize: ".8em", mt: "20px", mb: "10px" }}
-        >
-          Passwords must:
-        </Typography>
-        <List>
-          {["Be at least 8 characters long"].map((option, index) => (
-            <ListItem key={index}>
-              <Circle sx={{ fontSize: ".5em", mr: "10px" }} />
-              <Typography
-                variant="body2"
-                sx={{ lineHeight: ".1em", fontSize: ".7em" }}
-              >
-                {option}
-              </Typography>
-            </ListItem>
-          ))}
-        </List>
-      </Box>
+      <PasswordCriteria />
 
       <LoadingButton
         type="submit"

@@ -1,19 +1,51 @@
+import { useState } from "react";
+
 // MUI
-import { Circle } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import {
-  Container,
-  Box,
-  Typography,
-  Stack,
-  TextField,
-  List,
-  ListItem,
-} from "@mui/material";
+import { Container, Box, Typography, Stack } from "@mui/material";
+
+// Components
+import { useChangePasswordAPI } from "../../../hooks/api/useChangePassword";
+import { ErrorMessagesField, PasswordField } from "../../../components/form";
+import PasswordCriteria from "../../../components/PasswordCriteria";
 
 export default function ProfileChangePassword() {
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const [showOldPassword, setShowOldPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const [isPasswordLengthError, setIsPasswordLengthError] = useState(false);
+  const [isPasswordMatchError, setIsPasswordMatchError] = useState(false);
+
+  const { mutate: changePassword, isPending } = useChangePasswordAPI();
+
+  const handleChangePassword = async () => {
+    if (newPassword !== confirmPassword) {
+      setIsPasswordMatchError(true);
+      return;
+    }
+
+    if (newPassword.length < 8 && newPassword.length < 8) {
+      setIsPasswordLengthError(true);
+      return;
+    }
+
+    setIsPasswordMatchError(false);
+
+    changePassword({ oldPassword, newPassword });
+  };
+
   return (
     <Container maxWidth="lg">
+      <ErrorMessagesField
+        isPasswordMatchError={isPasswordMatchError}
+        isPasswordLengthError={isPasswordLengthError}
+      />
+
       <Box
         sx={{
           mt: "30px",
@@ -34,10 +66,22 @@ export default function ProfileChangePassword() {
             alignItems: { xs: "none", sm: "none", md: "center", lg: "center" },
           }}
         >
-          <Typography sx={{ mr: "15px", mb: { xs: "5px" } }} variant="body2">
+          <Typography
+            sx={{ mb: { xs: "5px" }, width: "200px" }}
+            variant="body2"
+          >
             Old password
           </Typography>
-          <TextField name="firstName" type="text" required size="small" />
+          <PasswordField
+            name="oldPassword"
+            value={oldPassword}
+            placeholder="Enter your old password"
+            showPassword={showOldPassword}
+            onChange={(e) => setOldPassword(e.target.value)}
+            onToggleShowPassword={() => setShowOldPassword(!showOldPassword)}
+            sx={{ width: "100%" }}
+            size="small"
+          />
         </Stack>
 
         <Stack
@@ -48,56 +92,79 @@ export default function ProfileChangePassword() {
             alignItems: { xs: "none", sm: "none", md: "center", lg: "center" },
           }}
         >
-          <Typography sx={{ mr: "15px", mb: { xs: "5px" } }} variant="body2">
+          <Typography
+            sx={{ mb: { xs: "5px" }, width: "200px" }}
+            variant="body2"
+          >
             New password
           </Typography>
-          <TextField name="firstName" type="text" required size="small" />
+          <PasswordField
+            name="newPassword"
+            value={newPassword}
+            placeholder="Enter your new password"
+            showPassword={showNewPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            onToggleShowPassword={() => setShowNewPassword(!showNewPassword)}
+            sx={{ width: "100%" }}
+            size="small"
+          />
         </Stack>
 
         <Stack
           sx={{
             mb: "20px",
             display: "flex",
-            flexDirection: { xs: "column", sm: "column", md: "row", lg: "row" },
-            alignItems: { xs: "none", sm: "none", md: "center", lg: "center" },
+            flexDirection: {
+              xs: "column",
+              sm: "column",
+              md: "row",
+              lg: "row",
+            },
+            alignItems: {
+              xs: "none",
+              sm: "none",
+              md: "center",
+              lg: "center",
+            },
           }}
         >
-          <Typography sx={{ mr: "15px", mb: { xs: "5px" } }} variant="body2">
+          <Typography
+            sx={{ mb: { xs: "5px" }, width: "200px" }}
+            variant="body2"
+          >
             Confirm password
           </Typography>
-          <TextField name="firstName" type="text" required size="small" />
+          <PasswordField
+            name="confirmPassword"
+            value={confirmPassword}
+            placeholder="Enter your confirm password"
+            showPassword={showConfirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            onToggleShowPassword={() =>
+              setShowConfirmPassword(!showConfirmPassword)
+            }
+            sx={{ width: "100%" }}
+            size="small"
+          />
         </Stack>
 
-        <Box>
-          <Typography
-            variant="caption"
-            sx={{
-              lineHeight: ".1em",
-              mt: "20px",
-              mb: "10px",
-            }}
-          >
-            Passwords must:
-          </Typography>
-          <List>
-            {["Be at least 8 characters long"].map((option, index) => (
-              <ListItem key={index}>
-                <Circle sx={{ fontSize: ".5em", mr: "10px" }} />
-                <Typography
-                  variant="body2"
-                  sx={{ lineHeight: ".1em", fontSize: ".7em" }}
-                >
-                  {option}
-                </Typography>
-              </ListItem>
-            ))}
-          </List>
-        </Box>
+        <Stack sx={{ ml: { xs: "0", sm: "0", md: "25%", lg: "20%" } }}>
+          <PasswordCriteria />
+        </Stack>
 
         <LoadingButton
           fullWidth
           size="large"
-          sx={{ backgroundColor: "#2dc98a", mt: "40px" }}
+          loading={isPending}
+          onClick={handleChangePassword}
+          sx={{
+            borderRadius: "3px",
+            mt: "30px",
+            backgroundColor: "#2dc98a",
+            "&:hover": {
+              backgroundColor: "#22a270",
+            },
+          }}
         >
           <Typography sx={{ color: "#FFF" }} variant="subtitle2">
             Update Password

@@ -1,5 +1,7 @@
 import { SxProps, Theme } from "@mui/material";
 
+type SizeType = "small" | "medium" | "large";
+
 export type TMobileField = {
   name: string;
   placeholder: string;
@@ -13,7 +15,7 @@ export type TErrorMessagesField = {
   isError?: boolean;
   isMobileError?: boolean;
   isPasswordMatchError?: boolean;
-  isPasswordError?: boolean;
+  isPasswordLengthError?: boolean;
 };
 
 export type TPasswordField = {
@@ -23,6 +25,7 @@ export type TPasswordField = {
   showPassword: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onToggleShowPassword: () => void;
-  error: boolean;
+  error?: boolean;
   sx?: SxProps<Theme>;
+  size?: SizeType;
 };
