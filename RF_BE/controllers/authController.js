@@ -66,10 +66,6 @@ const login = async (req, res) => {
 
     const token = createJWT({
       userID: userData._id,
-      email: userData.email,
-      firstName: userData.firstName,
-      lastName: userData.lastName,
-      mobile: userData.mobile,
       role: userData.role,
     });
 
