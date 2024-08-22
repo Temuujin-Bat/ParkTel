@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 // MUI
 import { LoadingButton } from "@mui/lab";
@@ -12,33 +12,28 @@ import { useGetProfileAPI } from "../../../hooks/api/useGetProfile";
 
 export default function ProfileSettings() {
   useGetProfileAPI();
-
   const userDetails = useAppSelector(getUserDetails);
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [mobile, setMobile] = useState("");
 
   const { mutate: editProfile, isPending } = useEditProfileAPI();
 
-  const [formData, setFormData] = useState({
-    firstName: userDetails?.firstName || "",
-    lastName: userDetails?.lastName || "",
-    email: userDetails?.email || "",
-    mobile: userDetails?.mobile || "",
-  });
-
-  const handleInputChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+  useEffect(() => {
+    if (userDetails) {
+      setFirstName(userDetails?.firstName || "");
+      setLastName(userDetails?.lastName || "");
+      setEmail(userDetails?.email || "");
+      setMobile(userDetails?.mobile || "");
+    }
+  }, [userDetails]);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    editProfile(formData);
+    editProfile({ firstName, lastName, email, mobile });
   };
 
   return (
@@ -75,8 +70,8 @@ export default function ProfileSettings() {
             type="text"
             required
             size="small"
-            value={formData.firstName}
-            onChange={handleInputChange}
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
             sx={{ width: "100%" }}
           />
         </Stack>
@@ -100,8 +95,8 @@ export default function ProfileSettings() {
             type="text"
             required
             size="small"
-            value={formData.lastName}
-            onChange={handleInputChange}
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
             sx={{ width: "100%" }}
           />
         </Stack>
@@ -130,8 +125,8 @@ export default function ProfileSettings() {
             type="email"
             required
             size="small"
-            value={formData.email}
-            onChange={handleInputChange}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             sx={{ width: "100%" }}
           />
         </Stack>
@@ -155,8 +150,8 @@ export default function ProfileSettings() {
             type="tel"
             required
             size="small"
-            value={formData.mobile}
-            onChange={handleInputChange}
+            value={mobile}
+            onChange={(e) => setMobile(e.target.value)}
             sx={{ width: "100%" }}
           />
         </Stack>

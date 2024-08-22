@@ -20,15 +20,20 @@ const GetProfileController = async () => {
   }
 };
 
-const EditProfileController = async (editProfileData: TEditProfile) => {
+const EditProfileController = async ({
+  firstName,
+  lastName,
+  email,
+  mobile,
+}: TEditProfile) => {
   try {
     const response = await axios.post(
       "http://localhost:1010/api/v1/user/edit-profile",
       {
-        firstName: editProfileData?.firstName,
-        lastName: editProfileData?.lastName,
-        email: editProfileData?.email,
-        mobile: editProfileData?.mobile,
+        firstName,
+        lastName,
+        email,
+        mobile,
       },
       {
         withCredentials: true,
