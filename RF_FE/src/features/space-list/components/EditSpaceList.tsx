@@ -3,14 +3,24 @@ import { Box, Fade, Stack } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
 
 // Components
-import { ListYourSpaceSteps } from "../features/space-list";
+import OwnerEditSteps from "./EditSpaceListSteps";
+import { useGetUserSingleSpaceListAPI } from "../../../hooks/api/useGetSingleSpaceList";
 
-export default function ListYourSpace() {
+// Third party
+import { useParams } from "react-router-dom";
+
+export default function EditSpaceList() {
+  const { id } = useParams();
+
+  if (id) {
+    useGetUserSingleSpaceListAPI(id);
+  }
+
   return (
     <Fade in={true} timeout={500}>
       <Grid container sx={{ position: "relative" }}>
         <Grid xs={12} sm={9} md={9} lg={9}>
-          <ListYourSpaceSteps />
+          <OwnerEditSteps />
         </Grid>
 
         <Grid xs={0} sm={3} md={3} lg={3}>

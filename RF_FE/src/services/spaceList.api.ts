@@ -16,6 +16,43 @@ const SpaceListController = async (listSpaceData: TListYourSpace) => {
   }
 };
 
+const GetUserSingleSpaceListController = async (id: string) => {
+  try {
+    const response = await axios.get(
+      `http://localhost:1010/api/v1/spaceList/space-owner/${id}`,
+      {
+        withCredentials: true,
+      }
+    );
+
+    return response?.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const EditUserSpaceListController = async ({
+  id,
+  updatedData,
+}: {
+  id: string;
+  updatedData: TListYourSpace;
+}) => {
+  try {
+    const response = await axios.post(
+      `http://localhost:1010/api/v1/spaceList/space-owner/edit/${id}`,
+      updatedData,
+      {
+        withCredentials: true,
+      }
+    );
+
+    return response?.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const GetUserSpaceListController = async () => {
   try {
     const response = await axios.post(
@@ -49,6 +86,8 @@ const DeleteUserSpaceListController = async (id: string) => {
 
 export {
   SpaceListController,
+  GetUserSingleSpaceListController,
+  EditUserSpaceListController,
   GetUserSpaceListController,
   DeleteUserSpaceListController,
 };

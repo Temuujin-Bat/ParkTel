@@ -9,3 +9,6 @@ export { default as SpaceType } from "./components/SpaceType";
 export { default as SpaceDayPicker } from "./components/SpaceDayPicker";
 export { default as SpacePrice } from "./components/SpacePrice";
 export { default as SpacePhotos } from "./components/SpacePhotos";
+
+export { default as EditSpaceList } from "./components/EditSpaceList";
+export { default as EditSpaceListSteps } from "./components/EditSpaceListSteps";

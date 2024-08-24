@@ -10,6 +10,7 @@ import { IRootState } from "./type";
 
 const initialState: IRootState = {
   userSpaceList: [],
+  userSingleSpaceList: {},
 };
 
 export const slice = createSlice({

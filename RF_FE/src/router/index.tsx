@@ -15,7 +15,7 @@ const LazyHome = lazy(() => import("../pages/HomePage"));
 // Pages Owner
 const LazyOwner = lazy(() => import("../pages/OwnerPage"));
 const LazyEditListing = lazy(
-  () => import("../features/profile/components/OwnerEditListing")
+  () => import("../features/space-list/components/EditSpaceList")
 );
 const LazyOwnerReservations = lazy(
   () => import("../features/profile/components/OwnerReservations")

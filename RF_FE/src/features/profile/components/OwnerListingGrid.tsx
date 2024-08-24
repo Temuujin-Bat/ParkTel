@@ -7,14 +7,14 @@ import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import { Box, Stack, Typography } from "@mui/material";
 
 // Components
-import { TOwnerListingGridProps } from "../../../types/spaceListing.type";
 import { LoadingButton } from "@mui/lab";
 import { useDeleteUserSpaceListAPI } from "../../../hooks/api/useDeleteUserSpaceList";
+import { useAppSelector } from "../../../hooks/useAppStore";
+import { getUserSpaceList } from "../../../store/spaceList/selectors";
 
-export default function OwnerListingGrid({
-  myListings,
-}: TOwnerListingGridProps) {
+export default function OwnerListingGrid() {
   const navigate = useNavigate();
+  const myListings = useAppSelector(getUserSpaceList);
 
   const { mutate: deleteSpaceList, isPending } = useDeleteUserSpaceListAPI();
 

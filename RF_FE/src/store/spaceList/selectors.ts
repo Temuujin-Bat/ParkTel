@@ -4,4 +4,7 @@ import { RootState } from "..";
 const getUserSpaceList = (state: RootState) =>
   state.userSpaceListReducer.userSpaceList;
 
-export { getUserSpaceList };
+const getSingleSpaceSpaceList = (state: RootState) =>
+  state.userSpaceListReducer.userSingleSpaceList;
+
+export { getUserSpaceList, getSingleSpaceSpaceList };

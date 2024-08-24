@@ -10,6 +10,7 @@ const PERSIST_KEYS = {
 
 const QUERY_KEYS = {
   SPACELIST: "spaceList",
+  SINGLESPACELIST: "singleSpaceList",
   PROFILE: "profile",
 };
 

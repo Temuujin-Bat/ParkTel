@@ -18,10 +18,10 @@ export function useGetUserSpaceListAPI() {
   });
 
   useEffect(() => {
-    if (isSuccess) {
+    if (isSuccess && data) {
       dispatch(spaceList.setUserSpaceList(data));
     }
   }, [data]);
 
-  return { isPending };
+  return { isPending, data };
 }

@@ -2,7 +2,6 @@
 export { default as OwnerLinks } from "./components/OwnerLinks";
 export { default as OwnerListing } from "./components/OwnerListing";
 export { default as OwnerListingGrid } from "./components/OwnerListingGrid";
-export { default as OwnerEditListing } from "./components/OwnerEditListing";
 export { default as OwnerReservations } from "./components/OwnerReservations";
 export { default as OwnerReservationsLinks } from "./components/OwnerReservationsLinks";
 export { default as OwnerReservationsActive } from "./components/OwnerReservationsActive";

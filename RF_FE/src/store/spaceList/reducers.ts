@@ -2,7 +2,7 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 
 // Components
-import { IRootState } from "./type";
+import { IRootState, TUserSpaceList } from "./type";
 
 const reducers = {
   setUserSpaceList: (
@@ -10,6 +10,12 @@ const reducers = {
     action: PayloadAction<IRootState["userSpaceList"]>
   ) => {
     state.userSpaceList = action.payload;
+  },
+  setUserSingleSpaceList: (
+    state: IRootState,
+    action: PayloadAction<Partial<TUserSpaceList>>
+  ) => {
+    state.userSingleSpaceList = action.payload;
   },
 };
 

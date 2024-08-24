@@ -2,13 +2,12 @@
 import { Box, Typography } from "@mui/material";
 
 // Components
-import { useAppSelector } from "../../../hooks/useAppStore";
-import { getUserSpaceList } from "../../../store/spaceList/selectors";
 import { NoActiveListingBooking } from "../../../components/notFound";
 import OwnerListingGrid from "./OwnerListingGrid";
+import { useGetUserSpaceListAPI } from "../../../hooks/api/useGetUserSpaceList";
 
 export default function OwnerListing() {
-  const myListings = useAppSelector(getUserSpaceList);
+  const { data: myListings } = useGetUserSpaceListAPI();
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -19,7 +18,7 @@ export default function OwnerListing() {
       {myListings.length === 0 ? (
         <NoActiveListingBooking />
       ) : (
-        <OwnerListingGrid myListings={myListings} />
+        <OwnerListingGrid />
       )}
     </Box>
   );

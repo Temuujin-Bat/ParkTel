@@ -1,15 +1,13 @@
 // MUI
-import { AccountCircle } from "@mui/icons-material";
-import { Link, Typography, Box, List } from "@mui/material";
+import { Box } from "@mui/material";
 
 // Components
 import { useAuth } from "../../../hooks/useAuth";
 import { useAppSelector } from "../../../hooks/useAppStore";
 import { getUserDetails } from "../../../store/auth/selectors";
-import { persistor } from "../../../store";
-
-// Third party
-import { useNavigate } from "react-router-dom";
+import { useLogout } from "../../../hooks/useLogout";
+import DrawerListLinks from "./DrawerListLinks";
+import DrawerListButtons from "./DrawerListButtons";
 
 export default function DrawerList({
   setOpen,
@@ -18,15 +16,8 @@ export default function DrawerList({
 }) {
   const { isLoggedIn } = useAuth();
   const userDetails = useAppSelector(getUserDetails);
-  const navigate = useNavigate();
 
-  const logoutHandler = async () => {
-    await persistor.purge();
-    sessionStorage.clear();
-    localStorage.clear();
-
-    navigate("/");
-  };
+  const { logoutHandler } = useLogout(setOpen);
 
   const links = [
     { name: "Your Listing", url: "/space-owner" },
@@ -38,174 +29,24 @@ export default function DrawerList({
 
   return (
     <Box
-      sx={(theme) => ({
+      sx={{
         position: "relative",
         height: "100%",
         padding: "20px",
-        width: "80vw",
         backgroundColor: "#F2F2F2",
         mt: "50px",
-        [theme.breakpoints.down("xs")]: {
-          width: "100vw",
+        width: {
+          xs: "100vw",
+          sm: "60vw",
         },
-        [theme.breakpoints.between("xs", "sm")]: {
-          width: "100vw",
-        },
-        [theme.breakpoints.between("sm", "md")]: {
-          width: "60vw",
-        },
-      })}
+      }}
       onClick={() => setOpen((prev) => !prev)}
     >
       {userDetails && userDetails.role === "owner" && (
-        <List
-          sx={{
-            display: { xs: "flex", sm: "flex", md: "none", lg: "none" },
-            flexDirection: "column",
-            mt: "30px",
-          }}
-        >
-          {links.map((link, index) =>
-            link.action ? (
-              <Typography
-                key={index}
-                variant="subtitle1"
-                sx={{
-                  color: "#a4a5a8",
-                  lineHeight: "2.5em",
-                  cursor: "pointer",
-                  "&:hover": { color: "#36383e" },
-                }}
-                onClick={link.action}
-              >
-                {link.name}
-              </Typography>
-            ) : (
-              <Link key={index} underline="none" href={link.url}>
-                <Typography
-                  variant="subtitle1"
-                  sx={{
-                    color:
-                      location.pathname === link.url ? "#36383e" : "#a4a5a8",
-                    lineHeight: "2.5em",
-                    "&:hover": { color: "#36383e" },
-                  }}
-                >
-                  {link.name}
-                </Typography>
-              </Link>
-            )
-          )}
-        </List>
+        <DrawerListLinks links={links} />
       )}
 
-      <Box
-        sx={{
-          position: "absolute",
-          left: "0",
-          bottom: "0",
-          display: "flex",
-          justifyContent: "space-around",
-          width: "100%",
-          backgroundColor: "#FFF",
-          padding: "20px 15px 30px 15px",
-        }}
-      >
-        <Link
-          underline="none"
-          href="/list-your-space"
-          sx={{
-            width: "50%",
-            backgroundColor: "#2dc98a",
-            color: "#FFF",
-            display: "flex",
-            alignItems: "center",
-            padding: "10px",
-            justifyContent: "center",
-            flex: "1",
-            mr: "25px",
-            "&:hover": {
-              backgroundColor: "#22a270",
-            },
-          }}
-        >
-          <Typography variant="subtitle2">List your Space</Typography>
-        </Link>
-
-        {isLoggedIn() ? (
-          <Link
-            underline="none"
-            href="/space-owner"
-            sx={{
-              width: "50%",
-              border: "1px solid #2dc98a",
-              display: "flex",
-              padding: "10px",
-              alignItems: "center",
-              justifyContent: "center",
-              flex: "1",
-              "&:hover": {
-                cursor: "pointer",
-                backgroundColor: "#2dc98a",
-                "& .loginLogo": {
-                  color: "#FFF",
-                },
-                "& .loginTypo": {
-                  color: "#FFF",
-                },
-              },
-            }}
-          >
-            <AccountCircle
-              className="loginLogo"
-              sx={{ color: "#2dc98a", mr: "5px" }}
-            />
-            <Typography
-              className="loginTypo"
-              variant="subtitle2"
-              sx={{ color: "#2dc98a" }}
-            >
-              My Account
-            </Typography>
-          </Link>
-        ) : (
-          <Link
-            underline="none"
-            href="/login"
-            sx={{
-              width: "50%",
-              border: "1px solid #2dc98a",
-              display: "flex",
-              padding: "10px",
-              alignItems: "center",
-              justifyContent: "center",
-              flex: "1",
-              "&:hover": {
-                cursor: "pointer",
-                backgroundColor: "#2dc98a",
-                "& .loginLogo": {
-                  color: "#FFF",
-                },
-                "& .loginTypo": {
-                  color: "#FFF",
-                },
-              },
-            }}
-          >
-            <AccountCircle
-              className="loginLogo"
-              sx={{ color: "#2dc98a", mr: "5px" }}
-            />
-            <Typography
-              className="loginTypo"
-              variant="subtitle2"
-              sx={{ color: "#2dc98a" }}
-            >
-              Log in
-            </Typography>
-          </Link>
-        )}
-      </Box>
+      <DrawerListButtons isLoggedIn={isLoggedIn} />
     </Box>
   );
 }

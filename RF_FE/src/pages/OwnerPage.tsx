@@ -12,6 +12,7 @@ import LoadingMUI from "../components/LoadingMUI";
 export default function OwnerPage() {
   const location = useLocation();
   const isOnSpaceOwnerPage = location.pathname === "/space-owner";
+  const isOnEditSpace = /\/space-owner\/edit\/[^\/]+$/.test(location.pathname);
 
   const { isPending } = useGetUserSpaceListAPI();
 
@@ -22,7 +23,7 @@ export default function OwnerPage() {
       ) : (
         <Container maxWidth="lg">
           <Box sx={{ display: "flex", mt: "30px" }}>
-            <OwnerLinks />
+            {!isOnEditSpace && <OwnerLinks />}
 
             <Outlet />
 

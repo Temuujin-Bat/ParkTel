@@ -11,6 +11,16 @@ const reducers = {
   ) => {
     state.userDetails = action.payload;
   },
+  resetState: (state: IRootState) => {
+    state.userDetails = {
+      userID: "",
+      email: "",
+      firstName: "",
+      lastName: "",
+      mobile: "",
+      role: "",
+    };
+  },
 };
 
 export { reducers };

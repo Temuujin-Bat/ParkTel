@@ -32,8 +32,10 @@ export type TUserSpaceList = {
   price: string;
   photos: string[];
   user: string;
+  updatedAt: string;
 };
 
 export interface IRootState {
   userSpaceList: TUserSpaceList[];
+  userSingleSpaceList: Partial<TUserSpaceList>;
 }

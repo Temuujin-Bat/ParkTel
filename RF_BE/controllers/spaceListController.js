@@ -25,7 +25,26 @@ const createSpaceList = async (req, res) => {
   }
 };
 
-const getUserSpaceList = async (req, res) => {
+const getUserSingleSpaceList = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const spaceList = await SpaceList.findById(id);
+
+    if (!spaceList) {
+      return res.status(404).json({ msg: `No space list with id: ${id}` });
+    }
+
+    return res.status(201).json(spaceList);
+  } catch (error) {
+    console.error("Error during getting a list:", error);
+    return res
+      .status(500)
+      .json({ error: "Error inside spaceListController.js/getUserSingleList" });
+  }
+};
+
+const getUserSpaceLists = async (req, res) => {
   try {
     const user = req.user.userID;
 
@@ -47,9 +66,7 @@ const deleteUserSpaceList = async (req, res) => {
     const spaceList = await SpaceList.findById(id);
 
     if (!spaceList) {
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ msg: `No space list with id: ${id}` });
+      return res.status(404).json({ msg: `No space list with id: ${id}` });
     }
 
     await SpaceList.findByIdAndDelete(id);
@@ -74,18 +91,14 @@ const editUserSpaceList = async (req, res) => {
     const spaceList = await SpaceList.findById(id);
 
     if (!spaceList) {
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ msg: `No space list with id: ${id}` });
+      return res.status(404).json({ msg: `No space list with id: ${id}` });
     }
 
-    await SpaceList.findByIdAndUpdate(id);
+    const updatedSpaceList = await SpaceList.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
 
-    const updatedSpaceList = await SpaceList.find({ user: req.user.userID });
-
-    return res
-      .status(200)
-      .json({ msg: "Space list edited successfully!", updatedSpaceList });
+    return res.status(200).json(updatedSpaceList);
   } catch (error) {
     console.error("Error during editing a list:", error);
     return res
@@ -96,7 +109,8 @@ const editUserSpaceList = async (req, res) => {
 
 module.exports = {
   createSpaceList,
-  getUserSpaceList,
+  getUserSingleSpaceList,
+  getUserSpaceLists,
   deleteUserSpaceList,
   editUserSpaceList,
 };

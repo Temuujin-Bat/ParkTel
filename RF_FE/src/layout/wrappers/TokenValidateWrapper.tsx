@@ -15,6 +15,7 @@ export const TokenValidationWrapper: React.FC<TokenValidationWrapperProps> = ({
   children,
 }) => {
   const { token } = useParams();
+
   const {
     mutate: validateToken,
     isPending,
