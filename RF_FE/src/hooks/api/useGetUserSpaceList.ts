@@ -23,5 +23,5 @@ export function useGetUserSpaceListAPI() {
     }
   }, [data]);
 
-  return { isPending, data };
+  return { data, isPending };
 }

@@ -95,13 +95,19 @@ export default function OwnerListingGrid() {
                   }}
                 />
 
-                <Stack sx={{ mt: "20px" }}>
+                <Stack
+                  sx={{
+                    mt: { xs: "10px", sm: "10px", md: "20px", lg: "20px" },
+                  }}
+                >
                   <Typography variant="subtitle2">
                     You're 100% done with your listing
                   </Typography>
                 </Stack>
 
-                <Stack>
+                <Stack
+                  sx={{ mb: { xs: "5px", sm: "5px", md: "0px", lg: "0px" } }}
+                >
                   <Typography variant="body2" sx={{ color: "#b7b7b9" }}>
                     Last updated on{" "}
                     {format(

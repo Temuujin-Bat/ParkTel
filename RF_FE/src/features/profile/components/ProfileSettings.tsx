@@ -5,14 +5,12 @@ import { LoadingButton } from "@mui/lab";
 import { Container, Box, Typography, Stack, TextField } from "@mui/material";
 
 // Components
-import { useAppSelector } from "../../../hooks/useAppStore";
-import { getUserDetails } from "../../../store/auth/selectors";
 import { useEditProfileAPI } from "../../../hooks/api/useEditProfile";
 import { useGetProfileAPI } from "../../../hooks/api/useGetProfile";
+import LoadingMUI from "../../../components/LoadingMUI";
 
 export default function ProfileSettings() {
-  useGetProfileAPI();
-  const userDetails = useAppSelector(getUserDetails);
+  const { data: userDetails, isPending: isLoading } = useGetProfileAPI();
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -35,6 +33,10 @@ export default function ProfileSettings() {
 
     editProfile({ firstName, lastName, email, mobile });
   };
+
+  if (isLoading) {
+    return <LoadingMUI />;
+  }
 
   return (
     <Container maxWidth="lg">

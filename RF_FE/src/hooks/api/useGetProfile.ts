@@ -11,7 +11,7 @@ import { authActions } from "../../store/auth/slice";
 export function useGetProfileAPI() {
   const dispatch = useDispatch();
 
-  const { isSuccess, data } = useQuery({
+  const { isSuccess, data, isPending } = useQuery({
     queryKey: [QUERY_KEYS.PROFILE],
     queryFn: GetProfileController,
   });
@@ -21,4 +21,6 @@ export function useGetProfileAPI() {
       dispatch(authActions.setUserDetails(data));
     }
   }, [data]);
+
+  return { data, isPending };
 }

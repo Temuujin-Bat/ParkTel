@@ -14,7 +14,7 @@ export default function OwnerReservations() {
     location.pathname === "/space-owner/your-reservations";
 
   return (
-    <Container maxWidth="lg" sx={{ mt: "20px" }}>
+    <Container maxWidth="lg" sx={{ mt: "30px" }}>
       <OwnerReservationsLinks />
 
       <Outlet />

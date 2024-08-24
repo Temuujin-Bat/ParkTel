@@ -29,7 +29,7 @@ export default function EditSpaceList() {
               width: "100%",
               height: "90vh",
               backgroundColor: "#2dc98a",
-              mt: "20px",
+              mt: "30px",
             }}
           />
         </Grid>
