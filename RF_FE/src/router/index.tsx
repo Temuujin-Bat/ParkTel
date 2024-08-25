@@ -33,16 +33,10 @@ const LazyDriverPastBookin = lazy(
   () => import("../features/profile/components/DriverPastBooking")
 );
 // Pages Profile
-const LazyProfileSettingsOwner = lazy(
+const LazyProfileSettings = lazy(
   () => import("../features/profile/components/ProfileSettings")
 );
-const LazyProfileSettingsDriver = lazy(
-  () => import("../features/profile/components/ProfileSettings")
-);
-const LazyChangePasswordOwner = lazy(
-  () => import("../features/profile/components/ProfileChangePassword")
-);
-const LazyChangePasswordDriver = lazy(
+const LazyChangePassword = lazy(
   () => import("../features/profile/components/ProfileChangePassword")
 );
 // Pages Welcome
@@ -102,7 +96,7 @@ const InitRoutes = () =>
               path: "profile-settings",
               element: (
                 <ProtectedRoute>
-                  <LazyProfileSettingsOwner />
+                  <LazyProfileSettings />
                 </ProtectedRoute>
               ),
             },
@@ -110,7 +104,7 @@ const InitRoutes = () =>
               path: "change-password",
               element: (
                 <ProtectedRoute>
-                  <LazyChangePasswordOwner />
+                  <LazyChangePassword />
                 </ProtectedRoute>
               ),
             },
@@ -131,12 +125,22 @@ const InitRoutes = () =>
                   <LazyDriverPastBookin />
                 </ProtectedRoute>
               ),
+              children: [
+                {
+                  path: "completed",
+                  element: <LazyOwnerReservationsCompleted />,
+                },
+                {
+                  path: "cancelled",
+                  element: <LazyOwnerReservationsCancelled />,
+                },
+              ],
             },
             {
               path: "profile-settings",
               element: (
                 <ProtectedRoute>
-                  <LazyProfileSettingsDriver />
+                  <LazyProfileSettings />
                 </ProtectedRoute>
               ),
             },
@@ -144,7 +148,7 @@ const InitRoutes = () =>
               path: "change-password",
               element: (
                 <ProtectedRoute>
-                  <LazyChangePasswordDriver />
+                  <LazyChangePassword />
                 </ProtectedRoute>
               ),
             },

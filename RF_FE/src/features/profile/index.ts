@@ -10,6 +10,7 @@ export { default as OwnerReservationsCancelled } from "./components/OwnerReserva
 
 // Driver
 export { default as DriverLinks } from "./components/DriverLinks";
+export { default as DriverActiveBooking } from "./components/DriverActiveBooking";
 export { default as DriverPastBooking } from "./components/DriverPastBooking";
 
 export { default as ProfileSettings } from "./components/ProfileSettings";
