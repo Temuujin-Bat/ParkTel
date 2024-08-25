@@ -7,3 +7,10 @@ export type TLinkType = {
 export type TLinksType = {
   links: TLinkType[];
 };
+
+export type TUserRole = "owner" | "driver";
+
+export interface TDrawerListOwnerDriverProps {
+  userRole: TUserRole;
+  setUserRole: React.Dispatch<React.SetStateAction<TUserRole>>;
+}

@@ -40,7 +40,7 @@ export default function ProfileChangePassword() {
   };
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="lg" sx={{ mt: "30px" }}>
       <ErrorMessagesField
         isPasswordMatchError={isPasswordMatchError}
         isPasswordLengthError={isPasswordLengthError}
@@ -60,7 +60,7 @@ export default function ProfileChangePassword() {
 
         <Stack
           sx={{
-            mb: "20px",
+            mb: "30px",
             display: "flex",
             flexDirection: { xs: "column", sm: "column", md: "row", lg: "row" },
             alignItems: { xs: "none", sm: "none", md: "center", lg: "center" },

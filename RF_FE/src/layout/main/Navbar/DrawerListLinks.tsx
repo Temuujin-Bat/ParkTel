@@ -1,7 +1,5 @@
 // MUI
 import { Link, Typography, List } from "@mui/material";
-
-// Components
 import { TLinksType } from "./types";
 
 export default function DrawerListLinks({ links }: TLinksType) {

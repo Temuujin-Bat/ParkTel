@@ -13,6 +13,10 @@ export default function Navbar() {
   const theme = useTheme();
   const isSmUp = useMediaQuery(theme.breakpoints.up("md"));
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <>
       {/* Mobile */}
@@ -24,15 +28,15 @@ export default function Navbar() {
       {/* Drawer */}
       <Drawer
         anchor="right"
-        open={isSmUp ? false : open}
-        onClick={() => setOpen((prev) => !prev)}
+        open={!isSmUp && open}
+        onClose={handleClose}
         transitionDuration={{
           enter: 500,
           exit: 300,
         }}
         sx={{ zIndex: 1200 }}
       >
-        <DrawerList setOpen={setOpen} />
+        <DrawerList handleClose={handleClose} />
       </Drawer>
     </>
   );

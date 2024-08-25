@@ -7,9 +7,7 @@ import { useDispatch } from "react-redux";
 import { authActions } from "../store/auth/slice";
 import { persistor } from "../store";
 
-export const useLogout = (
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
-) => {
+export const useLogout = (handleClose: () => void) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -18,7 +16,7 @@ export const useLogout = (
     sessionStorage.clear();
     localStorage.clear();
     dispatch(authActions.resetState());
-    setOpen(false);
+    handleClose();
     navigate("/");
   };
 

@@ -1,5 +1,5 @@
 // MUI
-import { Box } from "@mui/material";
+import { Box, Container } from "@mui/material";
 
 // Third party
 import { Outlet, useLocation } from "react-router-dom";
@@ -13,12 +13,14 @@ export default function OwnerPage() {
   const isOnEditSpace = /\/space-owner\/edit\/[^\/]+$/.test(location.pathname);
 
   return (
-    <Box sx={{ display: "flex" }}>
-      {!isOnEditSpace && <OwnerLinks />}
+    <Container maxWidth="lg">
+      <Box sx={{ display: "flex" }}>
+        {!isOnEditSpace && <OwnerLinks />}
 
-      <Outlet />
+        <Outlet />
 
-      {isOnSpaceOwnerPage && <OwnerListing />}
-    </Box>
+        {isOnSpaceOwnerPage && <OwnerListing />}
+      </Box>
+    </Container>
   );
 }

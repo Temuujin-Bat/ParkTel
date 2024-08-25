@@ -1,31 +1,56 @@
+import { useState } from "react";
+
 // MUI
-import { Box } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 
 // Components
 import { useAuth } from "../../../hooks/useAuth";
-import { useAppSelector } from "../../../hooks/useAppStore";
-import { getUserDetails } from "../../../store/auth/selectors";
 import { useLogout } from "../../../hooks/useLogout";
 import DrawerListLinks from "./DrawerListLinks";
 import DrawerListButtons from "./DrawerListButtons";
+import DrawerListOwnerDriver from "./DrawerListOwnerDriver";
+import { useGetProfileAPI } from "../../../hooks/api/useGetProfile";
+import LoadingMUI from "../../../components/LoadingMUI";
+import { TUserRole } from "./types";
+
+// Third party
+import { useLocation } from "react-router-dom";
 
 export default function DrawerList({
-  setOpen,
+  handleClose,
 }: {
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  handleClose: () => void;
 }) {
+  const location = useLocation();
+
+  const isSpaceOwner = location.pathname.startsWith("/space-owner");
+  const [userRole, setUserRole] = useState<TUserRole>(
+    isSpaceOwner ? "owner" : "driver"
+  );
   const { isLoggedIn } = useAuth();
-  const userDetails = useAppSelector(getUserDetails);
+  const { isPending } = useGetProfileAPI();
 
-  const { logoutHandler } = useLogout(setOpen);
+  const { logoutHandler } = useLogout(handleClose);
 
-  const links = [
+  const ownerLinks = [
     { name: "Your Listing", url: "/space-owner" },
     { name: "Your Reservations", url: "/space-owner/your-reservations" },
     { name: "Profile Settings", url: "/space-owner/profile-settings" },
     { name: "Change Password", url: "/space-owner/change-password" },
     { name: "Log Out", action: logoutHandler },
   ];
+
+  const driverLinks = [
+    { name: "Active Bookings", url: "/driver" },
+    { name: "Past Bookings", url: "/driver/past-bookings" },
+    { name: "Profile Settings", url: "/driver/profile-settings" },
+    { name: "Change Password", url: "/driver/change-password" },
+    { name: "Log Out", action: logoutHandler },
+  ];
+
+  if (isPending) {
+    return <LoadingMUI />;
+  }
 
   return (
     <Box
@@ -40,11 +65,14 @@ export default function DrawerList({
           sm: "60vw",
         },
       }}
-      onClick={() => setOpen((prev) => !prev)}
+      onClick={handleClose}
     >
-      {userDetails && userDetails.role === "owner" && (
-        <DrawerListLinks links={links} />
-      )}
+      <DrawerListOwnerDriver userRole={userRole} setUserRole={setUserRole} />
+
+      <Stack sx={{ borderBottom: "1px solid #979797", mt: "20px" }} />
+
+      {userRole === "owner" && <DrawerListLinks links={ownerLinks} />}
+      {userRole === "driver" && <DrawerListLinks links={driverLinks} />}
 
       <DrawerListButtons isLoggedIn={isLoggedIn} />
     </Box>

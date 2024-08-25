@@ -1,5 +1,5 @@
 // MUI
-import { Container } from "@mui/material";
+import { Container, Fade } from "@mui/material";
 
 // Components
 import OwnerReservationsLinks from "./OwnerReservationsLinks";
@@ -14,12 +14,14 @@ export default function OwnerReservations() {
     location.pathname === "/space-owner/your-reservations";
 
   return (
-    <Container maxWidth="lg" sx={{ mt: "30px" }}>
-      <OwnerReservationsLinks />
+    <Fade in={true} timeout={500}>
+      <Container maxWidth="lg" sx={{ mt: "30px" }}>
+        <OwnerReservationsLinks />
 
-      <Outlet />
+        <Outlet />
 
-      {isOnSpaceOwnerPage && <OwnerReservationsActive />}
-    </Container>
+        {isOnSpaceOwnerPage && <OwnerReservationsActive />}
+      </Container>
+    </Fade>
   );
 }

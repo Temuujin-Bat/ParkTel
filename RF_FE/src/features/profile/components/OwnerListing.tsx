@@ -1,5 +1,5 @@
 // MUI
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Container, Fade, Typography } from "@mui/material";
 
 // Components
 import { NoActiveListingBooking } from "../../../components/notFound";
@@ -15,18 +15,20 @@ export default function OwnerListing() {
   }
 
   return (
-    <Container maxWidth="lg" sx={{ mt: "30px" }}>
-      <Box sx={{ width: "100%" }}>
-        <Typography variant="h4" sx={{ mb: "30px" }}>
-          Your Listings
-        </Typography>
+    <Fade in={true} timeout={500}>
+      <Container maxWidth="lg" sx={{ mt: "30px" }}>
+        <Box sx={{ width: "100%" }}>
+          <Typography variant="h4" sx={{ mb: "30px" }}>
+            Your Listings
+          </Typography>
 
-        {myListings.length === 0 ? (
-          <NoActiveListingBooking />
-        ) : (
-          <OwnerListingGrid />
-        )}
-      </Box>
-    </Container>
+          {myListings.length === 0 ? (
+            <NoActiveListingBooking />
+          ) : (
+            <OwnerListingGrid />
+          )}
+        </Box>
+      </Container>
+    </Fade>
   );
 }

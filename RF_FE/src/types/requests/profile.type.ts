@@ -3,4 +3,5 @@ export type TEditProfile = {
   lastName?: string;
   email?: string;
   mobile?: string;
+  role?: string;
 };

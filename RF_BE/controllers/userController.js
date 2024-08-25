@@ -21,7 +21,7 @@ const getProfile = async (req, res) => {
 
 const editProfile = async (req, res) => {
   try {
-    const { firstName, lastName, email, mobile } = req.body;
+    const { firstName, lastName, email, mobile, role } = req.body;
     const userID = req.user.userID;
 
     const user = await User.findById(userID);
@@ -37,6 +37,7 @@ const editProfile = async (req, res) => {
         lastName: lastName,
         email: email,
         mobile: mobile,
+        role: role,
       }
     );
 
