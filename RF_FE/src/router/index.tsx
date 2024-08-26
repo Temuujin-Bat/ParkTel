@@ -12,6 +12,7 @@ import { ProtectedRoute } from "./ProtectedRoute";
 
 // Pages
 const LazyHome = lazy(() => import("../pages/HomePage"));
+const LazySpaces = lazy(() => import("../pages/SpacesPage"));
 // Pages Owner
 const LazyOwner = lazy(() => import("../pages/OwnerPage"));
 const LazyEditListing = lazy(
@@ -57,6 +58,10 @@ const InitRoutes = () =>
         {
           path: "/",
           element: <LazyHome />,
+        },
+        {
+          path: "/tel-aviv-spaces",
+          element: <LazySpaces />,
         },
         {
           path: "/space-owner",
