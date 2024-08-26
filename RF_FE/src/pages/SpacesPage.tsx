@@ -26,8 +26,7 @@ import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
 import Map, { Marker } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
-const MAPBOX_TOKEN =
-  "pk.eyJ1IjoidGVtdWppbjEyMyIsImEiOiJjbHpvMG5iemowdmo4Mmxxd2hqdjN6ZjdxIn0._zTFjJvz0MwqdIZLKCUJOA";
+const MAPBOX_TOKEN = "";
 
 const parkingSpots = [
   {
