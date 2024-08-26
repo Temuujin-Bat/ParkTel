@@ -71,8 +71,12 @@ export default function DrawerList({
 
       <Stack sx={{ borderBottom: "1px solid #979797", mt: "20px" }} />
 
-      {userRole === "owner" && <DrawerListLinks links={ownerLinks} />}
-      {userRole === "driver" && <DrawerListLinks links={driverLinks} />}
+      {userRole === "owner" ? (
+        <DrawerListLinks links={ownerLinks} />
+      ) : (
+        <DrawerListLinks links={driverLinks} />
+      )}
+      {/* {userRole === "driver" && <DrawerListLinks links={driverLinks} />} */}
 
       <DrawerListButtons isLoggedIn={isLoggedIn} />
     </Box>
