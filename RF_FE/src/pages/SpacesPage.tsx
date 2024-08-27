@@ -1,78 +1,78 @@
+import React, { useEffect, useState } from "react";
+
+type Coordinates = {
+  latitude: number;
+  longitude: number;
+};
+
 // MUI
 import {
-  InputAdornment,
-  Link,
-  TextField,
-  Typography,
-  Breadcrumbs,
-  Box,
-  FormControl,
-  Select,
-  MenuItem,
-  Card,
-  CardMedia,
-  CardContent,
-  Stack,
-  Divider,
-  Tooltip,
+  Dialog,
   Paper,
+  Slide,
+  Box,
+  Typography,
+  Stack,
+  Link,
 } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
-import { LocationOn, NavigateNext } from "@mui/icons-material";
-import { useState } from "react";
-import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
+import LockIcon from "@mui/icons-material/Lock";
 
-import Map, { Marker } from "react-map-gl";
-import "mapbox-gl/dist/mapbox-gl.css";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
-const MAPBOX_TOKEN = "";
-
-const parkingSpots = [
-  {
-    id: 1,
-    imageUrl: "https://via.placeholder.com/150",
-    addressLine: "123 Main St, TLV",
-    price: 20,
-    walkingDistance: 5,
-    coordinates: { x: 34.7818, y: 32.0853 },
-  },
-  {
-    id: 2,
-    imageUrl: "https://via.placeholder.com/150",
-    addressLine: "456 Elm St, TLV",
-    price: 15,
-    walkingDistance: 10,
-    coordinates: { x: 34.7808, y: 32.0843 },
-  },
-  {
-    id: 3,
-    imageUrl: "https://via.placeholder.com/150",
-    addressLine: "789 Oak St, TLV",
-    price: 25,
-    walkingDistance: 3,
-    coordinates: { x: 34.7808, y: 32.0843 },
-  },
-  {
-    id: 4,
-    imageUrl: "https://via.placeholder.com/150",
-    addressLine: "123 Oak St, TLV",
-    price: 30,
-    walkingDistance: 10,
-    coordinates: { x: 34.7808, y: 32.0843 },
-  },
-  {
-    id: 5,
-    imageUrl: "https://via.placeholder.com/150",
-    addressLine: "123 Oak St, TLV",
-    price: 30,
-    walkingDistance: 10,
-    coordinates: { x: 34.7808, y: 32.0843 },
-  },
-];
+// Components
+import { SpacesGrid, SpacesGridHeader, SpacesMap } from "../features/spaces";
+import { TransitionProps } from "notistack";
+import { Close, Fastfood, Hotel, LaptopMac, Repeat } from "@mui/icons-material";
+import {
+  Timeline,
+  TimelineConnector,
+  TimelineContent,
+  TimelineDot,
+  TimelineItem,
+  TimelineOppositeContent,
+  TimelineSeparator,
+} from "@mui/lab";
 
 export default function SpacesPage() {
   const [sortType, setSortType] = useState("nearest");
+  const [sortedParkingSpots, setSortedParkingSpots] = useState([
+    ...parkingSpots,
+  ]);
+  const [userLocation, setUserLocation] = useState<Coordinates | null>(null);
+  const [open, setOpen] = useState(true);
+  const [activeTab, setActiveTab] = useState("overview");
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        console.log(
+          `User location: latitude=${latitude}, longitude=${longitude}`
+        );
+        setUserLocation({ latitude: latitude, longitude: longitude });
+      },
+      (error) => {
+        console.error("Error getting user location:", error);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0,
+      }
+    );
+  }, []);
+
+  useEffect(() => {
+    const sortedSpots = [...parkingSpots];
+    if (sortType === "nearest") {
+      sortedSpots.sort((a, b) => a.walkingDistance - b.walkingDistance);
+    } else if (sortType === "lowestPrice") {
+      sortedSpots.sort((a, b) => a.price - b.price);
+    }
+    setSortedParkingSpots(sortedSpots);
+  }, [sortType]);
 
   return (
     <Grid
@@ -84,314 +84,431 @@ export default function SpacesPage() {
       }}
     >
       <Grid component={Paper} xs={12} sm={12} md={6} lg={5}>
+        <SpacesGridHeader sortType={sortType} setSortType={setSortType} />
+
+        <SpacesGrid sortedParkingSpots={sortedParkingSpots} />
+      </Grid>
+
+      <Grid xs={0} sm={0} md={6} lg={7}>
+        {userLocation && (
+          <SpacesMap userLocation={userLocation} parkingSpots={parkingSpots} />
+        )}
+      </Grid>
+
+      <Dialog
+        sx={{
+          m: {
+            xs: "60px 0px 0px 0px",
+            sm: "100px 0px 0px 0px",
+            md: "120px 0px 120px 0px",
+            lg: "150px 0px 150px 0px",
+          },
+        }}
+        fullScreen
+        open={open}
+        onClose={(prev) => !prev}
+        TransitionComponent={Transition}
+        PaperProps={{
+          sx: {
+            borderRadius: "15px 15px 0 0",
+            display: "flex",
+            flexDirection: "column",
+          },
+        }}
+      >
         <Box
           sx={{
-            backgroundColor: "#f8f9fb",
-            borderBottom: "1px solid #cdd9e1",
-            padding: "20px 20px 10px 30px",
+            width: "100%",
+            borderBottom: "1px solid #2dc98a",
+            padding: "15px 30px",
+            display: "flex",
+            justifyContent: "space-between",
           }}
         >
-          <Breadcrumbs
-            separator={<NavigateNext fontSize="small" />}
-            sx={{ borderBottom: "1px solid #cdd9e1", height: "2em" }}
-          >
-            <Link underline="none" href="/">
-              <Typography
-                variant="body2"
-                sx={{ color: "#4A697C", "&:hover": { color: "#2dc98a" } }}
-              >
-                Home
-              </Typography>
-            </Link>
+          <Typography variant="subtitle1">
+            {parkingSpots[0].addressLine}
+          </Typography>
 
-            <Typography
-              variant="body2"
-              sx={{ color: "#4A697C", textDecoration: "underline" }}
-            >
-              Tel Aviv
-            </Typography>
-          </Breadcrumbs>
-
-          <TextField
-            helperText="Only available in Tel Aviv"
-            fullWidth
-            size="small"
-            disabled
-            value="Tel Aviv"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <LocationOn sx={{ color: "#2dc98a" }} />
-                </InputAdornment>
-              ),
-              endAdornment: (
-                <InputAdornment position="end">
-                  <Typography
-                    variant="subtitle2"
-                    sx={{
-                      backgroundColor: "#2dc98a",
-                      color: "white",
-                      padding: "3px 25px",
-                      borderRadius: "3px",
-                      mr: "-8px",
-                    }}
-                  >
-                    Daily
-                  </Typography>
-                </InputAdornment>
-              ),
-            }}
-            sx={{
-              mt: "15px",
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderWidth: "1.5px",
-                  borderColor: "#2dc98a !important",
-                },
-              },
-            }}
-          />
-
-          <FormControl
-            size="small"
-            fullWidth
-            sx={{
-              marginBottom: "20px",
-              backgroundColor: "#f0fbf7",
-              mt: "10px",
-              "& .MuiOutlinedInput-root": {
-                borderColor: "#2dc98a",
-                "& fieldset": {
-                  border: "1.5px solid #2dc98a",
-                },
-                "&:hover fieldset": {
-                  borderColor: "#2dc98a",
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: "#2dc98a",
-                },
-              },
-            }}
-          >
-            <Select
-              value={sortType}
-              onChange={(e) => setSortType(e.target.value)}
-            >
-              <MenuItem value="nearest">
-                <Typography variant="body2">Nearest Location</Typography>
-              </MenuItem>
-              <MenuItem value="lowestPrice">
-                <Typography variant="body2">Lowest Price</Typography>
-              </MenuItem>
-            </Select>
-          </FormControl>
+          <Close onClick={() => setOpen(false)} style={{ cursor: "pointer" }} />
         </Box>
 
         <Box
           sx={{
-            padding: "40px",
-            maxHeight: "calc(100vh - 120px)",
+            flex: 1,
             overflowY: "auto",
           }}
         >
-          {parkingSpots.map((spot) => (
-            <Card
-              key={spot.id}
+          <Box
+            sx={{
+              padding: "25px 30px",
+              display: "flex",
+              width: "100%",
+              flexDirection: "column",
+              backgroundColor: "#f8f9fb",
+              borderBottom: "1px solid #cdd9e1",
+            }}
+          >
+            <Box
               sx={{
-                marginBottom: "20px",
-                display: "flex",
                 width: "100%",
+                display: "flex",
+                borderTop: "1px solid #8aa4b3",
+                borderRight: "1px solid #8aa4b3",
+                borderBottom: "0px solid #8aa4b3",
+                borderLeft: "1px solid #8aa4b3",
+                backgroundColor: "white",
+                padding: "5px",
+                position: "relative",
               }}
             >
-              <CardMedia
-                component="img"
-                sx={{ width: "30%", height: "140px" }}
-                image={spot.imageUrl}
-              />
-
-              <CardContent
+              <Stack
                 sx={{
-                  height: "140px",
-                  width: "70%",
-                  position: "relative",
+                  width: "50%",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Typography sx={{ color: "#4a697c" }} variant="body2">
+                  Enter after
+                </Typography>
+                <Typography variant="subtitle1">
+                  7pm{" "}
+                  <Typography
+                    variant="subtitle2"
+                    component={"span"}
+                    sx={{ color: "101921" }}
+                  >
+                    (today)
+                  </Typography>
+                </Typography>
+              </Stack>
+              <Stack
+                sx={{
+                  width: "50%",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Typography sx={{ color: "#4a697c" }} variant="body2">
+                  Exit before
+                </Typography>
+                <Typography variant="subtitle1">
+                  1am{" "}
+                  <Typography
+                    variant="subtitle2"
+                    component={"span"}
+                    sx={{ color: "101921" }}
+                  >
+                    (tomorrow)
+                  </Typography>
+                </Typography>
+              </Stack>
+              <ArrowForwardIcon
+                sx={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  color: "#2dc98a",
+                }}
+              />
+            </Box>
+
+            <Box
+              sx={{ width: "100%", display: "flex", backgroundColor: "white" }}
+            >
+              <Box
+                sx={{
+                  width: "50%",
+                  padding: "5px",
+                  borderTop: "1px solid #8aa4b3",
+                  borderRight: "0px solid #8aa4b3",
+                  borderBottom: "1px solid #8aa4b3",
+                  borderLeft: "1px solid #8aa4b3",
                 }}
               >
                 <Stack
                   sx={{
                     display: "flex",
-                    flexDirection: "row",
+                    justifyContent: "center",
                     alignItems: "center",
-                    justifyContent: "space-between",
-                    mb: "10px",
                   }}
                 >
-                  <Typography variant="subtitle1">
-                    {spot.addressLine}
+                  <Typography sx={{ color: "#4a697c" }} variant="body2">
+                    Booking price
                   </Typography>
-
-                  <Typography variant="subtitle1">{spot.price}NIS</Typography>
-                </Stack>
-
-                <Divider sx={{ borderTop: "1px solid #cdd9e1" }} />
-
-                <Stack
-                  sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-around",
-                    mt: "15px",
-                  }}
-                >
-                  <Typography
-                    variant="body2"
-                    sx={{ display: "flex", alignItems: "center" }}
-                  >
-                    <DirectionsWalkIcon
-                      sx={{ color: "#adbfca", fontSize: "1.5em", mr: "3px" }}
-                    />
+                  <Typography variant="subtitle1">
+                    {parkingSpots[0].price}{" "}
                     <Typography
-                      sx={{ mr: "3px" }}
                       variant="subtitle2"
                       component={"span"}
+                      sx={{ color: "101921" }}
                     >
-                      {spot.walkingDistance}
+                      (nis)
                     </Typography>
-                    mins
                   </Typography>
-
-                  <Tooltip
-                    title={
-                      <Paper
-                        sx={{
-                          backgroundColor: "white",
-                          margin: "-20px",
-                          display: "flex",
-                          flexDirection: "column",
-                          padding: "20px",
-                        }}
-                      >
-                        <Typography
-                          variant="subtitle2"
-                          sx={{
-                            fontWeight: "bold",
-                            borderBottom: "1px solid #2dc98a",
-                            lineHeight: "30px",
-                            mb: "10px",
-                          }}
-                        >
-                          Guaranteed
-                        </Typography>
-                        <Typography variant="caption" sx={{ color: "#4a697c" }}>
-                          Your space is for you and you only to use for the
-                          duration of your booking, and your space owner knows
-                          this.
-                        </Typography>
-                      </Paper>
-                    }
-                    arrow
-                  >
-                    <Typography
-                      sx={{ display: "flex", alignItems: "center" }}
-                      variant="subtitle2"
-                    >
-                      <ErrorOutlineIcon
-                        sx={{ color: "#adbfca", mr: "3px", fontSize: "1.5em" }}
-                      />
-                      Guaranteed
-                    </Typography>
-                  </Tooltip>
                 </Stack>
-
+              </Box>
+              <Box
+                sx={{
+                  border: "1px solid #8aa4b3",
+                  width: "50%",
+                  padding: "5px",
+                }}
+              >
                 <Stack
                   sx={{
                     display: "flex",
-                    flexDirection: "row",
+                    justifyContent: "center",
                     alignItems: "center",
-                    width: "100%",
-                    position: "absolute",
-                    bottom: "0",
-                    left: "0",
                   }}
                 >
-                  <Link
-                    underline="none"
-                    sx={{
-                      backgroundColor: "white",
-                      width: "50%",
-                      borderTop: "1px solid #e8eff3",
-                      padding: "6px",
-                      "&:hover": { cursor: "pointer" },
-                    }}
-                  >
+                  <Typography sx={{ color: "#4a697c" }} variant="body2">
+                    To destination
+                  </Typography>
+                  <Typography variant="subtitle1">
+                    {parkingSpots[0].walkingDistance}{" "}
                     <Typography
                       variant="subtitle2"
-                      sx={{ textAlign: "center", color: "#4a697c" }}
+                      component={"span"}
+                      sx={{ color: "101921" }}
                     >
-                      View Details
+                      (mins)
                     </Typography>
-                  </Link>
+                  </Typography>
+                </Stack>
+              </Box>
+            </Box>
+          </Box>
 
-                  <Link
-                    underline="none"
-                    sx={{
-                      backgroundColor: "#2dc98a",
-                      width: "50%",
-                      padding: "6px",
-                      "&:hover": {
-                        backgroundColor: "#22a270",
-                        cursor: "pointer",
-                      },
-                    }}
+          <Box
+            sx={{
+              display: "flex",
+              backgroundColor: "#F8F9FB",
+              border: "1px solid #adbfca",
+              margin: "30px",
+              flex: 1,
+              overflowY: "auto",
+              padding: "5px",
+            }}
+          >
+            <Link
+              underline="none"
+              sx={{
+                padding: "7px",
+                flex: 1,
+                display: "flex",
+                justifyContent: "center",
+                color: activeTab === "overview" ? "#fff" : "#4a697c",
+                backgroundColor:
+                  activeTab === "overview" ? "#000" : "transparent",
+                "&:hover": { cursor: "pointer" },
+              }}
+              onClick={() => setActiveTab("overview")}
+            >
+              <Typography variant="subtitle2">Overview</Typography>
+            </Link>
+            <Link
+              underline="none"
+              sx={{
+                flex: 1,
+                padding: "7px",
+                display: "flex",
+                justifyContent: "center",
+                color: activeTab === "reviews" ? "#fff" : "#4a697c",
+                backgroundColor:
+                  activeTab === "reviews" ? "#000" : "transparent",
+                "&:hover": { cursor: "pointer" },
+              }}
+              onClick={() => setActiveTab("reviews")}
+            >
+              <Typography variant="subtitle2">Reviews</Typography>
+            </Link>
+            <Link
+              underline="none"
+              sx={{
+                flex: 1,
+                padding: "7px",
+                display: "flex",
+                justifyContent: "center",
+                color: activeTab === "howToPark" ? "#fff" : "#4a697c",
+                backgroundColor:
+                  activeTab === "howToPark" ? "#000" : "transparent",
+                "&:hover": { cursor: "pointer" },
+              }}
+              onClick={() => setActiveTab("howToPark")}
+            >
+              <Typography variant="subtitle2">How to Park</Typography>
+            </Link>
+          </Box>
+
+          {activeTab === "overview" && (
+            <Box sx={{ padding: "0px 30px" }}>
+              <Typography>Overview Content</Typography>
+            </Box>
+          )}
+
+          {activeTab === "reviews" && (
+            <Box sx={{ padding: "0px 30px" }}>
+              <Typography>Reviews Content</Typography>
+            </Box>
+          )}
+
+          {activeTab === "howToPark" && (
+            <Box sx={{ padding: "0px 30px" }}>
+              <Timeline position="alternate">
+                <TimelineItem>
+                  <TimelineOppositeContent
+                    sx={{ m: "auto 0" }}
+                    align="right"
+                    variant="body2"
+                    color="text.secondary"
                   >
-                    <Typography
-                      variant="subtitle2"
+                    <Stack
                       sx={{
-                        textAlign: "center",
-                        color: "white",
+                        border: "3px solid #2dc98a",
+                        width: "fit-content", // Set the width of the border box
+                        padding: "0.5rem",
                       }}
                     >
-                      Book Now
+                      <Typography variant="subtitle1">1</Typography>
+                    </Stack>
+                  </TimelineOppositeContent>
+                  <TimelineSeparator>
+                    <TimelineConnector />
+                    <TimelineDot>
+                      <Fastfood />
+                    </TimelineDot>
+                    <TimelineConnector />
+                  </TimelineSeparator>
+                  <TimelineContent sx={{ py: "12px", px: 2 }}>
+                    <Typography variant="h6" component="span">
+                      Eat
                     </Typography>
-                  </Link>
-                </Stack>
-              </CardContent>
-            </Card>
-          ))}
+                    <Typography>Because you need strength</Typography>
+                  </TimelineContent>
+                </TimelineItem>
+                <TimelineItem>
+                  <TimelineOppositeContent
+                    sx={{ m: "auto 0" }}
+                    variant="body2"
+                    color="text.secondary"
+                  >
+                    10:00 am
+                  </TimelineOppositeContent>
+                  <TimelineSeparator>
+                    <TimelineConnector />
+                    <TimelineDot color="primary">
+                      <LaptopMac />
+                    </TimelineDot>
+                    <TimelineConnector />
+                  </TimelineSeparator>
+                  <TimelineContent sx={{ py: "12px", px: 2 }}>
+                    <Typography variant="h6" component="span">
+                      Code
+                    </Typography>
+                    <Typography>Because it&apos;s awesome!</Typography>
+                  </TimelineContent>
+                </TimelineItem>
+                <TimelineItem>
+                  <TimelineSeparator>
+                    <TimelineConnector />
+                    <TimelineDot color="primary" variant="outlined">
+                      <Hotel />
+                    </TimelineDot>
+                    <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
+                  </TimelineSeparator>
+                  <TimelineContent sx={{ py: "12px", px: 2 }}>
+                    <Typography variant="h6" component="span">
+                      Sleep
+                    </Typography>
+                    <Typography>Because you need rest</Typography>
+                  </TimelineContent>
+                </TimelineItem>
+                <TimelineItem>
+                  <TimelineSeparator>
+                    <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
+                    <TimelineDot color="secondary">
+                      <Repeat />
+                    </TimelineDot>
+                    <TimelineConnector />
+                  </TimelineSeparator>
+                  <TimelineContent sx={{ py: "12px", px: 2 }}>
+                    <Typography variant="h6" component="span">
+                      Repeat
+                    </Typography>
+                    <Typography>Because this is the life you love!</Typography>
+                  </TimelineContent>
+                </TimelineItem>
+              </Timeline>
+            </Box>
+          )}
         </Box>
-      </Grid>
 
-      <Grid xs={0} sm={0} md={6} lg={7}>
-        <Map
-          initialViewState={{
-            longitude: 34.7818, // Center longitude
-            latitude: 32.0853, // Center latitude
-            zoom: 14, // Adjust zoom level
+        <Box
+          sx={{
+            padding: "15px 30px",
+            backgroundColor: "#f8f9fb",
+            borderTop: "1px solid #cdd9e1",
+            display: "flex",
+            justifyContent: "center",
           }}
-          style={{ width: "100%", height: "100vh" }} // Fullscreen map
-          mapStyle="mapbox://styles/mapbox/streets-v11"
-          mapboxAccessToken={MAPBOX_TOKEN}
         >
-          {parkingSpots.map((spot) => (
-            <Marker
-              key={spot.id}
-              longitude={spot.coordinates.x}
-              latitude={spot.coordinates.y}
-              anchor="bottom"
-            >
-              <img
-                src="https://via.placeholder.com/30" // Placeholder for a custom marker icon
-                alt={spot.addressLine}
-                style={{ width: "30px", height: "30px", cursor: "pointer" }}
-                title={`${spot.addressLine} - ${spot.price} NIS`}
-              />
-            </Marker>
-          ))}
-        </Map>
-      </Grid>
+          <Link
+            underline="none"
+            sx={{
+              backgroundColor: "#2dc98a",
+              "&:hover": {
+                backgroundColor: "#22a270",
+                cursor: "pointer",
+              },
+              width: "100%",
+              display: "flex",
+              padding: "15px 0",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <LockIcon sx={{ mr: "10px", color: "#4a697c" }} />
+            <Typography variant="subtitle2" sx={{ color: "#FFF" }}>
+              Book now securely
+            </Typography>
+          </Link>
+        </Box>
+      </Dialog>
     </Grid>
   );
 }
+// 1px solid #cdd9e1
+// #f8f9fb
 
-// #4A697C
-// 101291
+const parkingSpots = [
+  {
+    id: 1,
+    imageUrl: "https://via.placeholder.com/150",
+    addressLine: "123 Main St, TLV",
+    price: 20,
+    walkingDistance: 5,
+    coordinates: { latitude: 32.070526, longitude: 34.785343 },
+  },
+  {
+    id: 2,
+    imageUrl: "https://via.placeholder.com/150",
+    addressLine: "123 Main St, TLV",
+    price: 10,
+    walkingDistance: 10,
+    coordinates: { latitude: 32.070526, longitude: 34.785343 },
+  },
+];
+
+const Transition = React.forwardRef(function Transition(
+  props: TransitionProps & {
+    children: React.ReactElement<any>;
+  },
+  ref: React.Ref<unknown>
+) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
