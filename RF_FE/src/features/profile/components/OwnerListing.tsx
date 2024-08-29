@@ -22,7 +22,7 @@ export default function OwnerListing() {
             Your Listings
           </Typography>
 
-          {myListings.length === 0 ? (
+          {myListings && myListings.length === 0 ? (
             <NoActiveListingBooking />
           ) : (
             <OwnerListingGrid />

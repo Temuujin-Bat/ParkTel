@@ -10,8 +10,7 @@ import { Outlet, useLocation } from "react-router-dom";
 
 export default function DriverPastBooking() {
   const location = useLocation();
-  const isOnSpaceOwnerPage =
-    location.pathname === "/space-owner/your-reservations";
+  const isOnSpaceOwnerPage = location.pathname === "/driver/past-bookings";
 
   return (
     <Fade in={true} timeout={500}>

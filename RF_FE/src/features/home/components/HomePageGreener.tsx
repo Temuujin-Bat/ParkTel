@@ -41,7 +41,7 @@ export default function HomePageGreener() {
             alignItems: "center",
             position: "absolute",
             top: "-70px",
-            left: "-33px",
+            left: { xs: "-40px", sm: "-35px" },
           }}
         >
           <Lottie
@@ -80,8 +80,8 @@ export default function HomePageGreener() {
       <Box
         sx={{
           display: "flex",
-          flexDirection: "row",
-          gap: "10px",
+          flexDirection: { xs: "column", sm: "row" },
+          gap: { xs: "30px", sm: "10px" },
         }}
       >
         <Box
@@ -130,6 +130,7 @@ export default function HomePageGreener() {
             </Typography>
           </Typography>
         </Box>
+
         <Box
           sx={{
             display: "flex",
@@ -176,6 +177,7 @@ export default function HomePageGreener() {
             </Typography>
           </Typography>
         </Box>
+
         <Box
           sx={{
             display: "flex",
