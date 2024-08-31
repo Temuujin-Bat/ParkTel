@@ -7,4 +7,7 @@ const getUserSpaceList = (state: RootState) =>
 const getSingleSpaceSpaceList = (state: RootState) =>
   state.userSpaceListReducer.userSingleSpaceList;
 
-export { getUserSpaceList, getSingleSpaceSpaceList };
+const getAllSpaceList = (state: RootState) =>
+  state.userSpaceListReducer.allSpaceList;
+
+export { getUserSpaceList, getSingleSpaceSpaceList, getAllSpaceList };

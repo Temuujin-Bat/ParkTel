@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 // MUI
 import { Paper } from "@mui/material";
@@ -11,15 +11,35 @@ import {
   SpacesGridHeader,
   SpacesMap,
 } from "../features/spaces";
+
+// Hooks
 import { useUserLocation } from "../hooks/useUserLocation";
 import { useSortedSpace } from "../hooks/useSortedSpace";
+import { useGetAllSpaceList } from "../hooks/api/useGetAllSpaceList";
+
+// Utils
+import { CalculateParkingSpotsWithTime } from "../utils/helpers/DistanceCalc";
 
 export default function SpacesPage() {
   const [sortType, setSortType] = useState("nearest");
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
+  const [selectedSpot, setSelectedSpot] = useState(null);
 
+  const { data: parkingSpots, isPending } = useGetAllSpaceList();
   const userLocation = useUserLocation();
-  const sortedParkingSpots = useSortedSpace(parkingSpots, sortType);
+  const averageSpeedMetersPerMinute = 83.33;
+
+  const parkingSpotsWithTime = useMemo(
+    () =>
+      CalculateParkingSpotsWithTime(
+        parkingSpots,
+        userLocation,
+        averageSpeedMetersPerMinute
+      ),
+    [parkingSpots, userLocation, averageSpeedMetersPerMinute]
+  );
+
+  const sortedParkingSpots = useSortedSpace(parkingSpotsWithTime, sortType);
 
   return (
     <Grid
@@ -31,35 +51,32 @@ export default function SpacesPage() {
     >
       <Grid component={Paper} xs={12} sm={12} md={6} lg={5}>
         <SpacesGridHeader sortType={sortType} setSortType={setSortType} />
-        <SpacesGrid sortedParkingSpots={sortedParkingSpots} />
+
+        <SpacesGrid
+          sortedParkingSpots={sortedParkingSpots}
+          setSelectedSpot={setSelectedSpot}
+          setOpen={setOpen}
+          isPending={isPending}
+        />
       </Grid>
 
       <Grid xs={0} sm={0} md={6} lg={7}>
-        {userLocation && (
-          <SpacesMap userLocation={userLocation} parkingSpots={parkingSpots} />
-        )}
+        <SpacesMap
+          setSelectedSpot={setSelectedSpot}
+          userLocation={userLocation}
+          parkingSpots={sortedParkingSpots}
+          setOpen={setOpen}
+          isPending={isPending}
+        />
       </Grid>
 
-      <SpacesDialog parkingSpots={parkingSpots} open={open} setOpen={setOpen} />
+      {!isPending && (
+        <SpacesDialog
+          parkingSpots={selectedSpot}
+          open={open}
+          setOpen={setOpen}
+        />
+      )}
     </Grid>
   );
 }
-
-const parkingSpots = [
-  {
-    id: 1,
-    imageUrl: "https://via.placeholder.com/150",
-    addressLine: "123 Main St, TLV",
-    price: 20,
-    walkingDistance: 5,
-    coordinates: { latitude: 32.070526, longitude: 34.785343 },
-  },
-  {
-    id: 2,
-    imageUrl: "https://via.placeholder.com/150",
-    addressLine: "123 Main St, TLV",
-    price: 10,
-    walkingDistance: 10,
-    coordinates: { latitude: 32.070526, longitude: 34.785343 },
-  },
-];

@@ -17,6 +17,12 @@ const reducers = {
   ) => {
     state.userSingleSpaceList = action.payload;
   },
+  setAllSpaceList: (
+    state: IRootState,
+    action: PayloadAction<IRootState["allSpaceList"]>
+  ) => {
+    state.allSpaceList = action.payload;
+  },
 };
 
 export { reducers };

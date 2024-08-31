@@ -4,21 +4,21 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 
 // Components
-import { GetProfileController } from "../../services";
+import { GetAllSpaceListController } from "../../services";
 import { QUERY_KEYS } from "../../utils/enums";
-import { authActions } from "../../store/auth/slice";
+import { spaceList } from "../../store/spaceList/slice";
 
-export function useGetProfileAPI() {
+export function useGetAllSpaceList() {
   const dispatch = useDispatch();
 
   const { isSuccess, data, isPending } = useQuery({
-    queryKey: [QUERY_KEYS.PROFILE],
-    queryFn: GetProfileController,
+    queryKey: [QUERY_KEYS.ALLSPACELIST],
+    queryFn: GetAllSpaceListController,
   });
 
   useEffect(() => {
     if (isSuccess) {
-      dispatch(authActions.setUserDetails(data));
+      dispatch(spaceList.setAllSpaceList(data));
     }
   }, [data, isSuccess, dispatch]);
 

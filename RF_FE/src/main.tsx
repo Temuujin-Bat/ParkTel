@@ -8,6 +8,7 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { SnackbarProvider } from "notistack";
+import "mapbox-gl/dist/mapbox-gl.css";
 
 // Components
 import App from "./App.tsx";

@@ -12,6 +12,7 @@ const QUERY_KEYS = {
   SPACELIST: "spaceList",
   SINGLESPACELIST: "singleSpaceList",
   PROFILE: "profile",
+  ALLSPACELIST: "allSpaceList",
 };
 
 export { STORE_SLICES, PERSIST_KEYS, QUERY_KEYS };

@@ -1,14 +1,52 @@
 // Third party
 import Map, { Marker } from "react-map-gl";
-import "mapbox-gl/dist/mapbox-gl.css";
-const MAPBOX_TOKEN =
-  "pk.eyJ1IjoidGVtdWppbjEyMyIsImEiOiJjbHpvMG5iemowdmo4Mmxxd2hqdjN6ZjdxIn0._zTFjJvz0MwqdIZLKCUJOA";
 
 // MUI
 import { Typography, Box, Stack } from "@mui/material";
 import { LocationOn } from "@mui/icons-material";
 
-export default function SpacesMap({ userLocation, parkingSpots }) {
+// Components
+import { ACCESS_TOKEN_MAP } from "../../../../config";
+
+export default function SpacesMap({
+  userLocation,
+  parkingSpots,
+  setSelectedSpot,
+  setOpen,
+  isPending,
+}) {
+  if (
+    isPending ||
+    !userLocation ||
+    !userLocation.latitude ||
+    !userLocation.longitude
+  ) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+          textAlign: "center",
+        }}
+      >
+        <Typography variant="h6" color="textSecondary">
+          Loading map data, please wait...
+        </Typography>
+      </Box>
+    );
+  }
+
+  // Check if parkingSpots are not available
+  if (!parkingSpots || !Array.isArray(parkingSpots)) {
+    return (
+      <Typography variant="h6" align="center" color="textSecondary">
+        No available data to display.
+      </Typography>
+    );
+  }
+
   return (
     <Map
       initialViewState={{
@@ -16,9 +54,9 @@ export default function SpacesMap({ userLocation, parkingSpots }) {
         longitude: Number(userLocation?.longitude),
         zoom: 16,
       }}
-      style={{ width: "100%", height: "100vh" }}
+      style={{ width: "100%", height: "93.5vh" }}
       mapStyle="mapbox://styles/mapbox/streets-v11"
-      mapboxAccessToken={MAPBOX_TOKEN}
+      mapboxAccessToken={ACCESS_TOKEN_MAP}
     >
       <Marker
         latitude={userLocation.latitude}
@@ -49,9 +87,9 @@ export default function SpacesMap({ userLocation, parkingSpots }) {
         </Box>
       </Marker>
 
-      {parkingSpots.map((spot) => (
+      {parkingSpots.map((spot, id) => (
         <Marker
-          key={spot.id}
+          key={id}
           longitude={spot.coordinates.longitude}
           latitude={spot.coordinates.latitude}
           anchor="bottom"
@@ -64,6 +102,8 @@ export default function SpacesMap({ userLocation, parkingSpots }) {
               backgroundColor: "white",
               boxShadow: "2px 0px 8px rgba(0, 0, 0, 1)",
               zIndex: 1,
+              cursor: "pointer",
+              transition: "all .2s ease",
               "&::after": {
                 content: '""',
                 position: "absolute",
@@ -75,10 +115,29 @@ export default function SpacesMap({ userLocation, parkingSpots }) {
                 borderLeft: "10px solid transparent",
                 borderRight: "10px solid transparent",
                 borderTop: "15px solid #2dc98a",
+                transition: "all .2s ease",
+              },
+              "&:hover": {
+                backgroundColor: "#2dc98a",
+                border: "3px solid white",
+                bottom: "5px",
+                color: "white",
+                "& .price-typo": {
+                  color: "white",
+                  transition: "color .2s ease",
+                },
               },
             }}
+            onClick={() => {
+              setSelectedSpot(spot);
+              setOpen((prev) => !prev);
+            }}
           >
-            <Typography variant="subtitle2" sx={{ color: "#101921" }}>
+            <Typography
+              className="price-typo"
+              variant="subtitle2"
+              sx={{ color: "#101921" }}
+            >
               {spot?.price}NIS
             </Typography>
           </Box>

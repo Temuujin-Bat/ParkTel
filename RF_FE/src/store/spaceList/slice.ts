@@ -11,6 +11,7 @@ import { IRootState } from "./type";
 const initialState: IRootState = {
   userSpaceList: [],
   userSingleSpaceList: {},
+  allSpaceList: [],
 };
 
 export const slice = createSlice({

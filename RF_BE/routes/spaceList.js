@@ -5,6 +5,7 @@ const {
   deleteUserSpaceList,
   getUserSingleSpaceList,
   editUserSpaceList,
+  getAllSpaceList,
 } = require("../controllers/spaceListController");
 const authMiddleware = require("../middlewares/authMiddleware");
 const router = Router();
@@ -14,6 +15,7 @@ router
   .get("/space-owner/:id", authMiddleware, getUserSingleSpaceList)
   .post("/space-owner/edit/:id", authMiddleware, editUserSpaceList)
   .post("/space-owner", authMiddleware, getUserSpaceLists)
-  .delete("/space-owner/:id", authMiddleware, deleteUserSpaceList);
+  .delete("/space-owner/:id", authMiddleware, deleteUserSpaceList)
+  .post("/spaces", getAllSpaceList);
 
 module.exports = router;

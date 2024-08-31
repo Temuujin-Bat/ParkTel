@@ -56,7 +56,7 @@ export default function SpacesDialogHeader({ parkingSpots }) {
               Enter after
             </Typography>
             <Typography variant="subtitle1">
-              7pm{" "}
+              12pm{" "}
               <Typography
                 variant="subtitle2"
                 component={"span"}
@@ -127,7 +127,7 @@ export default function SpacesDialogHeader({ parkingSpots }) {
                 Booking price
               </Typography>
               <Typography variant="subtitle1">
-                {parkingSpots[0].price}{" "}
+                {parkingSpots?.price}{" "}
                 <Typography
                   variant="subtitle2"
                   component={"span"}
@@ -156,7 +156,7 @@ export default function SpacesDialogHeader({ parkingSpots }) {
                 To destination
               </Typography>
               <Typography variant="subtitle1">
-                {parkingSpots[0].walkingDistance}{" "}
+                {Math.floor(parkingSpots?.timeInMinutes)}{" "}
                 <Typography
                   variant="subtitle2"
                   component={"span"}

@@ -38,4 +38,5 @@ export type TUserSpaceList = {
 export interface IRootState {
   userSpaceList: TUserSpaceList[];
   userSingleSpaceList: Partial<TUserSpaceList>;
+  allSpaceList: TUserSpaceList[];
 }

@@ -14,7 +14,7 @@ export default function Navbar() {
   const isSmUp = useMediaQuery(theme.breakpoints.up("md"));
 
   const handleClose = () => {
-    setOpen(false);
+    setOpen(!open);
   };
 
   return (
@@ -31,7 +31,7 @@ export default function Navbar() {
         open={!isSmUp && open}
         onClose={handleClose}
         transitionDuration={{
-          enter: 500,
+          enter: 300,
           exit: 300,
         }}
         sx={{ zIndex: 1200 }}

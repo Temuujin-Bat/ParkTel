@@ -39,7 +39,7 @@ export default function SpacesDialog({ parkingSpots, open, setOpen }) {
         }}
       >
         <Typography variant="subtitle1">
-          {parkingSpots[0]?.addressLine}
+          {parkingSpots?.addressLine}, Tel Aviv
         </Typography>
 
         <Close onClick={() => setOpen(false)} style={{ cursor: "pointer" }} />

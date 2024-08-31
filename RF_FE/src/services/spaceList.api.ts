@@ -5,30 +5,22 @@ import axios from "axios";
 import { TListYourSpace } from "../types/requests";
 
 const SpaceListController = async (listSpaceData: TListYourSpace) => {
-  try {
-    await axios.post(
-      "http://localhost:1010/api/v1/spaceList/list-your-space",
-      listSpaceData,
-      { withCredentials: true }
-    );
-  } catch (error) {
-    throw error;
-  }
+  await axios.post(
+    "http://localhost:1010/api/v1/spaceList/list-your-space",
+    listSpaceData,
+    { withCredentials: true }
+  );
 };
 
 const GetUserSingleSpaceListController = async (id: string) => {
-  try {
-    const response = await axios.get(
-      `http://localhost:1010/api/v1/spaceList/space-owner/${id}`,
-      {
-        withCredentials: true,
-      }
-    );
+  const response = await axios.get(
+    `http://localhost:1010/api/v1/spaceList/space-owner/${id}`,
+    {
+      withCredentials: true,
+    }
+  );
 
-    return response?.data;
-  } catch (error) {
-    throw error;
-  }
+  return response?.data;
 };
 
 const EditUserSpaceListController = async ({
@@ -38,50 +30,49 @@ const EditUserSpaceListController = async ({
   id: string;
   updatedData: TListYourSpace;
 }) => {
-  try {
-    const response = await axios.post(
-      `http://localhost:1010/api/v1/spaceList/space-owner/edit/${id}`,
-      updatedData,
-      {
-        withCredentials: true,
-      }
-    );
+  const response = await axios.post(
+    `http://localhost:1010/api/v1/spaceList/space-owner/edit/${id}`,
+    updatedData,
+    {
+      withCredentials: true,
+    }
+  );
 
-    return response?.data;
-  } catch (error) {
-    throw error;
-  }
+  return response?.data;
 };
 
 const GetUserSpaceListController = async () => {
-  try {
-    const response = await axios.post(
-      "http://localhost:1010/api/v1/spaceList/space-owner",
-      {},
-      {
-        withCredentials: true,
-      }
-    );
+  const response = await axios.post(
+    "http://localhost:1010/api/v1/spaceList/space-owner",
+    {},
+    {
+      withCredentials: true,
+    }
+  );
 
-    return response?.data;
-  } catch (error) {
-    throw error;
-  }
+  return response?.data;
 };
 
 const DeleteUserSpaceListController = async (id: string) => {
-  try {
-    const response = await axios.delete(
-      `http://localhost:1010/api/v1/spaceList/space-owner/${id}`,
-      {
-        withCredentials: true,
-      }
-    );
+  const response = await axios.delete(
+    `http://localhost:1010/api/v1/spaceList/space-owner/${id}`,
+    {
+      withCredentials: true,
+    }
+  );
 
-    return response.data.updatedSpaceList;
-  } catch (error) {
-    throw error;
-  }
+  return response.data.updatedSpaceList;
+};
+
+const GetAllSpaceListController = async () => {
+  const response = await axios.post(
+    "http://localhost:1010/api/v1/spaceList/spaces",
+    {
+      withCredentials: true,
+    }
+  );
+
+  return response.data;
 };
 
 export {
@@ -90,4 +81,5 @@ export {
   EditUserSpaceListController,
   GetUserSpaceListController,
   DeleteUserSpaceListController,
+  GetAllSpaceListController,
 };

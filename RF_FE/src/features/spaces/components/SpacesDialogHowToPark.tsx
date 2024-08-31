@@ -128,8 +128,8 @@ export default function SpacesDialogHowToPark() {
                   <NotificationsSharp
                     sx={{
                       fontSize: "1.3em",
-                      mr: "10px",
                       color: "#2dc98a",
+                      mr: "10px",
                     }}
                   />
                   <Typography variant="subtitle1">

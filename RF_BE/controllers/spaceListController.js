@@ -35,7 +35,7 @@ const getUserSingleSpaceList = async (req, res) => {
       return res.status(404).json({ msg: `No space list with id: ${id}` });
     }
 
-    return res.status(201).json(spaceList);
+    return res.status(200).json(spaceList);
   } catch (error) {
     console.error("Error during getting a list:", error);
     return res
@@ -107,10 +107,28 @@ const editUserSpaceList = async (req, res) => {
   }
 };
 
+const getAllSpaceList = async (req, res) => {
+  try {
+    const spaceList = await SpaceList.find();
+
+    if (!spaceList || spaceList.length === 0) {
+      return res.status(404).json({ msg: "No space lists found" });
+    }
+
+    return res.status(200).json(spaceList);
+  } catch (error) {
+    console.error("Error during getting all space lists:", error);
+    return res
+      .status(500)
+      .json({ error: "Error inside spaceListController.js/getAllSpaceList" });
+  }
+};
+
 module.exports = {
   createSpaceList,
   getUserSingleSpaceList,
   getUserSpaceLists,
   deleteUserSpaceList,
   editUserSpaceList,
+  getAllSpaceList,
 };

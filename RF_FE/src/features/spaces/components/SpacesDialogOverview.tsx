@@ -8,8 +8,8 @@ export default function SpacesDialogOverview({ parkingSpots }) {
       <Stack sx={{ width: "100%", height: "300px" }}>
         <Stack
           component={"img"}
-          src={parkingSpots[0].imageUrl}
-          sx={{ height: "100%" }}
+          src={parkingSpots?.photos[0]}
+          sx={{ height: "100%", objectFit: "contain" }}
         />
       </Stack>
 
@@ -27,7 +27,7 @@ export default function SpacesDialogOverview({ parkingSpots }) {
             textDecorationColor: "#2dc98a",
           },
         }}
-        href={`https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${parkingSpots[0].coordinates.latitude},${parkingSpots[0].coordinates.longitude}`}
+        href={`https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${parkingSpots?.coordinates?.latitude},${parkingSpots?.coordinates?.longitude}`}
         target="_blank"
       >
         <Map sx={{ mr: "10px", color: "#2dc98a" }} />

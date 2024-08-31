@@ -23,10 +23,15 @@ export default function DrawerList({
 }) {
   const location = useLocation();
 
-  const isSpaceOwner = location.pathname.startsWith("/space-owner");
-  const [userRole, setUserRole] = useState<TUserRole>(
-    isSpaceOwner ? "owner" : "driver"
-  );
+  const [userRole, setUserRole] = useState<TUserRole>(() => {
+    if (location.pathname.startsWith("/space-owner")) {
+      return "owner";
+    } else if (location.pathname.startsWith("/driver")) {
+      return "driver";
+    }
+    return "owner";
+  });
+
   const { isLoggedIn } = useAuth();
   const { isPending } = useGetProfileAPI();
 
@@ -48,37 +53,43 @@ export default function DrawerList({
     { name: "Log Out", action: logoutHandler },
   ];
 
-  if (isPending) {
-    return <LoadingMUI />;
-  }
-
   return (
-    <Box
-      sx={{
-        position: "relative",
-        height: "100%",
-        padding: "20px",
-        backgroundColor: "#F2F2F2",
-        mt: "50px",
-        width: {
-          xs: "100vw",
-          sm: "60vw",
-        },
-      }}
-      onClick={handleClose}
-    >
-      <DrawerListOwnerDriver userRole={userRole} setUserRole={setUserRole} />
-
-      <Stack sx={{ borderBottom: "1px solid #979797", mt: "20px" }} />
-
-      {userRole === "owner" ? (
-        <DrawerListLinks links={ownerLinks} />
+    <>
+      {isPending ? (
+        <LoadingMUI />
       ) : (
-        <DrawerListLinks links={driverLinks} />
-      )}
-      {/* {userRole === "driver" && <DrawerListLinks links={driverLinks} />} */}
+        <Box
+          sx={{
+            position: "relative",
+            height: "100%",
+            padding: "20px",
+            backgroundColor: "#F2F2F2",
+            mt: "50px",
+            width: {
+              xs: "100vw",
+              sm: "60vw",
+            },
+          }}
+          onClick={handleClose}
+        >
+          <DrawerListOwnerDriver
+            userRole={userRole}
+            setUserRole={setUserRole}
+          />
 
-      <DrawerListButtons isLoggedIn={isLoggedIn} />
-    </Box>
+          <Stack sx={{ borderBottom: "1px solid #979797", mt: "20px" }} />
+
+          {userRole === "owner" ? (
+            <DrawerListLinks links={ownerLinks} />
+          ) : userRole === "driver" ? (
+            <DrawerListLinks links={driverLinks} />
+          ) : (
+            <div>Not Found (Typo)</div>
+          )}
+
+          <DrawerListButtons isLoggedIn={isLoggedIn} />
+        </Box>
+      )}
+    </>
   );
 }
