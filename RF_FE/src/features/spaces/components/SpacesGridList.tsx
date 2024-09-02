@@ -68,22 +68,43 @@ export default function SpacesGridList({
                 mt: "15px",
               }}
             >
-              <Typography
-                variant="body2"
-                sx={{ display: "flex", alignItems: "center" }}
-              >
-                <DirectionsWalk
-                  sx={{ color: "#adbfca", fontSize: "1.5em", mr: "3px" }}
-                />
+              {spot.timeInMinutes !== undefined ? (
                 <Typography
-                  sx={{ mr: "3px" }}
-                  variant="subtitle2"
-                  component={"span"}
+                  variant="body2"
+                  sx={{ display: "flex", alignItems: "center" }}
                 >
-                  {Math.floor(spot.timeInMinutes)}
+                  <DirectionsWalk
+                    sx={{ color: "#adbfca", fontSize: "1.5em", mr: "3px" }}
+                  />
+                  <Typography
+                    sx={{ mr: "3px" }}
+                    variant="subtitle2"
+                    component={"span"}
+                  >
+                    {Math.floor(spot.timeInMinutes)}
+                  </Typography>
+                  mins
                 </Typography>
-                mins
-              </Typography>
+              ) : (
+                <Tooltip title="User location is unavailable">
+                  <Typography
+                    variant="body2"
+                    sx={{ display: "flex", alignItems: "center" }}
+                  >
+                    <DirectionsWalk
+                      sx={{ color: "#adbfca", fontSize: "1.5em", mr: "3px" }}
+                    />
+                    <Typography
+                      sx={{ mr: "3px" }}
+                      variant="subtitle2"
+                      component={"span"}
+                    >
+                      NaN
+                    </Typography>
+                    mins
+                  </Typography>
+                </Tooltip>
+              )}
 
               <Tooltip
                 title={

@@ -22,27 +22,34 @@ export default function SpacesPage() {
   const [open, setOpen] = useState(false);
   const [selectedSpot, setSelectedSpot] = useState(null);
   const [parkingSpotsWithTime, setParkingSpotsWithTime] = useState([]);
+  const [isWorkerLoading, setIsWorkerLoading] = useState(false);
 
   const { data: parkingSpots, isPending } = useGetAllSpaceList();
   const userLocation = useUserLocation();
 
   useEffect(() => {
-    if (parkingSpots && userLocation) {
-      const worker = new Worker(
-        new URL("../workers/distanceWorker.js", import.meta.url)
-      );
+    if (parkingSpots) {
+      if (userLocation) {
+        setIsWorkerLoading(true);
+        const worker = new Worker(
+          new URL("../workers/distanceWorker.js", import.meta.url)
+        );
 
-      worker.postMessage({
-        parkingSpots,
-        userLocation,
-      });
+        worker.postMessage({
+          parkingSpots,
+          userLocation,
+        });
 
-      worker.onmessage = (e) => {
-        setParkingSpotsWithTime(e.data);
-        worker.terminate();
-      };
+        worker.onmessage = (e) => {
+          setParkingSpotsWithTime(e.data);
+          setIsWorkerLoading(false);
+          worker.terminate();
+        };
 
-      return () => worker.terminate();
+        return () => worker.terminate();
+      } else {
+        setParkingSpotsWithTime(parkingSpots);
+      }
     }
   }, [parkingSpots, userLocation]);
 
@@ -63,7 +70,7 @@ export default function SpacesPage() {
           sortedParkingSpots={sortedParkingSpots}
           setSelectedSpot={setSelectedSpot}
           setOpen={setOpen}
-          isPending={isPending}
+          isPending={isPending || isWorkerLoading}
         />
       </Grid>
 

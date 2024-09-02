@@ -19,7 +19,7 @@ export default function SpacesGrid({
         overflowY: "auto",
       }}
     >
-      {isPending || !sortedParkingSpots || sortedParkingSpots.coordinates ? (
+      {isPending ? (
         <SpacesGridSkeleton />
       ) : (
         <SpacesGridList

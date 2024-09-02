@@ -1,3 +1,5 @@
+export { default as OwnerOrDriver } from "./components/OwnerOrDriver";
+
 // Owner
 export { default as OwnerLinks } from "./components/OwnerLinks";
 export { default as OwnerListing } from "./components/OwnerListing";

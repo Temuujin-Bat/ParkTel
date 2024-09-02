@@ -17,10 +17,7 @@ export default function SpacesMap({
 }) {
   return (
     <>
-      {isPending ||
-      !userLocation ||
-      !userLocation.latitude ||
-      !userLocation.longitude ? (
+      {isPending ? (
         <Box
           sx={{
             display: {
@@ -41,42 +38,44 @@ export default function SpacesMap({
       ) : (
         <Map
           initialViewState={{
-            latitude: Number(userLocation?.latitude),
-            longitude: Number(userLocation?.longitude),
-            zoom: 16,
+            latitude: userLocation?.latitude || 32.0853,
+            longitude: userLocation?.longitude || 34.7818,
+            zoom: userLocation?.latitude ? 16 : 12,
           }}
           style={{ width: "100%", height: "93.5vh" }}
           mapStyle="mapbox://styles/mapbox/streets-v11"
           mapboxAccessToken={ACCESS_TOKEN_MAP}
         >
-          <Marker
-            latitude={userLocation.latitude}
-            longitude={userLocation.longitude}
-            anchor="bottom"
-          >
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                position: "relative",
-              }}
+          {userLocation?.latitude && (
+            <Marker
+              latitude={userLocation.latitude}
+              longitude={userLocation.longitude}
+              anchor="bottom"
             >
-              <LocationOn sx={{ fontSize: "2em" }} />
-              <Stack
+              <Box
                 sx={{
-                  position: "absolute",
-                  top: "50%",
-                  left: "50%",
-                  border: "5px dotted #2dc98a",
-                  transform: "translate(-50%, -50%)",
-                  borderRadius: "50%",
-                  width: "100px",
-                  height: "100px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  position: "relative",
                 }}
-              />
-            </Box>
-          </Marker>
+              >
+                <LocationOn sx={{ fontSize: "2em" }} />
+                <Stack
+                  sx={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    border: "5px dotted #2dc98a",
+                    transform: "translate(-50%, -50%)",
+                    borderRadius: "50%",
+                    width: "100px",
+                    height: "100px",
+                  }}
+                />
+              </Box>
+            </Marker>
+          )}
 
           {parkingSpots.map((spot, id) => (
             <Marker
