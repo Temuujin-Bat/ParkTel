@@ -4,14 +4,16 @@ import { useState } from "react";
 import { Box, Stack } from "@mui/material";
 
 // Components
-import { useAuth } from "../../../hooks/useAuth";
-import { useLogout } from "../../../hooks/useLogout";
 import DrawerListLinks from "./DrawerListLinks";
 import DrawerListButtons from "./DrawerListButtons";
 import DrawerListOwnerDriver from "./DrawerListOwnerDriver";
-import { useGetProfileAPI } from "../../../hooks/api/useGetProfile";
 import LoadingMUI from "../../../components/LoadingMUI";
 import { TUserRole } from "./types";
+
+// Hooks
+import { useAuth } from "../../../hooks/useAuth";
+import { useLogout } from "../../../hooks/useLogout";
+import { useGetProfileAPI } from "../../../hooks/api/useGetProfile";
 
 // Third party
 import { useLocation } from "react-router-dom";
@@ -72,16 +74,19 @@ export default function DrawerList({
           }}
           onClick={handleClose}
         >
-          <DrawerListOwnerDriver
-            userRole={userRole}
-            setUserRole={setUserRole}
-          />
+          {isLoggedIn() && (
+            <>
+              <DrawerListOwnerDriver
+                userRole={userRole}
+                setUserRole={setUserRole}
+              />
+              <Stack sx={{ borderBottom: "1px solid #979797", mt: "20px" }} />
+            </>
+          )}
 
-          <Stack sx={{ borderBottom: "1px solid #979797", mt: "20px" }} />
-
-          {userRole === "owner" ? (
+          {userRole === "owner" && isLoggedIn() ? (
             <DrawerListLinks links={ownerLinks} />
-          ) : userRole === "driver" ? (
+          ) : userRole === "driver" && isLoggedIn() ? (
             <DrawerListLinks links={driverLinks} />
           ) : (
             <div>Not Found (Typo)</div>

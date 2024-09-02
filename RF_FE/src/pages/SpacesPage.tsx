@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 // MUI
 import { Paper } from "@mui/material";
@@ -17,27 +17,34 @@ import { useUserLocation } from "../hooks/useUserLocation";
 import { useSortedSpace } from "../hooks/useSortedSpace";
 import { useGetAllSpaceList } from "../hooks/api/useGetAllSpaceList";
 
-// Utils
-import { CalculateParkingSpotsWithTime } from "../utils/helpers/DistanceCalc";
-
 export default function SpacesPage() {
   const [sortType, setSortType] = useState("nearest");
   const [open, setOpen] = useState(false);
   const [selectedSpot, setSelectedSpot] = useState(null);
+  const [parkingSpotsWithTime, setParkingSpotsWithTime] = useState([]);
 
   const { data: parkingSpots, isPending } = useGetAllSpaceList();
   const userLocation = useUserLocation();
-  const averageSpeedMetersPerMinute = 83.33;
 
-  const parkingSpotsWithTime = useMemo(
-    () =>
-      CalculateParkingSpotsWithTime(
+  useEffect(() => {
+    if (parkingSpots && userLocation) {
+      const worker = new Worker(
+        new URL("../workers/distanceWorker.js", import.meta.url)
+      );
+
+      worker.postMessage({
         parkingSpots,
         userLocation,
-        averageSpeedMetersPerMinute
-      ),
-    [parkingSpots, userLocation, averageSpeedMetersPerMinute]
-  );
+      });
+
+      worker.onmessage = (e) => {
+        setParkingSpotsWithTime(e.data);
+        worker.terminate();
+      };
+
+      return () => worker.terminate();
+    }
+  }, [parkingSpots, userLocation]);
 
   const sortedParkingSpots = useSortedSpace(parkingSpotsWithTime, sortType);
 
@@ -70,7 +77,7 @@ export default function SpacesPage() {
         />
       </Grid>
 
-      {!isPending && (
+      {sortedParkingSpots && (
         <SpacesDialog
           parkingSpots={selectedSpot}
           open={open}

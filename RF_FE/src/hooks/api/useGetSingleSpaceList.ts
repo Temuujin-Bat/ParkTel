@@ -20,5 +20,5 @@ export function useGetUserSingleSpaceListAPI(id: string) {
     if (isSuccess) {
       dispatch(spaceList.setUserSingleSpaceList(data));
     }
-  }, [data]);
+  }, [data, dispatch, isSuccess]);
 }

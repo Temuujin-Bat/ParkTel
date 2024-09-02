@@ -4,15 +4,12 @@ import { Box, Container, Fade, Typography } from "@mui/material";
 // Components
 import { NoActiveListingBooking } from "../../../components/notFound";
 import OwnerListingGrid from "./OwnerListingGrid";
+
+// Hooks
 import { useGetUserSpaceListAPI } from "../../../hooks/api/useGetUserSpaceList";
-import LoadingMUI from "../../../components/LoadingMUI";
 
 export default function OwnerListing() {
   const { data: myListings, isPending } = useGetUserSpaceListAPI();
-
-  if (isPending) {
-    return <LoadingMUI />;
-  }
 
   return (
     <Fade in={true} timeout={500}>
@@ -25,7 +22,7 @@ export default function OwnerListing() {
           {myListings && myListings.length === 0 ? (
             <NoActiveListingBooking />
           ) : (
-            <OwnerListingGrid />
+            <OwnerListingGrid isPending={isPending} />
           )}
         </Box>
       </Container>

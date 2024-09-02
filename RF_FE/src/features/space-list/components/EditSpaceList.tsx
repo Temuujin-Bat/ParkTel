@@ -10,11 +10,9 @@ import { useGetUserSingleSpaceListAPI } from "../../../hooks/api/useGetSingleSpa
 import { useParams } from "react-router-dom";
 
 export default function EditSpaceList() {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
 
-  if (id) {
-    useGetUserSingleSpaceListAPI(id);
-  }
+  useGetUserSingleSpaceListAPI(id as string);
 
   return (
     <Fade in={true} timeout={500}>

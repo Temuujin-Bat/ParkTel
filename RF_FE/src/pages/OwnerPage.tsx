@@ -10,7 +10,7 @@ import { OwnerLinks, OwnerListing } from "../features/profile";
 export default function OwnerPage() {
   const location = useLocation();
   const isOnSpaceOwnerPage = location.pathname === "/space-owner";
-  const isOnEditSpace = /\/space-owner\/edit\/[^\/]+$/.test(location.pathname);
+  const isOnEditSpace = /\/space-owner\/edit\/[^/]+$/.test(location.pathname);
 
   return (
     <Container maxWidth="lg">

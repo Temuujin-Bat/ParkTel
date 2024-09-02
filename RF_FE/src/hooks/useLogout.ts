@@ -3,11 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 // Components
-
 import { authActions } from "../store/auth/slice";
 import { persistor } from "../store";
+import { HandleCloseType, TLogout } from "./types";
 
-export const useLogout = (handleClose: () => void) => {
+export const useLogout = (handleClose?: HandleCloseType): TLogout => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -16,7 +16,9 @@ export const useLogout = (handleClose: () => void) => {
     sessionStorage.clear();
     localStorage.clear();
     dispatch(authActions.resetState());
-    handleClose();
+    if (handleClose) {
+      handleClose();
+    }
     navigate("/");
   };
 

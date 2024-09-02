@@ -21,7 +21,7 @@ export function useGetUserSpaceListAPI() {
     if (isSuccess && data) {
       dispatch(spaceList.setUserSpaceList(data));
     }
-  }, [data]);
+  }, [data, isSuccess, dispatch]);
 
   return { data, isPending };
 }
