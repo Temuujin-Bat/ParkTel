@@ -1,18 +1,16 @@
 // MUI
 import { Box, Container, Fade, Typography } from "@mui/material";
+import { SentimentDissatisfiedSharp } from "@mui/icons-material";
 
 // Components
 import { NoActiveListingBooking } from "../../../components/notFound";
 import OwnerListingGrid from "./OwnerListingGrid";
+
+// Hooks
 import { useGetUserSpaceListAPI } from "../../../hooks/api/useGetUserSpaceList";
-import LoadingMUI from "../../../components/LoadingMUI";
 
 export default function DriverActiveBooking() {
   const { data: myListings, isPending } = useGetUserSpaceListAPI();
-
-  if (isPending) {
-    return <LoadingMUI />;
-  }
 
   return (
     <Fade in={true} timeout={500}>
@@ -23,9 +21,16 @@ export default function DriverActiveBooking() {
           </Typography>
 
           {myListings && myListings.length !== 0 ? (
-            <NoActiveListingBooking />
+            <NoActiveListingBooking
+              icon={
+                <SentimentDissatisfiedSharp
+                  sx={{ margin: "20px", fontSize: "3.5em" }}
+                />
+              }
+              message="You have no active bookings"
+            />
           ) : (
-            <OwnerListingGrid />
+            <OwnerListingGrid isPending={isPending} />
           )}
         </Box>
       </Container>

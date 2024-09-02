@@ -1,5 +1,6 @@
 // MUI
 import { Box, Container, Fade, Typography } from "@mui/material";
+import { SentimentDissatisfiedSharp } from "@mui/icons-material";
 
 // Components
 import { NoActiveListingBooking } from "../../../components/notFound";
@@ -20,7 +21,14 @@ export default function OwnerListing() {
           </Typography>
 
           {myListings && myListings.length === 0 ? (
-            <NoActiveListingBooking />
+            <NoActiveListingBooking
+              icon={
+                <SentimentDissatisfiedSharp
+                  sx={{ margin: "20px", fontSize: "3.5em" }}
+                />
+              }
+              message="You have no active bookings"
+            />
           ) : (
             <OwnerListingGrid isPending={isPending} />
           )}

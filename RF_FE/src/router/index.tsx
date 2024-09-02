@@ -30,7 +30,7 @@ const LazyOwnerReservationsCancelled = lazy(
 const LazyListYourSpace = lazy(() => import("../pages/ListYourSpace"));
 // Pages Driver
 const LazyDriver = lazy(() => import("../pages/DriverPage"));
-const LazyDriverPastBookin = lazy(
+const LazyDriverPastBooking = lazy(
   () => import("../features/profile/components/DriverPastBooking")
 );
 // Pages Profile
@@ -127,7 +127,7 @@ const InitRoutes = () =>
               path: "past-bookings",
               element: (
                 <ProtectedRoute>
-                  <LazyDriverPastBookin />
+                  <LazyDriverPastBooking />
                 </ProtectedRoute>
               ),
               children: [

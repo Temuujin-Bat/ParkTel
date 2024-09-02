@@ -1,8 +1,17 @@
+import { ReactNode } from "react";
+
 // MUI
 import { Box, Container, Link, Stack, Typography } from "@mui/material";
-import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 
-export default function NoActiveListingBooking() {
+interface NoActiveListingBookingProps {
+  icon: ReactNode;
+  message: string;
+}
+
+export default function NoActiveListingBooking({
+  icon,
+  message,
+}: NoActiveListingBookingProps) {
   return (
     <Container maxWidth="md">
       <Box
@@ -22,13 +31,11 @@ export default function NoActiveListingBooking() {
             mt: "50px",
           }}
         >
-          <SentimentVeryDissatisfiedIcon
-            sx={{ margin: "20px", fontSize: "3.5em" }}
-          />
+          {icon}
         </Stack>
 
         <Typography variant="h5" sx={{ mt: "20px" }}>
-          You have no active listings
+          {message}
         </Typography>
 
         <Stack

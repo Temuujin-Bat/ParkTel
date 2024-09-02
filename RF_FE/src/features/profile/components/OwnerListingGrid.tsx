@@ -1,7 +1,5 @@
 // Components
 import OwnerListingGridSkeleton from "./OwnerListingGridSkeleton";
-
-// Hooks
 import OwnerListingGridList from "./OwnerListingGridList";
 
 export default function OwnerListingGrid({
