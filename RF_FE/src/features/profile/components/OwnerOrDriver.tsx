@@ -17,10 +17,23 @@ export default function OwnerOrDriver({ userRole, setUserRole }) {
   return (
     <Box
       sx={{
-        display: "flex",
+        display: { xs: "none", sm: "none", md: "flex", lg: "flex" },
         alignItems: "center",
         justifyContent: "left",
         mt: "15px",
+        position: "relative",
+        width: "100%",
+        "&:after": {
+          content: '""',
+          position: "absolute",
+          bottom: "-15px",
+          left: 0,
+          right: 0,
+          height: "2px",
+          backgroundColor: "#d9d9d9",
+          width: "calc(100% + 100vw)",
+          marginLeft: "-50vw",
+        },
       }}
     >
       <Link

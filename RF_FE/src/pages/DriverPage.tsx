@@ -9,14 +9,13 @@ import { Outlet, useLocation } from "react-router-dom";
 // Components
 import {
   DriverActiveBooking,
-  OwnerLinks,
+  DriverLinks,
   OwnerOrDriver,
 } from "../features/profile";
 
 export default function DriverPage() {
   const location = useLocation();
   const isOnSpaceOwnerPage = location.pathname === "/driver";
-  const isOnEditSpace = /\/driver\/edit\/[^/]+$/.test(location.pathname);
 
   const [userRole, setUserRole] = useState(() => {
     if (location.pathname.startsWith("/driver")) {
@@ -32,7 +31,7 @@ export default function DriverPage() {
       <OwnerOrDriver userRole={userRole} setUserRole={setUserRole} />
 
       <Box sx={{ display: "flex" }}>
-        {!isOnEditSpace && <OwnerLinks />}
+        <DriverLinks />
 
         <Outlet />
 

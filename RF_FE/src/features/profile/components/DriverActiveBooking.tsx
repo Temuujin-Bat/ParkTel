@@ -27,7 +27,7 @@ export default function DriverActiveBooking() {
                   sx={{ margin: "20px", fontSize: "3.5em" }}
                 />
               }
-              message="You have no active bookings"
+              message="You have no upcoming bookings"
             />
           ) : (
             <OwnerListingGrid isPending={isPending} />
