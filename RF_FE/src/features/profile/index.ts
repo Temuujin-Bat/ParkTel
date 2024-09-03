@@ -19,4 +19,6 @@ export { default as DriverActiveBooking } from "./components/DriverActiveBooking
 export { default as DriverPastBooking } from "./components/DriverPastBooking";
 
 export { default as ProfileSettings } from "./components/ProfileSettings";
+export { default as ProfileSettingsGrid } from "./components/ProfileSettingsGrid";
+export { default as ProfileSettingsSkeleton } from "./components/ProfileSettingsSkeleton";
 export { default as ProfileChangePassword } from "./components/ProfileChangePassword";
