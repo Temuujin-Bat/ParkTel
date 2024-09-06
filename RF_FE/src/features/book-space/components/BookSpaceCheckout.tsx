@@ -17,6 +17,11 @@ export default function BookSpaceCheckout({
   const { mutate } = useCreateBookingAPI();
 
   const handlePay = () => {
+    if (!vehicleNumber) {
+      alert("Please enter your vehicle registration number");
+      return;
+    }
+
     mutate({
       id: singleList._id,
       vehicleNumber,
@@ -99,7 +104,7 @@ export default function BookSpaceCheckout({
         </Stack>
       </Box>
 
-      <Box
+      {/* <Box
         sx={{
           display: "flex",
           justifyContent: "center",
@@ -108,13 +113,13 @@ export default function BookSpaceCheckout({
         }}
       >
         <Link
-          href="#"
           underline="none"
           sx={{
             backgroundColor: "#2dc98a",
             width: "100%",
             borderRadius: "3px",
             padding: "10px",
+            "&:hover": { cursor: "pointer" },
           }}
           onClick={handlePay}
         >
@@ -125,7 +130,7 @@ export default function BookSpaceCheckout({
             Pay
           </Typography>
         </Link>
-      </Box>
+      </Box> */}
     </>
   );
 }
