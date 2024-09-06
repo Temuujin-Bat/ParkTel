@@ -13,7 +13,6 @@ export default function DriverLinks() {
 
   const links = [
     { name: "Active Bookings", url: "/driver" },
-    { name: "Past Bookings", url: "/driver/past-bookings" },
     { name: "Profile Settings", url: "/driver/profile-settings" },
     { name: "Change Password", url: "/driver/change-password" },
     { name: "Log Out", action: logoutHandler },

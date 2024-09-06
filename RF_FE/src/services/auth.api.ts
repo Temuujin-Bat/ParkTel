@@ -10,52 +10,40 @@ import {
 import { encryptData } from "../utils/crypto_util";
 
 const RegisterController = async (registerData: TRegisterRequest) => {
-  try {
-    const response = await axios.post(
-      "http://localhost:1010/api/v1/auth/register",
-      registerData,
-      { withCredentials: true }
-    );
+  const response = await axios.post(
+    "http://localhost:1010/api/v1/auth/register",
+    registerData,
+    { withCredentials: true }
+  );
 
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  return response.data;
 };
 
 const LoginController = async (loginData: TLoginRequest) => {
-  try {
-    const email = loginData?.email.toLocaleLowerCase();
-    const password = loginData?.password;
+  const email = loginData?.email.toLocaleLowerCase();
+  const password = loginData?.password;
 
-    const response = await axios.post(
-      "http://localhost:1010/api/v1/auth/login",
-      { email, password },
-      { withCredentials: true }
-    );
+  const response = await axios.post(
+    "http://localhost:1010/api/v1/auth/login",
+    { email, password },
+    { withCredentials: true }
+  );
 
-    if (response) {
-      encryptData("token", response.data.token, "sessionStorage");
-    }
-
-    return response.data;
-  } catch (error) {
-    throw error;
+  if (response) {
+    encryptData("token", response.data.token, "sessionStorage");
   }
+
+  return response.data;
 };
 
 const ForgotPasswordController = async (email: string) => {
-  try {
-    const response = await axios.post(
-      "http://localhost:1010/api/v1/auth/forgot-password",
-      { email },
-      { withCredentials: true }
-    );
+  const response = await axios.post(
+    "http://localhost:1010/api/v1/auth/forgot-password",
+    { email },
+    { withCredentials: true }
+  );
 
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  return response.data;
 };
 
 const ResetPasswordController = async ({
@@ -65,43 +53,31 @@ const ResetPasswordController = async ({
   token: string;
   password: string;
 }) => {
-  try {
-    const response = await axios.post(
-      `http://localhost:1010/api/v1/auth/reset-password/${token}`,
-      { password },
-      { withCredentials: true }
-    );
+  const response = await axios.post(
+    `http://localhost:1010/api/v1/auth/reset-password/${token}`,
+    { password },
+    { withCredentials: true }
+  );
 
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  return response.data;
 };
 
 const ValidateResetTokenController = async (token: string) => {
-  try {
-    await axios.post(
-      `http://localhost:1010/api/v1/auth/validate-reset-token/${token}`,
-      { withCredentials: true }
-    );
-  } catch (error) {
-    throw error;
-  }
+  await axios.post(
+    `http://localhost:1010/api/v1/auth/validate-reset-token/${token}`,
+    { withCredentials: true }
+  );
 };
 
 const ChangePasswordController = async (changeData: TChangePassword) => {
-  try {
-    await axios.post(
-      "http://localhost:1010/api/v1/auth/change-password",
-      {
-        oldPassword: changeData.oldPassword,
-        newPassword: changeData.newPassword,
-      },
-      { withCredentials: true }
-    );
-  } catch (error) {
-    throw error;
-  }
+  await axios.post(
+    "http://localhost:1010/api/v1/auth/change-password",
+    {
+      oldPassword: changeData.oldPassword,
+      newPassword: changeData.newPassword,
+    },
+    { withCredentials: true }
+  );
 };
 
 export {

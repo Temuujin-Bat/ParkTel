@@ -15,7 +15,7 @@ import {
 
 export default function DriverPage() {
   const location = useLocation();
-  const isOnSpaceOwnerPage = location.pathname === "/driver";
+  const isOnDriverPage = location.pathname === "/driver";
 
   const [userRole, setUserRole] = useState(() => {
     if (location.pathname.startsWith("/driver")) {
@@ -35,7 +35,7 @@ export default function DriverPage() {
 
         <Outlet />
 
-        {isOnSpaceOwnerPage && <DriverActiveBooking />}
+        {isOnDriverPage && <DriverActiveBooking />}
       </Box>
     </Container>
   );

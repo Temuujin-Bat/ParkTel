@@ -49,7 +49,6 @@ export default function DrawerList({
 
   const driverLinks = [
     { name: "Active Bookings", url: "/driver" },
-    { name: "Past Bookings", url: "/driver/past-bookings" },
     { name: "Profile Settings", url: "/driver/profile-settings" },
     { name: "Change Password", url: "/driver/change-password" },
     { name: "Log Out", action: logoutHandler },

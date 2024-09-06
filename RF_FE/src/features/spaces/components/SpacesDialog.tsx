@@ -57,6 +57,7 @@ export default function SpacesDialog({ parkingSpots, open, setOpen }) {
         }}
       >
         <Link
+          href={`/book/${parkingSpots?._id}`}
           underline="none"
           sx={{
             backgroundColor: "#2dc98a",

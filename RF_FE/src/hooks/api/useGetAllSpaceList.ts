@@ -8,12 +8,12 @@ import { GetAllSpaceListController } from "../../services";
 import { QUERY_KEYS } from "../../utils/enums";
 import { spaceList } from "../../store/spaceList/slice";
 
-export function useGetAllSpaceList() {
+export function useGetAllSpaceList(selectedDay: string) {
   const dispatch = useDispatch();
 
   const { isSuccess, data, isPending } = useQuery({
     queryKey: [QUERY_KEYS.ALLSPACELIST],
-    queryFn: GetAllSpaceListController,
+    queryFn: () => GetAllSpaceListController(selectedDay),
   });
 
   useEffect(() => {

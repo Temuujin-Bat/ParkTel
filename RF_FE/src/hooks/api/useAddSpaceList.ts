@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
 
 // Components
-import { SpaceListController } from "../../services";
+import { AddSpaceListController } from "../../services";
 
 export function useAddSpaceListAPI(
   setActiveStep: React.Dispatch<React.SetStateAction<number>>
@@ -13,7 +13,7 @@ export function useAddSpaceListAPI(
   const { enqueueSnackbar } = useSnackbar();
 
   const { mutate, isPending, isError } = useMutation({
-    mutationFn: SpaceListController,
+    mutationFn: AddSpaceListController,
     onSuccess: () => {
       enqueueSnackbar("Space list added successfully!", {
         variant: "success",

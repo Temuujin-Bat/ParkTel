@@ -4,7 +4,7 @@ import axios from "axios";
 // Components
 import { TListYourSpace } from "../types/requests";
 
-const SpaceListController = async (listSpaceData: TListYourSpace) => {
+const AddSpaceListController = async (listSpaceData: TListYourSpace) => {
   await axios.post(
     "http://localhost:1010/api/v1/spaceList/list-your-space",
     listSpaceData,
@@ -64,9 +64,12 @@ const DeleteUserSpaceListController = async (id: string) => {
   return response.data.updatedSpaceList;
 };
 
-const GetAllSpaceListController = async () => {
+const GetAllSpaceListController = async (selectedDay: string) => {
   const response = await axios.post(
     "http://localhost:1010/api/v1/spaceList/spaces",
+    {
+      day: selectedDay,
+    },
     {
       withCredentials: true,
     }
@@ -76,7 +79,7 @@ const GetAllSpaceListController = async () => {
 };
 
 export {
-  SpaceListController,
+  AddSpaceListController,
   GetUserSingleSpaceListController,
   EditUserSpaceListController,
   GetUserSpaceListController,

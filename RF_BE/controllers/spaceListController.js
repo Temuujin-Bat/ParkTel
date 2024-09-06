@@ -109,13 +109,46 @@ const editUserSpaceList = async (req, res) => {
 
 const getAllSpaceList = async (req, res) => {
   try {
-    const spaceList = await SpaceList.find();
+    const { day } = req.body;
+
+    let filter = {};
+
+    if (day) {
+      filter[`selectedDays.${day}`] = true;
+    }
+
+    const spaceList = await SpaceList.find(filter);
 
     if (!spaceList || spaceList.length === 0) {
       return res.status(404).json({ msg: "No space lists found" });
     }
 
-    return res.status(200).json(spaceList);
+    // Iterate through the space list and check if 24 hours have passed
+    const updatedSpaceList = await Promise.all(
+      spaceList.map(async (space) => {
+        if (!space.status && space.bookingDate) {
+          const now = new Date();
+          const bookingDuration = 24 * 60 * 60 * 1000;
+          const timeSinceBooking = now - new Date(space.bookingDate);
+
+          if (timeSinceBooking >= bookingDuration) {
+            const updatedSpace = {
+              status: true, // Make it available again
+              rentedBy: null, // Clear the rentedBy field
+              bookingDate: null, // Clear the bookingDate
+            };
+
+            await SpaceList.findByIdAndUpdate(space._id, updatedSpace, {
+              new: true, // Return the updated document
+            });
+          }
+        }
+
+        return space;
+      })
+    );
+
+    return res.status(200).json(updatedSpaceList);
   } catch (error) {
     console.error("Error during getting all space lists:", error);
     return res
