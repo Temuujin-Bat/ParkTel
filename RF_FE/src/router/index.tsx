@@ -13,6 +13,7 @@ import { ProtectedRoute } from "./ProtectedRoute";
 // Pages
 const LazyHome = lazy(() => import("../pages/HomePage"));
 const LazySpaces = lazy(() => import("../pages/SpacesPage"));
+const LazyBookSpace = lazy(() => import("../pages/BookSpace"));
 // Pages Owner
 const LazyOwner = lazy(() => import("../pages/OwnerPage"));
 const LazyEditListing = lazy(
@@ -21,18 +22,10 @@ const LazyEditListing = lazy(
 const LazyOwnerReservations = lazy(
   () => import("../features/profile/components/OwnerReservations")
 );
-const LazyOwnerReservationsCompleted = lazy(
-  () => import("../features/profile/components/OwnerReservationsCompleted")
-);
-const LazyOwnerReservationsCancelled = lazy(
-  () => import("../features/profile/components/OwnerReservationsCancelled")
-);
 const LazyListYourSpace = lazy(() => import("../pages/ListYourSpace"));
 // Pages Driver
 const LazyDriver = lazy(() => import("../pages/DriverPage"));
-const LazyDriverPastBooking = lazy(
-  () => import("../features/profile/components/DriverPastBooking")
-);
+
 // Pages Profile
 const LazyProfileSettings = lazy(
   () => import("../features/profile/components/ProfileSettings")
@@ -64,6 +57,10 @@ const InitRoutes = () =>
           element: <LazySpaces />,
         },
         {
+          path: "/book/:id",
+          element: <LazyBookSpace />,
+        },
+        {
           path: "/space-owner",
           element: (
             <ProtectedRoute>
@@ -86,16 +83,6 @@ const InitRoutes = () =>
                   <LazyOwnerReservations />
                 </ProtectedRoute>
               ),
-              children: [
-                {
-                  path: "completed",
-                  element: <LazyOwnerReservationsCompleted />,
-                },
-                {
-                  path: "cancelled",
-                  element: <LazyOwnerReservationsCancelled />,
-                },
-              ],
             },
             {
               path: "profile-settings",
@@ -123,24 +110,6 @@ const InitRoutes = () =>
             </ProtectedRoute>
           ),
           children: [
-            {
-              path: "past-bookings",
-              element: (
-                <ProtectedRoute>
-                  <LazyDriverPastBooking />
-                </ProtectedRoute>
-              ),
-              children: [
-                {
-                  path: "completed",
-                  element: <LazyOwnerReservationsCompleted />,
-                },
-                {
-                  path: "cancelled",
-                  element: <LazyOwnerReservationsCancelled />,
-                },
-              ],
-            },
             {
               path: "profile-settings",
               element: (

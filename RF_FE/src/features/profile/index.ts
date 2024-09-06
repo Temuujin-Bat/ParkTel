@@ -8,15 +8,13 @@ export { default as OwnerListingGridSkeleton } from "./components/OwnerListingGr
 export { default as OwnerListingGridList } from "./components/OwnerListingGridList";
 
 export { default as OwnerReservations } from "./components/OwnerReservations";
-export { default as OwnerReservationsLinks } from "./components/OwnerReservationsLinks";
-export { default as OwnerReservationsActive } from "./components/OwnerReservationsActive";
-export { default as OwnerReservationsCompleted } from "./components/OwnerReservationsCompleted";
-export { default as OwnerReservationsCancelled } from "./components/OwnerReservationsCancelled";
 
 // Driver
 export { default as DriverLinks } from "./components/DriverLinks";
 export { default as DriverActiveBooking } from "./components/DriverActiveBooking";
-export { default as DriverPastBooking } from "./components/DriverPastBooking";
+export { default as DriverActiveBookingList } from "./components/DriverActiveBookingList";
 
 export { default as ProfileSettings } from "./components/ProfileSettings";
+export { default as ProfileSettingsGrid } from "./components/ProfileSettingsGrid";
+export { default as ProfileSettingsSkeleton } from "./components/ProfileSettingsSkeleton";
 export { default as ProfileChangePassword } from "./components/ProfileChangePassword";

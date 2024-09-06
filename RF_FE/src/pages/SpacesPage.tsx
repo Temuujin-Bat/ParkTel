@@ -24,11 +24,22 @@ export default function SpacesPage() {
   const [parkingSpotsWithTime, setParkingSpotsWithTime] = useState([]);
   const [isWorkerLoading, setIsWorkerLoading] = useState(false);
 
-  const { data: parkingSpots, isPending } = useGetAllSpaceList();
+  const getTodayDayString = () => {
+    const daysOfWeek = ["Sun", "Mon", "Tues", "Weds", "Thurs", "Fri", "Sat"];
+    const today = new Date().getDay();
+    return daysOfWeek[today];
+  };
+
+  const selectedDay = getTodayDayString();
+
+  const { data: parkingSpots, isPending } = useGetAllSpaceList(selectedDay);
   const userLocation = useUserLocation();
 
   useEffect(() => {
-    if (parkingSpots) {
+    const availableSpots =
+      parkingSpots?.filter((spot) => spot.status === true) || [];
+
+    if (availableSpots.length > 0) {
       if (userLocation) {
         setIsWorkerLoading(true);
         const worker = new Worker(
@@ -36,7 +47,7 @@ export default function SpacesPage() {
         );
 
         worker.postMessage({
-          parkingSpots,
+          parkingSpots: availableSpots,
           userLocation,
         });
 
@@ -48,10 +59,10 @@ export default function SpacesPage() {
 
         return () => worker.terminate();
       } else {
-        setParkingSpotsWithTime(parkingSpots);
+        setParkingSpotsWithTime(availableSpots);
       }
     }
-  }, [parkingSpots, userLocation]);
+  }, [userLocation, parkingSpots]);
 
   const sortedParkingSpots = useSortedSpace(parkingSpotsWithTime, sortType);
 

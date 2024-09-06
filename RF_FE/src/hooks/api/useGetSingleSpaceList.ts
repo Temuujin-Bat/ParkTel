@@ -11,7 +11,7 @@ import { spaceList } from "../../store/spaceList/slice";
 export function useGetUserSingleSpaceListAPI(id: string) {
   const dispatch = useDispatch();
 
-  const { isSuccess, data } = useQuery({
+  const { isSuccess, data, isPending } = useQuery({
     queryKey: [QUERY_KEYS.SINGLESPACELIST, id],
     queryFn: () => GetUserSingleSpaceListController(id),
   });
@@ -21,4 +21,6 @@ export function useGetUserSingleSpaceListAPI(id: string) {
       dispatch(spaceList.setUserSingleSpaceList(data));
     }
   }, [data, dispatch, isSuccess]);
+
+  return { isPending };
 }

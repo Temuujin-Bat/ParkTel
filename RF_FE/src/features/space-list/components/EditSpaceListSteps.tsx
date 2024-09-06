@@ -15,15 +15,16 @@ import {
   SpacePhotos,
   SpaceButtons,
 } from "..";
-
 import { getSingleSpaceSpaceList } from "../../../store/spaceList/selectors";
+import { TListYourSpace } from "../types";
+
+// Hooks
 import { useAppSelector } from "../../../hooks/useAppStore";
+import { useEditSpaceListAPI } from "../../../hooks/api/useEditSpaceList";
 
 // Third party
 import { useSnackbar } from "notistack";
-import { useEditSpaceListAPI } from "../../../hooks/api/useEditSpaceList";
 import { useParams } from "react-router-dom";
-import { TListYourSpace } from "../types";
 
 export default function EditSpaceListSteps() {
   const spaceListDetails = useAppSelector(getSingleSpaceSpaceList);

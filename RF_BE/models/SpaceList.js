@@ -90,6 +90,9 @@ const SpaceList = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    status: { type: Boolean, default: true },
+    bookingDate: { type: Date },
+    rentedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   },
   { timestamps: true }
 );

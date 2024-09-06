@@ -11,4 +11,5 @@ export { default as SpacePrice } from "./components/SpacePrice";
 export { default as SpacePhotos } from "./components/SpacePhotos";
 
 export { default as EditSpaceList } from "./components/EditSpaceList";
+export { default as EditSpaceSkeleton } from "./components/EditSpaceSkeleton";
 export { default as EditSpaceListSteps } from "./components/EditSpaceListSteps";
