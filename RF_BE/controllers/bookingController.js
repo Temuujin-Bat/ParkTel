@@ -8,7 +8,7 @@ const createBooking = async (req, res) => {
 
     // Find the space list by ID
     const space = await SpaceList.findById(id);
-    if (!space || !space.status) {
+    if (!space) {
       return res.status(404).json({ message: "Parking space not available." });
     }
 
@@ -41,6 +41,27 @@ const createBooking = async (req, res) => {
   }
 };
 
+const getDriverBookings = async (req, res) => {
+  try {
+    // Find all bookings where the logged-in user is the driver
+    const bookings = await Booking.find({
+      driver: req.user.userID,
+    }).populate({
+      path: "spaceListID", // Populate space details and the owner (user) details
+      populate: { path: "user", select: "firstName lastName phone" }, // Populate owner details
+    });
+
+    if (!bookings || bookings.length === 0) {
+      return res.status(404).json({ msg: "No bookings found for this driver" });
+    }
+
+    return res.status(200).json(bookings);
+  } catch (error) {
+    console.error("Error retrieving driver bookings:", error);
+    return res.status(500).json({ error: "Server error" });
+  }
+};
+
 const getOwnerBookings = async (req, res) => {
   try {
     const ownerSpaces = await SpaceList.find({ user: req.user.userID });
@@ -54,7 +75,9 @@ const getOwnerBookings = async (req, res) => {
 
     const bookings = await Booking.find({
       spaceListID: { $in: spaceIds },
-    }).populate("spaceListID", "addressLine coordinates"); // Populating space details
+    })
+      .populate("spaceListID", "addressLine coordinates") // Populate space details
+      .populate("driver", "firstName lastName mobile"); // Populate driver details
 
     return res.status(200).json(bookings);
   } catch (error) {
@@ -63,4 +86,4 @@ const getOwnerBookings = async (req, res) => {
   }
 };
 
-module.exports = { createBooking, getOwnerBookings };
+module.exports = { createBooking, getDriverBookings, getOwnerBookings };

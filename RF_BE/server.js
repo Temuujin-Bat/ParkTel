@@ -4,6 +4,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
+const updateExpiredBookings = require("./utils/updateExpiredBookings");
 
 dotenv.config();
 const app = express();
@@ -44,6 +45,9 @@ mongoose
   .connect(process.env.MONGO_URL)
   .then(() => {
     console.log("Server connected to MongoDB successfully!");
+
+    updateExpiredBookings();
+
     app.listen(port, () => {
       console.log(`Server is running on port ${port}...`);
     });

@@ -15,13 +15,13 @@ export default function HomePageGreener() {
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "column",
-        mt: "210px",
+        mt: { xs: "110px", sm: "120px", md: "130px", lg: "150px" },
       }}
     >
       <Stack
         sx={{
           display: "flex",
-          flexDirection: "row",
+          flexDirection: { xs: "column", sm: "row" },
           alignItems: "center",
           justifyContent: "center",
           position: "relative",
@@ -41,7 +41,7 @@ export default function HomePageGreener() {
             alignItems: "center",
             position: "absolute",
             top: "-70px",
-            left: { xs: "-40px", sm: "-35px" },
+            left: { xs: "45px", sm: "-35px" },
           }}
         >
           <Lottie

@@ -12,7 +12,7 @@ export default function HomePage() {
         sx={{
           backgroundColor: "#f8f9fb",
           width: "100%",
-          height: { xs: "600px", sm: "700px" },
+          height: { xs: "500px", sm: "620px", md: "630px" },
           position: "absolute",
           zIndex: "-1",
           top: 0,

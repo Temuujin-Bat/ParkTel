@@ -5,9 +5,9 @@ import { useQuery } from "@tanstack/react-query";
 import { GetOwnerReservationsController } from "../../services";
 import { QUERY_KEYS } from "../../utils/enums";
 
-export function useGetAllBooking() {
+export function useGetOwnerReservations() {
   const { data, isPending } = useQuery({
-    queryKey: [QUERY_KEYS.BOOKING],
+    queryKey: [QUERY_KEYS.OWNERRESERVATION],
     queryFn: GetOwnerReservationsController,
   });
 

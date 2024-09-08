@@ -8,6 +8,7 @@ export { default as OwnerListingGridSkeleton } from "./components/OwnerListingGr
 export { default as OwnerListingGridList } from "./components/OwnerListingGridList";
 
 export { default as OwnerReservations } from "./components/OwnerReservations";
+export { default as OwnerReservationsList } from "./components/OwnerReservationsList";
 
 // Driver
 export { default as DriverLinks } from "./components/DriverLinks";

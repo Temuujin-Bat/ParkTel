@@ -1,6 +1,5 @@
 // models/Booking.js
 const mongoose = require("mongoose");
-const { Schema } = mongoose;
 
 const Booking = new mongoose.Schema({
   spaceListID: {
@@ -12,7 +11,11 @@ const Booking = new mongoose.Schema({
   enterAfter: { type: Date, required: true },
   exitBefore: { type: Date, required: true },
   vehicleNumber: { type: String, required: true },
-  status: { type: Boolean, default: true },
+  expiresAt: {
+    type: Date,
+    default: () => new Date(Date.now() + 24 * 60 * 60 * 1000),
+    index: { expireAfterSeconds: 0 },
+  },
   createdAt: { type: Date, default: Date.now },
 });
 

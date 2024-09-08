@@ -7,6 +7,7 @@ export default function ErrorMessagesField({
   isMobileError,
   isPasswordMatchError,
   isPasswordLengthError,
+  isVehicleError,
 }: TErrorMessagesField) {
   return (
     <>
@@ -17,6 +18,9 @@ export default function ErrorMessagesField({
       {isPasswordMatchError && <ErrorField text="Passwords do not match" />}
       {isPasswordLengthError && (
         <ErrorField text="Password length should be at least 8 characters" />
+      )}
+      {isVehicleError && (
+        <ErrorField text="Vehicle registration number is required" />
       )}
     </>
   );

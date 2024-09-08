@@ -1,34 +1,11 @@
 // MUI
-import { Box, Link, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { Lock } from "@mui/icons-material";
 
-// Hooks
-import { useCreateBookingAPI } from "../../../hooks/api/useCreateBooking";
-
-export default function BookSpaceCheckout({
-  vehicleNumber,
-  singleList,
-  enterAfter,
-  exitBefore,
-}) {
+export default function BookSpaceCheckout({ singleList }) {
   const price = Math.floor(singleList.price);
   const serviceFee = Math.floor(price * 0.15);
   const totalPrice = price + serviceFee;
-  const { mutate } = useCreateBookingAPI();
-
-  const handlePay = () => {
-    if (!vehicleNumber) {
-      alert("Please enter your vehicle registration number");
-      return;
-    }
-
-    mutate({
-      id: singleList._id,
-      vehicleNumber,
-      enterAfter,
-      exitBefore,
-    });
-  };
 
   return (
     <>

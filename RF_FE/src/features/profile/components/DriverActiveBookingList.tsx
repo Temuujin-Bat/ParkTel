@@ -1,21 +1,22 @@
+// MUI
 import { AccessTime, CalendarToday, LocationOn } from "@mui/icons-material";
 import { Box, Card, CardContent, Stack, Typography } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
 
-export default function DriverActiveBookingList({ myListings }) {
+export default function DriverActiveBookingList({ driverBooking }) {
   return (
     <div>
       <Typography variant="h4" sx={{ mb: "30px" }}>
         Your Active Bookings
       </Typography>
       <Grid container spacing={4}>
-        {myListings.map((booking) => (
+        {driverBooking.map((booking) => (
           <Grid xs={12} sm={6} md={6} lg={4} key={booking._id}>
             <Card sx={{ height: "100%" }}>
               <Box
                 sx={{
                   height: "200px",
-                  backgroundImage: `url(${booking.photos[0]})`,
+                  backgroundImage: `url(${booking.spaceListID.photos[0]})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }}
@@ -30,7 +31,7 @@ export default function DriverActiveBookingList({ myListings }) {
                   }}
                 >
                   <LocationOn />
-                  <Typography>{booking.addressLine}</Typography>
+                  <Typography>{booking.spaceListID.addressLine}</Typography>
                 </Stack>
 
                 <Stack
@@ -42,23 +43,20 @@ export default function DriverActiveBookingList({ myListings }) {
                 >
                   <CalendarToday />
                   <Typography>
-                    {new Date(booking.bookingDate).toLocaleDateString()}
+                    {new Date(booking.enterAfter).toLocaleDateString()}
                   </Typography>
                 </Stack>
 
                 <Stack direction="row" alignItems="center" spacing={1}>
                   <AccessTime />
                   <Typography>
-                    {new Date(booking.bookingDate).toLocaleTimeString()} till
-                    tomorrow{" "}
-                    {new Date(
-                      new Date(booking.bookingDate).getTime() +
-                        24 * 60 * 60 * 1000
-                    ).toLocaleTimeString()}
+                    {new Date(booking.enterAfter).toLocaleTimeString()} till{" "}
+                    {new Date(booking.exitBefore).toLocaleTimeString()}{" "}
+                    {/* Adjusted for booking time */}
                   </Typography>
                 </Stack>
 
-                <Typography>{booking.price} nis</Typography>
+                <Typography>{booking.spaceListID.price} nis</Typography>
               </CardContent>
             </Card>
           </Grid>

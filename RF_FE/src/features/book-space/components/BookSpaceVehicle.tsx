@@ -2,7 +2,20 @@
 import { DirectionsCar } from "@mui/icons-material";
 import { Stack, Typography, TextField } from "@mui/material";
 
-export default function BookSpaceVehicle({ vehicleNumber, setVehicleNumber }) {
+export default function BookSpaceVehicle({
+  vehicleNumber,
+  setVehicleNumber,
+  vehicleError,
+  setVehicleError,
+}) {
+  const handleVehicleNumberChange = (e) => {
+    setVehicleNumber(e.target.value);
+
+    if (vehicleError && e.target.value) {
+      setVehicleError(false);
+    }
+  };
+
   return (
     <>
       <Stack
@@ -14,7 +27,12 @@ export default function BookSpaceVehicle({ vehicleNumber, setVehicleNumber }) {
           mt: "20px",
         }}
       >
-        <DirectionsCar sx={{ border: "3px solid #2dc98a", mr: "10px" }} />
+        <DirectionsCar
+          sx={{
+            border: `3px solid ${vehicleError ? "#dc3545" : "#2dc98a"}`,
+            mr: "10px",
+          }}
+        />
         <Typography variant="h4">Your vehicle</Typography>
       </Stack>
 
@@ -26,7 +44,22 @@ export default function BookSpaceVehicle({ vehicleNumber, setVehicleNumber }) {
           required
           placeholder="123·56·789"
           value={vehicleNumber}
-          onChange={(e) => setVehicleNumber(e.target.value)}
+          onChange={handleVehicleNumberChange}
+          error={vehicleError}
+          helperText={vehicleError ? "Please enter a vehicle number" : ""}
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              "& fieldset": {
+                borderColor: vehicleError ? "#dc3545" : "#2dc98a",
+              },
+              "&:hover fieldset": {
+                borderColor: vehicleError ? "#dc3545" : "#2dc98a",
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: vehicleError ? "#dc3545" : "#2dc98a",
+              },
+            },
+          }}
         />
       </Stack>
     </>

@@ -13,7 +13,8 @@ const QUERY_KEYS = {
   SINGLESPACELIST: "singleSpaceList",
   PROFILE: "profile",
   ALLSPACELIST: "allSpaceList",
-  BOOKING: "booking",
+  OWNERRESERVATION: "ownerReservation",
+  DRIVERBOOKING: "driverBooking",
 };
 
 export { STORE_SLICES, PERSIST_KEYS, QUERY_KEYS };
