@@ -16,6 +16,7 @@ export default function HomePageGreener() {
         justifyContent: "center",
         flexDirection: "column",
         mt: { xs: "110px", sm: "120px", md: "130px", lg: "150px" },
+        mb: "100px",
       }}
     >
       <Stack
