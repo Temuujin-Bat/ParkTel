@@ -52,7 +52,7 @@ const login = async (req, res) => {
     const userData = await User.findOne({ email: req.body.email });
 
     if (!userData) {
-      return res.status(401).json({ msg: "Email or password incorrect." });
+      return res.status(401).json({ msg: "Invalid email or password." });
     }
 
     const isPasswordCorrect = await comparePasswords(
@@ -69,11 +69,11 @@ const login = async (req, res) => {
       role: userData.role,
     });
 
-    const oneDay = 1000 * 60 * 60 * 24;
+    const tenYears = 1000 * 60 * 60 * 24 * 365 * 10;
 
     res.cookie("token", token, {
       httpOnly: true,
-      expires: new Date(Date.now() + oneDay),
+      expires: tenYears,
       secure: true,
     });
 
