@@ -6,9 +6,9 @@ const crypto = require("crypto");
 
 const register = async (req, res) => {
   try {
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email, password, mobile } = req.body;
 
-    if (!firstName || !lastName || !email || !password) {
+    if (!firstName || !lastName || !email || !password || !mobile) {
       return res.status(400).json({
         error: "Please provide email, password, first name, and last name",
       });
@@ -23,16 +23,9 @@ const register = async (req, res) => {
     const hashedPassword = await hashPassword(password);
     req.body.password = hashedPassword;
 
-    const userData = await User.create(req.body);
+    await User.create(req.body);
 
-    const user = {
-      userID: userData._id,
-      firstName: userData.firstName,
-      lastName: userData.lastName,
-      email: userData.email,
-    };
-
-    return res.status(201).json({ msg: "Registered Successfully", user });
+    return res.status(201).json({ msg: "Registered Successfully" });
   } catch (error) {
     console.error("Error during registration:", error);
     return res
@@ -56,7 +49,7 @@ const login = async (req, res) => {
     }
 
     const isPasswordCorrect = await comparePasswords(
-      req.body.password,
+      password,
       userData.password
     );
 
@@ -69,11 +62,11 @@ const login = async (req, res) => {
       role: userData.role,
     });
 
-    const tenYears = 1000 * 60 * 60 * 24 * 365 * 10;
+    const oneDay = 1000 * 60 * 60 * 24;
 
     res.cookie("token", token, {
       httpOnly: true,
-      expires: tenYears,
+      expires: new Date(Date.now() + oneDay),
       secure: true,
     });
 
@@ -110,6 +103,7 @@ const forgotPassword = async (req, res) => {
 
     user.resetPasswordToken = resetPasswordToken;
     user.resetPasswordExpire = resetPasswordExpire;
+
     await user.save();
 
     const resetUrl = `http://localhost:5173/reset-password/${resetToken}`;

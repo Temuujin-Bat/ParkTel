@@ -1,18 +1,13 @@
 // Components
-import { decryptData } from "../utils/crypto_util";
+
+import { useAppSelector } from "./useAppStore";
 
 export function useAuth() {
-  const getToken = () => {
-    const token = decryptData("token", "sessionStorage");
-
-    return token;
-  };
+  const user = useAppSelector((state) => state.authReducer);
 
   const isLoggedIn = (): boolean => {
-    const token = decryptData("token", "sessionStorage");
-
-    return !!token;
+    return !!user;
   };
 
-  return { isLoggedIn, getToken };
+  return { isLoggedIn };
 }

@@ -10,13 +10,9 @@ import {
 import { encryptData } from "../utils/crypto_util";
 
 const RegisterController = async (registerData: TRegisterRequest) => {
-  const response = await axios.post(
-    "http://localhost:1010/api/v1/auth/register",
-    registerData,
-    { withCredentials: true }
-  );
-
-  return response.data;
+  await axios.post("http://localhost:1010/api/v1/auth/register", registerData, {
+    withCredentials: true,
+  });
 };
 
 const LoginController = async (loginData: TLoginRequest) => {

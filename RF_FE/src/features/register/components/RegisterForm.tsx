@@ -38,12 +38,18 @@ export default function RegisterForm() {
       return;
     }
 
-    if (name === "mobile" && !/^\d*$/.test(value)) {
-      return;
-    }
-
     if (name === "mobile") {
+      const rawValue = value.replace(/\D/g, ""); // Remove all non-digit characters
+      const formattedValue = rawValue
+        .replace(/^(\d{3})(\d{3})(\d{4})$/, "($1)-$2-$3")
+        .slice(0, 14); // Format and limit length
+
+      setFormData((prevState) => ({
+        ...prevState,
+        mobile: formattedValue,
+      }));
       setIsMobileError(false);
+      return;
     }
 
     if (name === "password" || name === "confirmPassword") {
@@ -66,7 +72,7 @@ export default function RegisterForm() {
     e.preventDefault();
 
     const israeliMobileRegex = /^05\d{8}$/;
-    if (!israeliMobileRegex.test(formData.mobile)) {
+    if (!israeliMobileRegex.test(formData.mobile.replace(/\D/g, ""))) {
       setIsMobileError(true);
       return;
     }
@@ -85,7 +91,7 @@ export default function RegisterForm() {
       firstName: formData.firstName,
       lastName: formData.lastName,
       email: formData.email,
-      mobile: formData.mobile,
+      mobile: formData.mobile.replace(/\D/g, ""),
       password: formData.password,
     });
   };

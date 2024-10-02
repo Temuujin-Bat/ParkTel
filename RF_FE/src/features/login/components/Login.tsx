@@ -10,8 +10,7 @@ import {
 } from "@mui/material";
 
 // Components
-import ExternalLogin from "./ExternalLogin";
-import LoginForm from "./LoginForm";
+import { ExternalLogin, LoginForm } from "../index";
 
 export default function Login() {
   return (
