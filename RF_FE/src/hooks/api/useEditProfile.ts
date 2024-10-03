@@ -13,10 +13,12 @@ export function useEditProfileAPI() {
 
   const { mutate, isPending } = useMutation({
     mutationFn: EditProfileController,
-    onSuccess: async (data) => {
+    onSuccess: (data) => {
       dispatch(authActions.setUserDetails(data));
 
-      await queryClient.setQueryData([QUERY_KEYS.PROFILE], data);
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.PROFILE],
+      });
     },
     onError: (err) => {
       console.error(

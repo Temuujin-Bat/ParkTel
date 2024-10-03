@@ -1,7 +1,7 @@
 // Third party
 import { createSlice } from "@reduxjs/toolkit";
-import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
+import storageSession from "redux-persist/lib/storage/session";
 
 // Components
 import { PERSIST_KEYS, STORE_SLICES } from "../../utils/enums";
@@ -29,7 +29,7 @@ const authActions = slice.actions;
 
 const authPersistConfig = {
   key: PERSIST_KEYS.AUTH,
-  storage,
+  storage: storageSession,
 };
 
 export { authActions };

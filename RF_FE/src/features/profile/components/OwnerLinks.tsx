@@ -3,9 +3,9 @@ import { Box, Link, Slide, Typography } from "@mui/material";
 
 // Third party
 import { useLocation } from "react-router-dom";
-import { useLogoutAPI } from "../../../hooks/api/useLogout";
 
 // Hooks
+import { useLogoutAPI } from "../../../hooks/api/useLogout";
 
 export default function OwnerLinks() {
   const location = useLocation();

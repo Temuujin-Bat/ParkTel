@@ -7,9 +7,9 @@ import { Navigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 
 const AuthRedirect: FC<{ children: ReactNode }> = ({ children }) => {
-  const { isLoggedIn } = useAuth();
+  const isLoggedIn = useAuth();
 
-  if (isLoggedIn()) {
+  if (isLoggedIn) {
     return <Navigate to="/" />;
   }
   return children;

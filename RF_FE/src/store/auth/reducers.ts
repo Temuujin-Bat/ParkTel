@@ -7,9 +7,12 @@ import { IRootState } from "./types";
 const reducers = {
   setUserDetails: (
     state: IRootState,
-    action: PayloadAction<IRootState["userDetails"]>
+    action: PayloadAction<Partial<IRootState["userDetails"]>>
   ) => {
-    state.userDetails = action.payload;
+    state.userDetails = {
+      ...state.userDetails,
+      ...action.payload,
+    };
   },
   resetState: (state: IRootState) => {
     state.userDetails = {

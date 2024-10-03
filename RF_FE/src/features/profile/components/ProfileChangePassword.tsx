@@ -4,8 +4,10 @@ import { useState } from "react";
 import { LoadingButton } from "@mui/lab";
 import { Container, Box, Typography, Stack } from "@mui/material";
 
-// Components
+// Hooks
 import { useChangePasswordAPI } from "../../../hooks/api/useChangePassword";
+
+// Components
 import { ErrorMessagesField, PasswordField } from "../../../components/form";
 import PasswordCriteria from "../../../components/PasswordCriteria";
 
@@ -21,7 +23,11 @@ export default function ProfileChangePassword() {
   const [isPasswordLengthError, setIsPasswordLengthError] = useState(false);
   const [isPasswordMatchError, setIsPasswordMatchError] = useState(false);
 
-  const { mutate: changePassword, isPending } = useChangePasswordAPI();
+  const {
+    mutate: changePassword,
+    isPending,
+    isError: isOldPasswordIncorrect,
+  } = useChangePasswordAPI();
 
   const handleChangePassword = async () => {
     if (newPassword !== confirmPassword) {
@@ -42,6 +48,7 @@ export default function ProfileChangePassword() {
   return (
     <Container maxWidth="lg" sx={{ mt: "30px" }}>
       <ErrorMessagesField
+        isOldPasswordIncorrect={isOldPasswordIncorrect}
         isPasswordMatchError={isPasswordMatchError}
         isPasswordLengthError={isPasswordLengthError}
       />

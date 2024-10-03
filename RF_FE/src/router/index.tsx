@@ -3,12 +3,14 @@ import { lazy } from "react";
 // Third Party
 import { Navigate, useRoutes } from "react-router-dom";
 
-// Components
+// Layout
 import { MainLayout } from "../layout/main";
-import { AuthRedirect } from "./AuthRedirect";
 import { TokenValidationWrapper } from "../layout/wrappers/TokenValidateWrapper";
+
+// Components
 import NotFoundPage from "../pages/NotFoundPage";
 import { ProtectedRoute } from "./ProtectedRoute";
+import { AuthRedirect } from "./AuthRedirect";
 
 // Pages
 const LazyHome = lazy(() => import("../pages/HomePage"));
@@ -154,11 +156,7 @@ const InitRoutes = () =>
         },
         {
           path: "/forgot-password",
-          element: (
-            <AuthRedirect>
-              <LazyForgotPassword />
-            </AuthRedirect>
-          ),
+          element: <LazyForgotPassword />,
         },
         {
           path: "/reset-password/:token",
