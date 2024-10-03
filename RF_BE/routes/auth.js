@@ -6,10 +6,12 @@ const {
   resetPassword,
   validateResetToken,
   changePassword,
+  logout,
 } = require("../controllers/authController.js");
 const authMiddleware = require("../middlewares/authMiddleware.js");
 const router = Router();
 
+router.post("/logout", logout);
 router.post("/register", register);
 router.post("/login", login);
 router.post("/forgot-password", forgotPassword);

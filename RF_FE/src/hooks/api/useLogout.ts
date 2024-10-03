@@ -4,28 +4,26 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 // Components
-import { LoginController } from "../../services/auth.api";
+import { LogoutController } from "../../services/auth.api";
 import { authActions } from "../../store/auth/slice";
+import { persistor } from "../../store";
 
-export function useLoginAPI() {
+export function useLogoutAPI() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const { mutate, isPending, isError } = useMutation({
-    mutationFn: LoginController,
-    onSuccess: (response) => {
-      const { userID } = response;
-
-      dispatch(
-        authActions.setUserDetails({
-          userID,
-        })
-      );
+    mutationFn: LogoutController,
+    onSuccess: () => {
+      dispatch(authActions.resetState());
+      persistor.purge();
+      sessionStorage.clear();
+      localStorage.clear();
 
       navigate("/");
     },
     onError: (err) => {
-      console.error(`ERROR! invite login request threw an Exception! ${err}`);
+      console.error(`ERROR! invite logout request threw an Exception! ${err}`);
     },
   });
 

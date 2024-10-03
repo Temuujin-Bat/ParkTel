@@ -3,13 +3,12 @@ import { Box, Link, Skeleton, Stack, Typography } from "@mui/material";
 import { Person } from "@mui/icons-material";
 
 // Hooks
-import { useLogout } from "../../../hooks/useLogout";
 import { useGetProfileAPI } from "../../../hooks/api/useGetProfile";
+import { useLogoutAPI } from "../../../hooks/api/useLogout";
 
 export default function BookSpaceDetails() {
-  const { logoutHandler } = useLogout();
-
   const { data: userDetails, isPending } = useGetProfileAPI();
+  const { mutate: logout } = useLogoutAPI();
 
   return (
     <>
@@ -62,7 +61,7 @@ export default function BookSpaceDetails() {
               },
             },
           }}
-          onClick={logoutHandler}
+          onClick={() => logout()}
         >
           <Typography variant="subtitle2" sx={{ color: "#4a697c" }}>
             Log Out
