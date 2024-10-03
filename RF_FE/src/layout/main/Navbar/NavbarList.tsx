@@ -1,14 +1,16 @@
 // MUI
 import { LocalParking, AccountCircle } from "@mui/icons-material";
 import { Link, Typography, Box, Divider } from "@mui/material";
+
+// Hooks
 import { useAuth } from "../../../hooks/useAuth";
 
 export default function NavbarList() {
-  const { isLoggedIn } = useAuth();
+  const isLoggedIn = useAuth();
 
   return (
     <Box sx={{ display: "flex" }}>
-      {isLoggedIn() ? (
+      {isLoggedIn ? (
         <Link
           underline="none"
           sx={{

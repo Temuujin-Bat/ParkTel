@@ -1,7 +1,7 @@
 // Third party
 import { createSlice } from "@reduxjs/toolkit";
 import { persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage";
+import storageSession from "redux-persist/lib/storage/session";
 
 // Components
 import { PERSIST_KEYS, STORE_SLICES } from "../../utils/enums";
@@ -24,7 +24,7 @@ const spaceList = slice.actions;
 
 const spaceListPersistConfig = {
   key: PERSIST_KEYS.SPACELIST,
-  storage,
+  storage: storageSession,
 };
 
 export { spaceList };

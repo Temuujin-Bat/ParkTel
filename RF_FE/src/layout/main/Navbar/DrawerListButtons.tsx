@@ -5,7 +5,7 @@ import { Link, Typography, Box } from "@mui/material";
 export default function DrawerListButtons({
   isLoggedIn,
 }: {
-  isLoggedIn: () => boolean;
+  isLoggedIn: boolean;
 }) {
   return (
     <Box
@@ -41,7 +41,7 @@ export default function DrawerListButtons({
         <Typography variant="subtitle2">List your Space</Typography>
       </Link>
 
-      {isLoggedIn() ? (
+      {isLoggedIn ? (
         <Link
           underline="none"
           href="/space-owner"

@@ -8,7 +8,7 @@ import { ChangePasswordController } from "../../services";
 export function useChangePasswordAPI() {
   const navigate = useNavigate();
 
-  const { mutate, isPending } = useMutation({
+  const { mutate, isPending, isError } = useMutation({
     mutationFn: ChangePasswordController,
     onSuccess: () => {
       navigate("/space-owner");
@@ -20,5 +20,5 @@ export function useChangePasswordAPI() {
     },
   });
 
-  return { mutate, isPending };
+  return { mutate, isPending, isError };
 }

@@ -14,15 +14,17 @@ export function useLoginAPI() {
   const { mutate, isPending, isError } = useMutation({
     mutationFn: LoginController,
     onSuccess: (response) => {
-      const { userID } = response;
+      if (response?.userID) {
+        const { userID } = response;
 
-      dispatch(
-        authActions.setUserDetails({
-          userID,
-        })
-      );
+        dispatch(
+          authActions.setUserDetails({
+            userID: userID,
+          })
+        );
 
-      navigate("/");
+        navigate("/");
+      }
     },
     onError: (err) => {
       console.error(`ERROR! invite login request threw an Exception! ${err}`);

@@ -17,6 +17,7 @@ export type TErrorMessagesField = {
   isPasswordMatchError?: boolean;
   isPasswordLengthError?: boolean;
   isVehicleError?: boolean;
+  isOldPasswordIncorrect?: boolean;
 };
 
 export type TPasswordField = {

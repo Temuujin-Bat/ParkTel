@@ -22,7 +22,6 @@ export default function DrawerList({
   handleClose: () => void;
 }) {
   const location = useLocation();
-
   const [userRole, setUserRole] = useState<TUserRole>(() => {
     if (location.pathname.startsWith("/space-owner")) {
       return "owner";
@@ -32,7 +31,7 @@ export default function DrawerList({
     return "owner";
   });
 
-  const { isLoggedIn } = useAuth();
+  const isLoggedIn = useAuth();
 
   const { mutate: logout } = useLogoutAPI();
 
@@ -66,7 +65,7 @@ export default function DrawerList({
       }}
       onClick={handleClose}
     >
-      {isLoggedIn() && (
+      {isLoggedIn && (
         <>
           <DrawerListOwnerDriver
             userRole={userRole}
@@ -76,9 +75,9 @@ export default function DrawerList({
         </>
       )}
 
-      {userRole === "owner" && isLoggedIn() ? (
+      {userRole === "owner" && isLoggedIn ? (
         <DrawerListLinks links={ownerLinks} />
-      ) : userRole === "driver" && isLoggedIn() ? (
+      ) : userRole === "driver" && isLoggedIn ? (
         <DrawerListLinks links={driverLinks} />
       ) : (
         <div>Not Found (Typo)</div>

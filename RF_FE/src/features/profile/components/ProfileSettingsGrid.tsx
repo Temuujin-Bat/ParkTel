@@ -7,7 +7,14 @@ import { Box, Typography, Stack, TextField } from "@mui/material";
 // Hooks
 import { useEditProfileAPI } from "../../../hooks/api/useEditProfile";
 
-export default function ProfileSettingsGrid({ userDetails }) {
+// Components
+import { TUserDetails } from "../type";
+
+export default function ProfileSettingsGrid({
+  userDetails,
+}: {
+  userDetails: TUserDetails;
+}) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
