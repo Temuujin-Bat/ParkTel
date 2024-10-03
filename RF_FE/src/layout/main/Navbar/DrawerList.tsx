@@ -7,16 +7,14 @@ import { Box, Stack } from "@mui/material";
 import DrawerListLinks from "./DrawerListLinks";
 import DrawerListButtons from "./DrawerListButtons";
 import DrawerListOwnerDriver from "./DrawerListOwnerDriver";
-import LoadingMUI from "../../../components/LoadingMUI";
 import { TUserRole } from "./types";
 
 // Hooks
 import { useAuth } from "../../../hooks/useAuth";
-import { useLogout } from "../../../hooks/useLogout";
-import { useGetProfileAPI } from "../../../hooks/api/useGetProfile";
 
 // Third party
 import { useLocation } from "react-router-dom";
+import { useLogoutAPI } from "../../../hooks/api/useLogout";
 
 export default function DrawerList({
   handleClose,
@@ -35,65 +33,58 @@ export default function DrawerList({
   });
 
   const { isLoggedIn } = useAuth();
-  const { isPending } = useGetProfileAPI();
 
-  const { logoutHandler } = useLogout(handleClose);
+  const { mutate: logout } = useLogoutAPI();
 
   const ownerLinks = [
     { name: "Your Listing", url: "/space-owner" },
     { name: "Your Reservations", url: "/space-owner/your-reservations" },
     { name: "Profile Settings", url: "/space-owner/profile-settings" },
     { name: "Change Password", url: "/space-owner/change-password" },
-    { name: "Log Out", action: logoutHandler },
+    { name: "Log Out", action: () => logout() },
   ];
 
   const driverLinks = [
     { name: "Active Bookings", url: "/driver" },
     { name: "Profile Settings", url: "/driver/profile-settings" },
     { name: "Change Password", url: "/driver/change-password" },
-    { name: "Log Out", action: logoutHandler },
+    { name: "Log Out", action: () => logout() },
   ];
 
   return (
-    <>
-      {isPending ? (
-        <LoadingMUI />
-      ) : (
-        <Box
-          sx={{
-            position: "relative",
-            height: "100%",
-            padding: "20px",
-            backgroundColor: "#F2F2F2",
-            mt: "50px",
-            width: {
-              xs: "100vw",
-              sm: "60vw",
-            },
-          }}
-          onClick={handleClose}
-        >
-          {isLoggedIn() && (
-            <>
-              <DrawerListOwnerDriver
-                userRole={userRole}
-                setUserRole={setUserRole}
-              />
-              <Stack sx={{ borderBottom: "1px solid #979797", mt: "20px" }} />
-            </>
-          )}
-
-          {userRole === "owner" && isLoggedIn() ? (
-            <DrawerListLinks links={ownerLinks} />
-          ) : userRole === "driver" && isLoggedIn() ? (
-            <DrawerListLinks links={driverLinks} />
-          ) : (
-            <div>Not Found (Typo)</div>
-          )}
-
-          <DrawerListButtons isLoggedIn={isLoggedIn} />
-        </Box>
+    <Box
+      sx={{
+        position: "relative",
+        height: "100%",
+        padding: "20px",
+        backgroundColor: "#F2F2F2",
+        mt: "50px",
+        width: {
+          xs: "100vw",
+          sm: "60vw",
+        },
+      }}
+      onClick={handleClose}
+    >
+      {isLoggedIn() && (
+        <>
+          <DrawerListOwnerDriver
+            userRole={userRole}
+            setUserRole={setUserRole}
+          />
+          <Stack sx={{ borderBottom: "1px solid #979797", mt: "20px" }} />
+        </>
       )}
-    </>
+
+      {userRole === "owner" && isLoggedIn() ? (
+        <DrawerListLinks links={ownerLinks} />
+      ) : userRole === "driver" && isLoggedIn() ? (
+        <DrawerListLinks links={driverLinks} />
+      ) : (
+        <div>Not Found (Typo)</div>
+      )}
+
+      <DrawerListButtons isLoggedIn={isLoggedIn} />
+    </Box>
   );
 }

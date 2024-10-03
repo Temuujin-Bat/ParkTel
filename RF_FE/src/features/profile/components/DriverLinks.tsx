@@ -3,19 +3,19 @@ import { Box, Link, Slide, Typography } from "@mui/material";
 
 // Third party
 import { useLocation } from "react-router-dom";
+import { useLogoutAPI } from "../../../hooks/api/useLogout";
 
 // Hooks
-import { useLogout } from "../../../hooks/useLogout";
 
 export default function DriverLinks() {
   const location = useLocation();
-  const { logoutHandler } = useLogout();
+  const { mutate: logout } = useLogoutAPI();
 
   const links = [
     { name: "Active Bookings", url: "/driver" },
     { name: "Profile Settings", url: "/driver/profile-settings" },
     { name: "Change Password", url: "/driver/change-password" },
-    { name: "Log Out", action: logoutHandler },
+    { name: "Log Out", action: () => logout() },
   ];
 
   return (

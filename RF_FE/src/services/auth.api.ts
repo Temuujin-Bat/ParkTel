@@ -7,7 +7,16 @@ import {
   TLoginRequest,
   TRegisterRequest,
 } from "../types/requests";
-import { encryptData } from "../utils/crypto_util";
+
+const LogoutController = async () => {
+  await axios.post(
+    "http://localhost:1010/api/v1/auth/logout",
+    {},
+    {
+      withCredentials: true,
+    }
+  );
+};
 
 const RegisterController = async (registerData: TRegisterRequest) => {
   await axios.post("http://localhost:1010/api/v1/auth/register", registerData, {
@@ -24,10 +33,6 @@ const LoginController = async (loginData: TLoginRequest) => {
     { email, password },
     { withCredentials: true }
   );
-
-  if (response) {
-    encryptData("token", response.data.token, "sessionStorage");
-  }
 
   return response.data;
 };
@@ -77,6 +82,7 @@ const ChangePasswordController = async (changeData: TChangePassword) => {
 };
 
 export {
+  LogoutController,
   RegisterController,
   LoginController,
   ForgotPasswordController,
