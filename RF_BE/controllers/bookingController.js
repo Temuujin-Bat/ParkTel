@@ -66,10 +66,6 @@ const getOwnerBookings = async (req, res) => {
   try {
     const ownerSpaces = await SpaceList.find({ user: req.user.userID });
 
-    if (!ownerSpaces || ownerSpaces.length === 0) {
-      return res.status(404).json({ msg: "No listings found for this owner" });
-    }
-
     // Get all bookings for the owner's spaces
     const spaceIds = ownerSpaces.map((space) => space._id);
 

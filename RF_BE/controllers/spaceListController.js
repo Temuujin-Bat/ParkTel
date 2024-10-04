@@ -119,10 +119,6 @@ const getAllSpaceList = async (req, res) => {
 
     const spaceList = await SpaceList.find(filter);
 
-    if (!spaceList || spaceList.length === 0) {
-      return res.status(404).json({ msg: "No space lists found" });
-    }
-
     return res.status(200).json(spaceList);
   } catch (error) {
     console.error("Error during getting all space lists:", error);

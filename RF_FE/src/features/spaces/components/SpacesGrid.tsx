@@ -2,8 +2,7 @@
 import { Box } from "@mui/material";
 
 // Components
-import SpacesGridSkeleton from "./SpacesGridSkeleton";
-import SpacesGridList from "./SpacesGridList";
+import { SpacesGridSkeleton, SpacesGridList } from "../index";
 
 export default function SpacesGrid({
   sortedParkingSpots,

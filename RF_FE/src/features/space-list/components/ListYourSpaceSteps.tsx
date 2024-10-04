@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 // MUI
 import { Box, Typography } from "@mui/material";
@@ -24,72 +24,48 @@ import {
 
 export default function ListYourSpaceSteps() {
   const [activeStep, setActiveStep] = useState(0);
-  const [addressLine, setAddressLine] = useState("");
-  const [coordinates, setCoordinates] = useState({
-    latitude: 32.0853,
-    longitude: 34.7818,
-  });
-  const [features, setFeatures] = useState({
-    "Covered parking": false,
-    "Security camera": false,
-    "On-site staff": false,
-    "Underground parking": false,
-    "Disabled access": false,
-    "Electric charging": false,
-  });
-  const [type, setType] = useState("");
-  const [selectedDays, setSelectedDays] = useState({
-    Sun: false,
-    Mon: false,
-    Tues: false,
-    Weds: false,
-    Thurs: false,
-    Fri: false,
-    Sat: false,
-  });
-  const [price, setPrice] = useState("");
-  const [photos, setPhotos] = useState<string[]>([]);
-
-  const renderStepContent = (step: number) => {
-    switch (step) {
-      case 0:
-        return (
-          <SpaceAddress
-            addressLine={addressLine}
-            setAddressLine={setAddressLine}
-          />
-        );
-      case 1:
-        return (
-          <SpaceMap coordinates={coordinates} setCoordinates={setCoordinates} />
-        );
-      case 2:
-        return <SpaceFeatures features={features} setFeatures={setFeatures} />;
-      case 3:
-        return <SpaceType type={type} setType={setType} />;
-      case 4:
-        return (
-          <SpaceDayPicker
-            selectedDays={selectedDays}
-            setSelectedDays={setSelectedDays}
-          />
-        );
-      case 5:
-        return <SpacePrice price={price} setPrice={setPrice} />;
-      case 6:
-        return <SpacePhotos photos={photos} setPhotos={setPhotos} />;
-      default:
-        return <Typography>Unknown step</Typography>;
-    }
-  };
-
+  const { formData, updateField } = useSpaceForm();
   const { mutate: addSpaceList, isPending } = useAddSpaceListAPI(setActiveStep);
   const { enqueueSnackbar } = useSnackbar();
+
+  const steps = useMemo(
+    () => [
+      <SpaceAddress
+        addressLine={formData.addressLine}
+        setAddressLine={(val) => updateField("addressLine", val)}
+      />,
+      <SpaceMap
+        coordinates={formData.coordinates}
+        setCoordinates={(val) => updateField("coordinates", val)}
+      />,
+      <SpaceFeatures
+        features={formData.features}
+        setFeatures={(val) => updateField("features", val)}
+      />,
+      <SpaceType
+        type={formData.type}
+        setType={(val) => updateField("type", val)}
+      />,
+      <SpaceDayPicker
+        selectedDays={formData.selectedDays}
+        setSelectedDays={(val) => updateField("selectedDays", val)}
+      />,
+      <SpacePrice
+        price={formData.price}
+        setPrice={(val) => updateField("price", val)}
+      />,
+      <SpacePhotos
+        photos={formData.photos}
+        setPhotos={(val) => updateField("photos", val)}
+      />,
+    ],
+    [formData, updateField]
+  );
 
   const submitHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    if (photos.length === 0) {
+    if (formData.photos.length === 0) {
       enqueueSnackbar("Please add at least one photo.", {
         variant: "error",
         anchorOrigin: {
@@ -101,22 +77,14 @@ export default function ListYourSpaceSteps() {
       return;
     }
 
-    addSpaceList({
-      addressLine,
-      coordinates,
-      features,
-      type,
-      selectedDays,
-      price,
-      photos,
-    });
+    addSpaceList(formData);
   };
 
   return (
     <Box sx={{ width: "100%", padding: "30px" }}>
       <SpaceHeader />
 
-      <Box>{renderStepContent(activeStep)}</Box>
+      <Box>{steps[activeStep] || <Typography>Unknown step</Typography>}</Box>
 
       <SpaceButtons
         activeStep={activeStep}
@@ -126,4 +94,54 @@ export default function ListYourSpaceSteps() {
       />
     </Box>
   );
+}
+
+// Custom Hook for handling form state
+function useSpaceForm() {
+  const [formData, setFormData] = useState({
+    addressLine: "",
+    coordinates: { latitude: 32.0853, longitude: 34.7818 },
+    features: {
+      "Covered parking": false,
+      "Security camera": false,
+      "On-site staff": false,
+      "Underground parking": false,
+      "Disabled access": false,
+      "Electric charging": false,
+    },
+    type: "",
+    selectedDays: {
+      Sun: false,
+      Mon: false,
+      Tues: false,
+      Weds: false,
+      Thurs: false,
+      Fri: false,
+      Sat: false,
+    },
+    price: "",
+    photos: [] as string[],
+  });
+
+  const updateField = useCallback(
+    <T extends keyof typeof formData>(
+      field: T,
+      value: React.SetStateAction<(typeof formData)[T]>
+    ) => {
+      setFormData((prev) => ({
+        ...prev,
+        [field]:
+          typeof value === "function"
+            ? (
+                value as (
+                  prevState: (typeof formData)[T]
+                ) => (typeof formData)[T]
+              )(prev[field])
+            : value,
+      }));
+    },
+    []
+  );
+
+  return { formData, updateField };
 }

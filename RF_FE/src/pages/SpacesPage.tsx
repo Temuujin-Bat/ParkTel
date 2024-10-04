@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 
 // MUI
-import { Paper } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
+import { Paper } from "@mui/material";
 
 // Components
 import {
   SpacesDialog,
   SpacesGrid,
   SpacesGridHeader,
+  SpacesGridLottie,
   SpacesMap,
 } from "../features/spaces";
 
@@ -66,7 +67,7 @@ export default function SpacesPage() {
 
   const sortedParkingSpots = useSortedSpace(parkingSpotsWithTime, sortType);
 
-  return (
+  return sortedParkingSpots && sortedParkingSpots.length > 0 ? (
     <Grid
       container
       sx={{
@@ -102,6 +103,30 @@ export default function SpacesPage() {
           setOpen={setOpen}
         />
       )}
+    </Grid>
+  ) : (
+    <Grid
+      container
+      sx={{
+        height: "93vh",
+        width: "100vw",
+      }}
+    >
+      <Grid component={Paper} xs={12} sm={12} md={6} lg={5}>
+        <SpacesGridHeader sortType={sortType} setSortType={setSortType} />
+
+        <SpacesGridLottie />
+      </Grid>
+
+      <Grid xs={0} sm={0} md={6} lg={7}>
+        <SpacesMap
+          setSelectedSpot={setSelectedSpot}
+          userLocation={userLocation}
+          parkingSpots={sortedParkingSpots}
+          setOpen={setOpen}
+          isPending={isPending}
+        />
+      </Grid>
     </Grid>
   );
 }

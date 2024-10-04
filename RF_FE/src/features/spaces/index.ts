@@ -1,6 +1,7 @@
 export { default as SpacesMap } from "./components/SpacesMap";
 
 export { default as SpacesGridHeader } from "./components/SpacesGridHeader";
+export { default as SpacesGridLottie } from "./components/SpacesGridLottie";
 export { default as SpacesGrid } from "./components/SpacesGrid";
 export { default as SpacesGridSkeleton } from "./components/SpacesGridSkeleton";
 export { default as SpacesGridList } from "./components/SpacesGridList";

@@ -1,11 +1,9 @@
 // MUI
 import { AccessTime, CalendarToday, LocationOn } from "@mui/icons-material";
-import { Box, Card, CardContent, Stack, Typography } from "@mui/material";
+import { Card, CardContent, Stack, Typography } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
 
 export default function OwnerReservationsList({ ownerReservations }) {
-  console.log(ownerReservations);
-
   return (
     <div>
       <Typography variant="h4" sx={{ mb: "30px" }}>
