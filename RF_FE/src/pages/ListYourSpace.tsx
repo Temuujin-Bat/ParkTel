@@ -1,6 +1,6 @@
 // MUI
-import { Box, Fade, Stack } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
+import { Box, Fade, Stack } from "@mui/material";
 
 // Components
 import { ListYourSpaceSteps } from "../features/space-list";

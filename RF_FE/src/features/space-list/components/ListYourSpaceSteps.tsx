@@ -3,6 +3,12 @@ import { useState } from "react";
 // MUI
 import { Box, Typography } from "@mui/material";
 
+// Hooks
+import { useAddSpaceListAPI } from "../../../hooks/api/useAddSpaceList";
+
+// Third party
+import { useSnackbar } from "notistack";
+
 // Components
 import {
   SpaceHeader,
@@ -15,10 +21,6 @@ import {
   SpacePhotos,
   SpaceButtons,
 } from "../index";
-import { useAddSpaceListAPI } from "../../../hooks/api/useAddSpaceList";
-
-// Third party
-import { useSnackbar } from "notistack";
 
 export default function ListYourSpaceSteps() {
   const [activeStep, setActiveStep] = useState(0);
