@@ -4,22 +4,20 @@ import { SentimentDissatisfiedSharp } from "@mui/icons-material";
 
 // Components
 import { NoActiveListingBooking } from "../../../components/notFound";
+import DriverActiveBookingList from "./DriverActiveBookingList";
 
 // Hooks
 import { useGetDriverBooking } from "../../../hooks/api/useGetDriverBooking";
-import DriverActiveBookingList from "./DriverActiveBookingList";
 
 export default function DriverActiveBooking() {
-  const { data: driverBooking, isPending } = useGetDriverBooking();
-
-  if (isPending) return null;
+  const { data: driverBooking } = useGetDriverBooking();
 
   return (
     <Fade in={true} timeout={500}>
       <Container maxWidth="lg" sx={{ mt: "30px" }}>
         <Box sx={{ width: "100%" }}>
           {/* Conditionally render based on whether there are any active bookings */}
-          {driverBooking.length > 0 ? (
+          {driverBooking && driverBooking.length > 0 ? (
             <DriverActiveBookingList driverBooking={driverBooking} />
           ) : (
             <NoActiveListingBooking

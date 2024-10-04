@@ -51,10 +51,6 @@ const getDriverBookings = async (req, res) => {
       populate: { path: "user", select: "firstName lastName phone" }, // Populate owner details
     });
 
-    if (!bookings || bookings.length === 0) {
-      return res.status(404).json({ msg: "No bookings found for this driver" });
-    }
-
     return res.status(200).json(bookings);
   } catch (error) {
     console.error("Error retrieving driver bookings:", error);

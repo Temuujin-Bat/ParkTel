@@ -6,6 +6,11 @@ const CreateBookingController = async ({
   enterAfter,
   exitBefore,
   vehicleNumber,
+}: {
+  id: string;
+  enterAfter: string;
+  exitBefore: string;
+  vehicleNumber: string;
 }) => {
   await axios.post(
     `http://localhost:1010/api/v1/book/booking/${id}`,
