@@ -3,11 +3,6 @@ import { ReactNode } from "react";
 // MUI
 import { Box, Container, Link, Stack, Typography } from "@mui/material";
 
-interface NoActiveListingBookingProps {
-  icon: ReactNode;
-  message: string;
-}
-
 export default function NoActiveListingBooking({
   icon,
   message,
@@ -71,4 +66,9 @@ export default function NoActiveListingBooking({
       </Box>
     </Container>
   );
+}
+
+interface NoActiveListingBookingProps {
+  icon: ReactNode;
+  message: string;
 }
