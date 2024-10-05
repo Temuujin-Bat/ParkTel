@@ -1,5 +1,7 @@
 // MUI
 import { Link, Typography, List } from "@mui/material";
+
+// Components
 import { TLinksType } from "./types";
 
 export default function DrawerListLinks({ links }: TLinksType) {
@@ -15,7 +17,7 @@ export default function DrawerListLinks({ links }: TLinksType) {
         link.action ? (
           <Typography
             key={index}
-            variant="subtitle1"
+            variant="h4"
             sx={{
               color: "#a4a5a8",
               lineHeight: "2.5em",
@@ -29,7 +31,7 @@ export default function DrawerListLinks({ links }: TLinksType) {
         ) : (
           <Link key={index} underline="none" href={link.url}>
             <Typography
-              variant="subtitle1"
+              variant="h4"
               sx={{
                 color: location.pathname === link.url ? "#36383e" : "#a4a5a8",
                 lineHeight: "2.5em",
