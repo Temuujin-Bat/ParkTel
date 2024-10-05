@@ -53,6 +53,7 @@ export default function LoginForm() {
         type="email"
         required
         placeholder="Enter email address"
+        autoComplete="email"
         sx={{ width: "100%", mb: "10px" }}
         value={formData.email}
         onChange={handleChange}
@@ -65,6 +66,7 @@ export default function LoginForm() {
         sx={{ width: "100%" }}
         value={formData.password}
         onChange={handleChange}
+        autoComplete="current-password"
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">

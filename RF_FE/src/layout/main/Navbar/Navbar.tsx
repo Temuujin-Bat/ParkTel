@@ -28,10 +28,10 @@ export default function Navbar() {
           enter: 300,
           exit: 300,
         }}
-        keepMounted
         sx={{ zIndex: 1200 }}
+        keepMounted={false}
       >
-        <DrawerList handleClose={() => setOpen((prev) => !prev)} />
+        <DrawerList setOpen={setOpen} />
       </Drawer>
     </>
   );

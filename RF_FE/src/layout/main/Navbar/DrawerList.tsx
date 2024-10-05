@@ -18,9 +18,9 @@ import DrawerListLinksLogout from "./DrawerListLinksLogout";
 import { TUserRole } from "./types";
 
 export default function DrawerList({
-  handleClose,
+  setOpen,
 }: {
-  handleClose: () => void;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const location = useLocation();
   const [userRole, setUserRole] = useState<TUserRole>(() => {
@@ -64,7 +64,7 @@ export default function DrawerList({
           sm: "60vw",
         },
       }}
-      onClick={handleClose}
+      onClick={() => setOpen((prev) => !prev)}
     >
       {isLoggedIn && (
         <>

@@ -5,8 +5,10 @@ import { DirectionsCar, HomeWork } from "@mui/icons-material";
 // Third party
 import { useNavigate } from "react-router-dom";
 
-// Components
+// Hooks
 import { useEditProfileAPI } from "../../../hooks/api/useEditProfile";
+
+// Components
 import { TDrawerListOwnerDriverProps, TUserRole } from "./types";
 
 export default function DrawerListOwnerDriver({
