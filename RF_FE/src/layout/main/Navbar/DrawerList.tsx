@@ -3,18 +3,19 @@ import { useState } from "react";
 // MUI
 import { Box, Stack } from "@mui/material";
 
+// Hooks
+import { useAuth } from "../../../hooks/useAuth";
+import { useLogoutAPI } from "../../../hooks/api/useLogout";
+
+// Third party
+import { useLocation } from "react-router-dom";
+
 // Components
 import DrawerListLinks from "./DrawerListLinks";
 import DrawerListButtons from "./DrawerListButtons";
 import DrawerListOwnerDriver from "./DrawerListOwnerDriver";
+import DrawerListLinksLogout from "./DrawerListLinksLogout";
 import { TUserRole } from "./types";
-
-// Hooks
-import { useAuth } from "../../../hooks/useAuth";
-
-// Third party
-import { useLocation } from "react-router-dom";
-import { useLogoutAPI } from "../../../hooks/api/useLogout";
 
 export default function DrawerList({
   handleClose,
@@ -80,7 +81,7 @@ export default function DrawerList({
       ) : userRole === "driver" && isLoggedIn ? (
         <DrawerListLinks links={driverLinks} />
       ) : (
-        <div>Not Found (Typo)</div>
+        <DrawerListLinksLogout />
       )}
 
       <DrawerListButtons isLoggedIn={isLoggedIn} />
